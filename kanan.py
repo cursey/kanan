@@ -1,5 +1,7 @@
 import frida
 import glob
+import sys
+import getopt
 
 # Called when a script sends us a message.
 def on_message(message, data):
@@ -8,50 +10,54 @@ def on_message(message, data):
     elif message['type'] == 'error':
         print(message['stack'])
 
-script_defaults = """
-// Helper to scan for patterns in specific modules code section.
-function scan(name, sig) {
-    var ranges = Module.enumerateRangesSync(name, 'r-x');
+usage_text = """
+usage: python kanan.py <options>
 
-    for (var i = 0; i < ranges.length; ++i) {
-        var range = ranges[i];
-        var results = Memory.scanSync(range.base, range.size, sig);
+    -h --help
+        displays this help text
 
-        if (results.length > 0) {
-            return results[0].address;
-        }
-    }
-
-    return NULL;
-}
-
-function patch(addr, c) {
-    Memory.protect(addr, 4096, 'rwx');
-    Memory.writeU8(addr, c);
-    Memory.protect(addr, 4096, 'r-x');
-}
+    -d --debug
+        runs in debug mode
 """
 
-print("Kanan's Mabinogi Mod")
-print("Attaching to Client.exe...")
+def usage():
+    print(usage_text)
 
-session = frida.attach('Client.exe')
+def main():
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'hd', ['help', 'debug'])
+    except getopt.GetoptError as err:
+        print(err)
+        usage()
+        sys.exit(2)
+    debug_mode = False
+    for o, a in opts:
+        if o in ('-h', '--help'):
+            usage()
+            sys.exit()
+        elif o in ('-d', '--debug'):
+            debug_mode = True
+        else:
+            assert False, "Unhandled option"
+    print("Kanan's Mabinogi Mod")
+    print("Attaching to Client.exe...")
+    session = frida.attach('Client.exe')
+    print('Loading scripts...')
+    script_defaults = 'var debug = {};\n'.format(str(debug_mode).lower())
+    with open('./scripts/Defaults.js') as f:
+        script_defaults += f.read()
+    for filename in glob.iglob('./scripts/*.js'):
+        if 'Defaults.js' in filename:
+            continue
+        print(filename)
+        source = script_defaults
+        with open(filename) as f:
+            source += f.read()
+        script = session.create_script(source)
+        script.on('message', on_message)
+        script.load()
+    print('All done!')
+    input()
 
-print('Loading scripts...')
-
-for filename in glob.iglob('./scripts/*.js'):
-    print(filename)
-
-    source = script_defaults
-
-    with open(filename) as f:
-        source += f.read()
-
-    script = session.create_script(source)
-    script.on('message', on_message)
-    script.load()
-
-session.detach()
-
-print('All done!')
-input()
+if __name__ == "__main__":
+    main()
