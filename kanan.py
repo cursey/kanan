@@ -23,6 +23,14 @@ usage: python kanan.py <options>
 def usage():
     print(usage_text)
 
+def is_disabled(filename):
+    with open('disabled.txt') as f:
+        disabled_filenames = f.read()
+    for disabled_filename in disabled_filenames.splitlines():
+        if disabled_filename in filename:
+            return True;
+    return False;
+
 def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'hd', ['help', 'debug'])
@@ -47,7 +55,7 @@ def main():
     with open('./scripts/Defaults.js') as f:
         script_defaults += f.read()
     for filename in glob.iglob('./scripts/*.js'):
-        if 'Defaults.js' in filename:
+        if 'Defaults.js' in filename or is_disabled(filename):
             continue
         print(filename)
         source = script_defaults
