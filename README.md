@@ -12,8 +12,7 @@ PATH**
 
 ## Things to be aware of
 By default every script (mod) that comes with kanan is enabled by default. To 
-disable a mod go into the ./scripts/ directory and delete it. There are no 
-plans to make a more elaborate system than this at this time.
+disable a mod go into the `./scripts/` directory and delete it.
 
 ## Credits
 Credits to Blade3575 for the Bitmap font patch.
