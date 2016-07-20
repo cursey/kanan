@@ -11,5 +11,5 @@ PATH
 5. Run the batch file `kanan.bat` as an adminstrator.
 
 ## Credits
-At the moment the only script is for the bitmap font mod which I reverse from 
+At the moment the only script is for the bitmap font mod which I reversed from 
 Abyss. Credits to that guy.
