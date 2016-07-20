@@ -18,4 +18,10 @@ feature (BitmapFont for example) to `disabled.txt`.
 ## Credits
 Credits to Blade3575 for the Bitmap font patch.
 
+Patches provided by QewQew
+* ElfLagFix
+* NPCFastText
+* OneClickRevive
+* WindowsAppearFaster
+
 Also thanks to all contributors!
