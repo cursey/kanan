@@ -7,7 +7,6 @@ if (debug)
 {
 	send(pattern1);
 	send(pattern2);
-	send(pattern3);
 }
 
 if (pattern1 == NULL || pattern2 == NULL)
