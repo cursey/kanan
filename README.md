@@ -12,4 +12,4 @@ PATH**
 
 ## Credits
 At the moment the only script is for the bitmap font mod which I reversed from 
-Abyss. Credits to that guy.
+Abyss. Credits to Blade3575.

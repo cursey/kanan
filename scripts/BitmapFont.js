@@ -1,4 +1,5 @@
 // Bitmap patch reversed from Abyss
+// All credit to Blade3575
 
 var bm1 = scan('client.exe', '80 BF 88 00 00 00 00 57 74 0D');
 Memory.writeU8(bm1.add(8), 0x90);
