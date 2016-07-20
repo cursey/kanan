@@ -48,4 +48,4 @@ for filename in glob.iglob('./scripts/*.js'):
 session.detach()
 
 print('All done!')
-
+input()
