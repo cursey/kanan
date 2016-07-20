@@ -24,6 +24,12 @@ function scan(name, sig) {
 
     return NULL;
 }
+
+function patch(addr, c) {
+    Memory.protect(addr, 4096, 'rwx');
+    Memory.writeU8(addr, c);
+    Memory.protect(addr, 4096, 'r-x');
+}
 """
 
 print("Kanan's Mabinogi Mod")
