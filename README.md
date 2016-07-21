@@ -18,11 +18,21 @@ feature (BitmapFont for example) to `disabled.txt`.
 ## Known issues
 * The WindowsAppearFaster patch seems to cause crashes in certain locations. 
 Disable it if you encounter this issue.
+* Closing the command prompt after patches have been applied has caused crashes
+for some users. If you experience a crash immediately after closing the command
+prompt then leave it open for now.
+    * If kanan.bat does not stay open then something is most likely wrong with
+your python install.
 
-## Credits
-* Credits to Blade3575 for the bitmap font and elf lag patches.
-* Credits to Step29 for the NPC fast text, one click revive and windows appear 
-faster patches.
+## Original patch authors
+Blade3575 
+* Bitmap font
+* Elf lag
+
+Step29 
+* NPC fast text
+* One click revive
+* Windows appear faster
 
 ## Contributing
 Contributions are welcome. If you are contributing a patch that you aren't the
