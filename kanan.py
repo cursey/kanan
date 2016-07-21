@@ -28,8 +28,8 @@ def is_disabled(filename):
         return True
     with open('disabled.txt') as f:
         disabled_filenames = f.read()
-    for disabled_filename in disabled_filenames.splitlines():
-        if disabled_filename in filename:
+    for disabled in disabled_filenames.splitlines():
+        if len(disabled) > 0 and disabled.lower() in filename.lower():
             return True
     return False
 
