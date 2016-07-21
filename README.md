@@ -19,16 +19,16 @@ feature (BitmapFont for example) to `disabled.txt`.
 * The WindowsAppearFaster patch seems to cause crashes in certain locations. 
 Disable it if you encounter this issue.
 
+## Credits
+* Credits to Blade3575 for the bitmap font and elf lag patches.
+* Credits to Step29 for the NPC fast text, one click revive and windows appear 
+faster patches.
+
 ## Contributing
 Contributions are welcome. If you are contributing a patch that you aren't the
 original author of please give credits at the top of the file. If a patch has 
 been added and you are the original author of it or know who is, open an issue
 so proper credits may be given (or issue a pull request).
-
-## Credits
-Credits to Blade3575 for the bitmap font and elf lag patches.
-Credits to Step29 for the NPC fast text, one click revive and windows appear 
-faster patches.
 
 ## Contributions
 Patches provided by QewQew
