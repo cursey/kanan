@@ -14,6 +14,16 @@ function scan(name, sig) {
     return NULL;
 }
 
+function moduleOffset(moduleName, offset) {
+    var baseAddress = Module.findBaseAddress(moduleName);
+
+    if (baseAddress == NULL) {
+        return NULL;
+    }
+
+    return baseAddress.add(offset);
+}
+
 function patch(addr, c) {
     Memory.protect(addr, 4096, 'rwx');
     Memory.writeU8(addr, c);

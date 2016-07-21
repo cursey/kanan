@@ -1,8 +1,8 @@
 // Bitmap patch reversed from Abyss
 // All credit to Blade3575
 
-var bm1 = scan('client.exe', '80 BF 88 00 00 00 00 57 74 0D');
-var bm2 = scan('client.exe', '80 BE 88 00 00 00 00 74 ?? B9 ?? ?? ?? ?? E8 ?? ?? ?? ?? 83 F8 01 75');
+var bm1 = moduleOffset('client.exe', ptr('0xb55cef'));
+var bm2 = moduleOffset('client.exe', ptr('0xcab100'));
 
 if (debug) {
     send(bm1);
