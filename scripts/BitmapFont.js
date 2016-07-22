@@ -1,10 +1,10 @@
 // Bitmap patch reversed from Abyss
-// All credit to Blade3575
+// All credit to Blade35755
 
-var bm1 = moduleOffset('client.exe', 0xb55cef);
-var bm2 = moduleOffset('client.exe', 0xcab100);
-var bm3 = moduleOffset('client.exe', 0xc1a4b3);
-var bm4 = moduleOffset('client.exe', 0xb8e4b3);
+var bm1 = scan('client.exe', '80 BF 88 00 00 00 00 57 74 0D');
+var bm2 = scan('client.exe', '80 BE 88 00 00 00 00 74 ?? B9 ?? ?? ?? ?? E8 ?? ?? ?? ?? 83 F8 01 75');
+var bm3 = scan('client.exe', 'EB ?? 33 FF 8B 5D F8 83 BB A0 00 00 00 01 74');
+var bm4 = scan('client.exe', '0F 84 ?? ?? ?? ?? 8B 0D ?? ?? ?? ?? E8 ?? ?? ?? ?? 57 56 3C 01 75');
 
 if (debug) {
     send(bm1);
@@ -13,10 +13,10 @@ if (debug) {
     send(bm4);
 }
 
-if (bm1 == NULL || bm2 == NULL || bm3 == NULL || bm4 == NULL)
-	send('Failed to apply patch.');
-else
-{
+if (bm1 == NULL || bm2 == NULL || bm3 == NULL || bm4 == NULL) {
+    send('Failed to apply patch.');
+}
+else {
 	patch(bm1.add(8), 0x90);
 	patch(bm1.add(9), 0x90);
 

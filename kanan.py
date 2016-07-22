@@ -10,7 +10,9 @@ def on_message(message, data):
     elif message['type'] == 'error':
         print(message['stack'])
 
-usage_text = """
+
+def usage():
+    print("""
 usage: python kanan.py <options>
 
     -h --help
@@ -18,10 +20,7 @@ usage: python kanan.py <options>
 
     -d --debug
         runs in debug mode
-"""
-
-def usage():
-    print(usage_text)
+    """)
 
 def is_disabled(filename):
     if 'Defaults.js' in filename:
@@ -34,6 +33,7 @@ def is_disabled(filename):
     return False
 
 def main():
+    # Handle command line arguments.
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'hd', ['help', 'debug'])
     except getopt.GetoptError as err:
@@ -49,11 +49,14 @@ def main():
             debug_mode = True
         else:
             assert False, "Unhandled option"
+
+    # Attach and load the scripts.
     print("Kanan's Mabinogi Mod")
     print("Attaching to Client.exe...")
     session = frida.attach('Client.exe')
     print('Loading scripts...')
     script_defaults = 'var debug = {};\n'.format(str(debug_mode).lower())
+    scripts = []
     with open('./scripts/Defaults.js') as f:
         script_defaults += f.read()
     for filename in glob.iglob('./scripts/*.js'):
@@ -66,8 +69,16 @@ def main():
         script = session.create_script(source)
         script.on('message', on_message)
         script.load()
-    print('All done!')
+        scripts.append(script)
+    print("All done!")
     input()
+
+    # Unload the scripts and detach.
+    print("Unloading scripts (patches may stay applied)...")
+    for script in scripts:
+        script.unload()
+    print("Detaching from Client.exe...")
+    session.detach()
 
 if __name__ == "__main__":
     main()
