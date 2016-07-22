@@ -44,7 +44,7 @@ def main():
         usage()
         sys.exit(2)
     debug_mode = False
-    pid = -1
+    pid = None 
     for o, a in opts:
         if o in ('-h', '--help'):
             usage()
@@ -59,7 +59,7 @@ def main():
     # Attach and load the scripts.
     print("Kanan's Mabinogi Mod")
     print("Attaching to Client.exe...")
-    session = frida.attach('Client.exe' if pid == -1 else pid)
+    session = frida.attach('Client.exe' if pid is None else pid)
     print('Loading scripts...')
     script_defaults = 'var debug = {};\n'.format(str(debug_mode).lower())
     scripts = []
