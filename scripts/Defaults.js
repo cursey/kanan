@@ -61,3 +61,22 @@ function freeMemory(address, len) {
     return VirtualFree(address, len, 0x4000);
 }
 
+// Loads the dll located at filepath.
+var LoadLibraryA = new NativeFunction(getProcAddress('Kernel32.dll', 'LoadLibraryA'),
+        'pointer', ['pointer'], 'stdcall');
+
+function loadDll(filepath) {
+    var mem = allocateMemory(filepath.length + 1);
+
+    for (var i = 0; i < filepath.length; ++i) {
+        Memory.writeS8(mem.add(i), filepath.charCodeAt(i));
+    }
+
+    Memory.writeU8(mem.add(filepath.length), 0);
+
+    var result = LoadLibraryA(mem);
+
+    freeMemory(mem, filepath.length + 1);
+
+    return result;
+}
