@@ -16,13 +16,13 @@ def usage():
 usage: python kanan.py <options>
 
     -h --help
-        displays this help text
+        Displays this help text.
 
     -d --debug
-        runs in debug mode
+        Runs each script in debug mode.
 
     -p<id> --process <id>
-        attach kanan to a specific instance of mabi given by a process id.
+        Attach kanan to a specific instance of mabi given by a process id.
     """)
 
 def is_disabled(filename):
