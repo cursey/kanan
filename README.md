@@ -38,6 +38,13 @@ Step29
 * NPC fast text
 * One click revive
 * Windows appear faster
+* Free indoor camera
+* Hide NPC curtains
+* Hide second title
+* No player zoom transparency
+
+Rydian
+* No black bars
 
 ## Contributing
 Contributions are welcome. If you are contributing a patch that you aren't the
@@ -51,5 +58,12 @@ Patches provided by QewQew
 * NPCFastText
 * OneClickRevive
 * WindowsAppearFaster
+
+Patches provided by C0ZIEST
+* FreeIndoorCamera
+* HideNPCCurtains
+* HideSecondTitle
+* NoBlackBars
+* NoPlayerZoomTransparency
 
 Thanks to all contributors!
