@@ -13,15 +13,14 @@ PATH**
 You can run `python kanan.py -h` for more usage information.
 
 ## Features
-By default every script (mod) that comes with kanan is enabled. To disable a 
+* By default every script (mod) that comes with kanan is enabled. To disable a 
 mod go into the `./scripts/` directory and delete it, or add the name of the 
 feature (BitmapFont for example) to `disabled.txt`.
-
-You can attach kanan to different processes if you are running multiple clients. Open an adminstrator command prompt where `kanan.py` is located and run 
+* You can attach kanan to different processes if you are running multiple clients. Open an adminstrator command prompt where `kanan.py` is located and run 
 `python kanan.py -p<id>` where `id` is the process id you want to attach to. 
-
-You can use kanan to load dll's into mabi by modifying `DllLoader.js`. More 
+* You can use kanan to load dll's into mabi by modifying `DllLoader.js`. More 
 details on what to do are located at the top of that file.
+* Simple scripts can be automatically coalesced to cut down on memory usage.
 
 ## Known issues
 * The WindowsAppearFaster patch seems to cause crashes in certain locations. 

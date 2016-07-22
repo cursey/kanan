@@ -21,6 +21,9 @@ usage: python kanan.py <options>
     -d --debug
         Runs each script in debug mode.
 
+    -t --test
+        Runs each script in testing mode where no patches should be applied.
+
     -p<id> --process <id>
         Attach kanan to a specific instance of mabi given by a process id.
     """)
@@ -35,15 +38,24 @@ def is_disabled(filename):
             return True
     return False
 
+def is_coalesced(filename):
+    with open('coalesce.txt') as f:
+        coalesced_filenames = f.read()
+    for coalesced in coalesced_filenames.splitlines():
+        if len(coalesced) > 0 and coalesced.lower() in filename.lower():
+            return True
+    return False
+
 def main():
     # Handle command line arguments.
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'hdp:', ['help', 'debug', 'pid='])
+        opts, args = getopt.getopt(sys.argv[1:], 'hdp:t', ['help', 'debug', 'pid=', 'test'])
     except getopt.GetoptError as err:
         print(err)
         usage()
         sys.exit(2)
     debug_mode = 'false' 
+    test_mode = 'false'
     pid = None 
     for o, a in opts:
         if o in ('-h', '--help'):
@@ -53,6 +65,8 @@ def main():
             debug_mode = 'true'
         elif o in ('-p', '--pid'):
             pid = int(a)
+        elif o in ('-t', '--test'):
+            test_mode = 'true'
         else:
             assert False, "Unhandled option"
 
@@ -62,18 +76,31 @@ def main():
     session = frida.attach('Client.exe' if pid is None else pid)
     print('Loading scripts...')
     path = sys.path[0].replace('\\', '\\\\')
-    script_defaults = 'var debug = {};\nvar path = "{}";\n'.format(debug_mode, path)
+    script_defaults = 'var debug = {};\nvar testing = {};\nvar path = "{}";\n'.format(debug_mode, test_mode, path)
     scripts = []
     with open('./scripts/Defaults.js') as f:
         script_defaults += f.read()
+    coalesced_source = script_defaults
     for filename in glob.iglob('./scripts/*.js'):
         if is_disabled(filename):
             continue
-        print(filename)
         source = script_defaults
         with open(filename) as f:
-            source += f.read()
+            if is_coalesced(filename) and debug_mode == 'false':
+                print("Coalescing " + filename)
+                coalesced_source += f.read()
+                continue
+            else:
+                print(filename)
+                source += f.read()
         script = session.create_script(source)
+        script.on('message', on_message)
+        script.load()
+        scripts.append(script)
+    # Execute the coalesced script.
+    if debug_mode == 'false':
+        print("Running coalesced script...")
+        script = session.create_script(coalesced_source)
         script.on('message', on_message)
         script.load()
         scripts.append(script)

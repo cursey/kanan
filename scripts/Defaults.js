@@ -32,9 +32,11 @@ function moduleOffset(moduleName, offset) {
 
 // Patches a byte.
 function patch(addr, c) {
-    Memory.protect(addr, 4096, 'rwx');
-    Memory.writeU8(addr, c);
-    Memory.protect(addr, 4096, 'r-x');
+    if (!testing) {
+        Memory.protect(addr, 4096, 'rwx');
+        Memory.writeU8(addr, c);
+        Memory.protect(addr, 4096, 'r-x');
+    }
 }
 
 // Gets the address of an exported function.
