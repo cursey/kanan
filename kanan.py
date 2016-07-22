@@ -43,14 +43,14 @@ def main():
         print(err)
         usage()
         sys.exit(2)
-    debug_mode = False
+    debug_mode = 'false' 
     pid = None 
     for o, a in opts:
         if o in ('-h', '--help'):
             usage()
             sys.exit()
         elif o in ('-d', '--debug'):
-            debug_mode = True
+            debug_mode = 'true'
         elif o in ('-p', '--pid'):
             pid = int(a)
         else:
@@ -61,7 +61,8 @@ def main():
     print("Attaching to Client.exe...")
     session = frida.attach('Client.exe' if pid is None else pid)
     print('Loading scripts...')
-    script_defaults = 'var debug = {};\n'.format(str(debug_mode).lower())
+    path = sys.path[0].replace('\\', '\\\\')
+    script_defaults = 'var debug = {};\nvar path = "{}";\n'.format(debug_mode, path)
     scripts = []
     with open('./scripts/Defaults.js') as f:
         script_defaults += f.read()
