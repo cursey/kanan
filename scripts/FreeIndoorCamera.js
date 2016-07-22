@@ -2,11 +2,6 @@
 
 var pattern = scan('57 8b 7d 08 0f 84 22 02 00 00');
 
-if (debug)
-{
-	send(pattern);
-}
-
 if (pattern == NULL)
 	send('Failed to apply patch.');
 else
