@@ -1,6 +1,6 @@
 // Hide Second Titles Of All Players (Step29)
 
-var pattern = scan('client.exe', 'c1 e9 14 f6 c1 01 75 ?? 8b');
+var pattern = scan('c1 e9 14 f6 c1 01 75 ?? 8b');
 
 if (debug)
 	send(pattern);
