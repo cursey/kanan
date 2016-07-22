@@ -1,6 +1,6 @@
 // NPC Fast Text
 
-var pattern = scan('client.exe', '8B 08 33 FF 3B CF 76 2A');
+var pattern = scan('8B 08 33 FF 3B CF 76 2A');
 
 if (debug)
 	send(pattern);

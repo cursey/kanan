@@ -1,5 +1,10 @@
 // Scans for patterns in specific modules code section.
 function scan(name, sig) {
+    if (sig == undefined) {
+        sig = name;
+        name = 'client.exe';
+    }
+
     var ranges = Module.enumerateRangesSync(name, 'r-x');
 
     for (var i = 0; i < ranges.length; ++i) {

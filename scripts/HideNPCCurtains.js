@@ -1,6 +1,6 @@
 // Hide NPC Curtains During NPC Conversations And Cutscenes (Step29)
 
-var pattern = scan('client.exe', '55 8b ec 8a 45 08 56 8b f1 38 06');
+var pattern = scan('55 8b ec 8a 45 08 56 8b f1 38 06');
 
 if (debug)
 	send(pattern);
