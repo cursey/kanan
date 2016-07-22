@@ -20,6 +20,9 @@ usage: python kanan.py <options>
 
     -d --debug
         runs in debug mode
+
+    -p<id> --process <id>
+        attach kanan to a specific instance of mabi given by a process id.
     """)
 
 def is_disabled(filename):
@@ -35,25 +38,28 @@ def is_disabled(filename):
 def main():
     # Handle command line arguments.
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'hd', ['help', 'debug'])
+        opts, args = getopt.getopt(sys.argv[1:], 'hdp:', ['help', 'debug', 'pid='])
     except getopt.GetoptError as err:
         print(err)
         usage()
         sys.exit(2)
     debug_mode = False
+    pid = -1
     for o, a in opts:
         if o in ('-h', '--help'):
             usage()
             sys.exit()
         elif o in ('-d', '--debug'):
             debug_mode = True
+        elif o in ('-p', '--pid'):
+            pid = int(a)
         else:
             assert False, "Unhandled option"
 
     # Attach and load the scripts.
     print("Kanan's Mabinogi Mod")
     print("Attaching to Client.exe...")
-    session = frida.attach('Client.exe')
+    session = frida.attach('Client.exe' if pid == -1 else pid)
     print('Loading scripts...')
     script_defaults = 'var debug = {};\n'.format(str(debug_mode).lower())
     scripts = []
