@@ -1,6 +1,6 @@
 // Elf Lag Fix
 
-var pattern = scan('client.exe', 'CC 55 8B EC 56 57 8B F9 8B 07 8B 50 04 FF D2 8B C8 E8');
+var pattern = scan('CC 55 8B EC 56 57 8B F9 8B 07 8B 50 04 FF D2 8B C8 E8');
 
 if (debug)
 	send(pattern);
