@@ -6,17 +6,23 @@ function scan(name, sig) {
     }
 
     var ranges = Module.enumerateRangesSync(name, 'r-x');
+    
+    var address = NULL;
 
     for (var i = 0; i < ranges.length; ++i) {
         var range = ranges[i];
         var results = Memory.scanSync(range.base, range.size, sig);
 
         if (results.length > 0) {
-            return results[0].address;
+            address = results[0].address;
+            break;
         }
     }
 
-    return NULL;
+    if (debug)
+        send(address);
+
+    return address;
 }
 
 // Just adds an offset to the base address of a module.
