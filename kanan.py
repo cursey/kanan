@@ -3,6 +3,7 @@ import glob
 import sys
 import getopt
 import time
+from ctypes import *
 
 # Called when a script sends us a message.
 def on_message(message, data):
@@ -74,12 +75,10 @@ def main():
     # Attach and load the scripts.
     print("Kanan's Mabinogi Mod")
     print("Waiting for Client.exe...")
-    session = None
-    while session is None:
-        try:
-            session = frida.attach('Client.exe' if pid is None else pid)
-        except frida.ProcessNotFoundError:
-            time.sleep(1)
+    while windll.user32.FindWindowA(None, b'Mabinogi') == 0:
+        time.sleep(1)
+    time.sleep(1)
+    session = frida.attach('Client.exe' if pid is None else pid)
     print('Attached to Client.exe...')
     time.sleep(1)
     print('Loading scripts...')

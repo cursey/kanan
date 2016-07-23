@@ -7,8 +7,7 @@ Mods for Mabinogi using Javascript
 PATH**
 3. To make sure Python was installed correctly, open a command prompt and type
 `python --version` and you should get a response.
-4. Start Mabinogi.
-5. Run the batch file `kanan.bat` as an administrator.
+4. Run the batch file `kanan.bat` as an administrator.
 
 You can run `python kanan.py -h` for more usage information.
 

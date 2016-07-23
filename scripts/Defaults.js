@@ -45,6 +45,16 @@ function patch(addr, c) {
     }
 }
 
+// Writes a string to allocated memory.  Make sure theres enough room at the 
+// address for str.length + 1 (for the trailing zero).
+function writeStr(address, str) {
+    for (var i = 0; i < str.length; ++i) {
+        Memory.writeS8(address.add(i), str.charCodeAt(i)); 
+    }
+
+    Memory.writeU8(address.add(str.length), 0);
+}
+
 // Gets the address of an exported function.
 function getProcAddress(moduleName, funcName) {
     return Module.findExportByName(moduleName, funcName);
@@ -69,18 +79,15 @@ function freeMemory(address, len) {
     return VirtualFree(address, len, 0x4000);
 }
 
-// Loads the dll located at filepath.
+// Loads the dll located at filepath.  Returns the base address of the loaded
+// dll or NULL.
 var LoadLibraryA = new NativeFunction(getProcAddress('Kernel32.dll', 'LoadLibraryA'),
         'pointer', ['pointer'], 'stdcall');
 
 function loadDll(filepath) {
     var mem = allocateMemory(filepath.length + 1);
 
-    for (var i = 0; i < filepath.length; ++i) {
-        Memory.writeS8(mem.add(i), filepath.charCodeAt(i));
-    }
-
-    Memory.writeU8(mem.add(filepath.length), 0);
+    writeStr(mem, filepath);
 
     var result = LoadLibraryA(mem);
 
@@ -88,3 +95,4 @@ function loadDll(filepath) {
 
     return result;
 }
+
