@@ -79,7 +79,6 @@ def main():
         time.sleep(1)
     session = frida.attach('Client.exe' if pid is None else pid)
     print('Attached to Client.exe...')
-    time.sleep(1)
     print('Loading scripts...')
     path = sys.path[0].replace('\\', '\\\\')
     script_defaults = 'var debug = {};\nvar testing = {};\nvar path = "{}";\n'.format(debug_mode, test_mode, path)
