@@ -75,9 +75,8 @@ def main():
     # Attach and load the scripts.
     print("Kanan's Mabinogi Mod")
     print("Waiting for Client.exe...")
-    while windll.user32.FindWindowA(None, b'Mabinogi') == 0:
+    while windll.user32.FindWindowA(b'Mabinogi', b'Mabinogi') == 0:
         time.sleep(1)
-    time.sleep(1)
     session = frida.attach('Client.exe' if pid is None else pid)
     print('Attached to Client.exe...')
     time.sleep(1)
