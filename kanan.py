@@ -2,6 +2,7 @@ import frida
 import glob
 import sys
 import getopt
+import time
 
 # Called when a script sends us a message.
 def on_message(message, data):
@@ -72,8 +73,15 @@ def main():
 
     # Attach and load the scripts.
     print("Kanan's Mabinogi Mod")
-    print("Attaching to Client.exe...")
-    session = frida.attach('Client.exe' if pid is None else pid)
+    print("Waiting for Client.exe...")
+    session = None
+    while session is None:
+        try:
+            session = frida.attach('Client.exe' if pid is None else pid)
+        except frida.ProcessNotFoundError:
+            time.sleep(1)
+    print('Attached to Client.exe...')
+    time.sleep(1)
     print('Loading scripts...')
     path = sys.path[0].replace('\\', '\\\\')
     script_defaults = 'var debug = {};\nvar testing = {};\nvar path = "{}";\n'.format(debug_mode, test_mode, path)
