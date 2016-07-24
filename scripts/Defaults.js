@@ -79,19 +79,34 @@ function freeMemory(address, len) {
     return VirtualFree(address, len, 0x4000);
 }
 
+// Helper that just allocates memory for a str and writes the str to that 
+// mem.
+function allocateStr(str) {
+    var mem = allocateMemory(str.length + 1);
+
+    writeStr(mem, str);
+
+    return mem;
+}
+
+// Frees an allocated str from allocateStr.
+function freeStr(str) {
+    // We can pass 0 to freeMemory because str must have been allocated with 
+    // allocateStr (see docs on VirtualFree where the address is the address 
+    // returned from VirtualAlloc).
+    freeMemory(str, 0); 
+}
+
 // Loads the dll located at filepath.  Returns the base address of the loaded
 // dll or NULL.
 var LoadLibraryA = new NativeFunction(getProcAddress('Kernel32.dll', 'LoadLibraryA'),
         'pointer', ['pointer'], 'stdcall');
 
 function loadDll(filepath) {
-    var mem = allocateMemory(filepath.length + 1);
+    var str = allocateStr(filepath);
+    var result = LoadLibraryA(str);
 
-    writeStr(mem, filepath);
-
-    var result = LoadLibraryA(mem);
-
-    freeMemory(mem, filepath.length + 1);
+    freeStr(str);
 
     return result;
 }
