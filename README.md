@@ -38,7 +38,6 @@ Blade3575
 Step29 
 * NPC fast text
 * One click revive
-* Windows appear faster
 * Free indoor camera
 * Hide NPC curtains
 * Hide second title
@@ -63,7 +62,6 @@ Patches provided by QewQew
 * ElfLagFix
 * NPCFastText
 * OneClickRevive
-* WindowsAppearFaster
 
 Patches provided by C0ZIEST
 * FreeIndoorCamera
