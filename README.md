@@ -22,8 +22,6 @@ details on what to do are located at the top of that file.
 * Simple scripts can be automatically coalesced to cut down on memory usage.
 
 ## Known issues
-* The WindowsAppearFaster patch seems to cause crashes in certain locations. 
-Disable it if you encounter this issue.
 * Closing the command prompt after patches have been applied has caused crashes
 for some users. If you experience a crash immediately after closing the command
 prompt then leave it open for now.
