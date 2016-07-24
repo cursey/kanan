@@ -1,10 +1,15 @@
+AlwaysTransCollectMode.js
 BitmapFont.js
 ElfLagFix.js
+FighterNoForce.js
 FreeIndoorCamera.js
 HideNPCCurtains.js
 HideSecondTitle.js
+IgnoreTranslucency.js
+ManaTunnelLagFix.js
 NoBlackBars.js
 NoPlayerZoomTransparency.js
+NoSkillRankUpWindow.js
 NPCFastText.js
 OneClickRevive.js
 WindowsAppearFaster.js
