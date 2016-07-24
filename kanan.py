@@ -86,7 +86,15 @@ def main():
     print("Waiting for Client.exe...")
     while windll.user32.FindWindowA(b'Mabinogi', b'Mabinogi') == 0:
         time.sleep(1)
-    session = frida.attach('Client.exe' if pid is None else pid)
+
+    try:
+        session = frida.attach('Client.exe' if pid is None else pid)
+    except frida.ProcessNotFoundError:
+        print("Couldn't attach to Client.exe.")
+        print("Make sure you're running kanan as administrator!")
+        input()
+        sys.exit()
+
     print('Attached to Client.exe...')
     print('Loading scripts...')
     path = sys.path[0].replace('\\', '\\\\')
