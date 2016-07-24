@@ -43,9 +43,14 @@ Step29
 * Hide NPC curtains
 * Hide second title
 * No player zoom transparency
+* Mana tunnel lag fix
+* No skill rank up window
 
 Rydian
 * No black bars
+* Transformation mastery collect mode always enabled
+* No persistent fighter chain popup
+* Objects between camera and character do not become transparent
 
 ## Contributing
 Contributions are welcome. If you are contributing a patch that you aren't the
@@ -66,5 +71,10 @@ Patches provided by C0ZIEST
 * HideSecondTitle
 * NoBlackBars
 * NoPlayerZoomTransparency
+* AlwaysTransCollectMode
+* FighterNoForce
+* IgnoreTranslucency
+* ManaTunnelLagFix
+* NoSkillRankUpWindow
 
 Thanks to all contributors!
