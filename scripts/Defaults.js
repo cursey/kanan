@@ -39,13 +39,15 @@ function moduleOffset(moduleName, offset) {
 // Patches an array of bytes.
 function patch(addr, c) {
     if (!testing) {
-		if (!Array.isArray(c))
-			c = [c];
+        if (!Array.isArray(c))
+            c = [c];
 		
-		Memory.protect(addr, c.length, 'rwx');
-		for (var i = 0; i < c.length; ++i)
-			if (c[i] >= 0 && c[i] <= 0xFF)
-				Memory.writeU8(addr.add(i), c[i]);
+        Memory.protect(addr, c.length, 'rwx');
+        for (var i = 0; i < c.length; ++i)
+        {
+            if (c[i] >= 0 && c[i] <= 0xFF)
+                Memory.writeU8(addr.add(i), c[i]);
+        }
         Memory.protect(addr, c.length, 'r-x');
     }
 }
