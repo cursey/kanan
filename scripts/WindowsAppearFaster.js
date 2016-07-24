@@ -8,18 +8,12 @@ if (pattern1 == NULL || pattern2 == NULL)
 else
 {
 	patch(pattern1.add(10), 0xEB);
-	patch(pattern2.add(6), 0x31);
-	patch(pattern2.add(7), 0xC9);
-	patch(pattern2.add(8), 0x90);
+	patch(pattern2.add(6), [0x31, 0xC9, 0x90]);
 
 	var pattern3 = scan('89 86 ?? ?? ?? ?? 8b ?? ?? 6a 00');
 
 	if (pattern3 == NULL)
 		send('Failed to apply patch.');
 	else
-	{
-		patch(pattern3.add(6), 0x31);
-		patch(pattern3.add(7), 0xC9);
-		patch(pattern3.add(8), 0x90);
-	}
+		patch(pattern3.add(6), [0x31, 0xC9, 0x90]);
 }
