@@ -36,12 +36,17 @@ function moduleOffset(moduleName, offset) {
     return baseAddress.add(offset);
 }
 
-// Patches a byte.
+// Patches an array of bytes.
 function patch(addr, c) {
     if (!testing) {
-        Memory.protect(addr, 4096, 'rwx');
-        Memory.writeU8(addr, c);
-        Memory.protect(addr, 4096, 'r-x');
+		if (!Array.isArray(c))
+			c = [c];
+		
+		Memory.protect(addr, c.length, 'rwx');
+		for (var i = 0; i < c.length; ++i)
+			if (c[i] >= 0 && c[i] <= 0xFF)
+				Memory.writeU8(addr.add(i), c[i]);
+        Memory.protect(addr, c.length, 'r-x');
     }
 }
 
