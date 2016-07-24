@@ -7,8 +7,6 @@ if (pattern1 == NULL || pattern2 == NULL)
 	send('Failed to apply patch.');
 else
 {
-	patch(pattern1.add(6), 0xC7);
-	patch(pattern1.add(7), 0xF0);
-	patch(pattern1.add(8), 0x0F);
+	patch(pattern1.add(6), [0xC7, 0xF0, 0x0F]);
 	patch(pattern2.add(5), 0x05);
 }
