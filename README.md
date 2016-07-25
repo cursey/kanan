@@ -49,7 +49,6 @@ so proper credits may be given (or issue a pull request).
     * No player zoom transparency
     * Mana tunnel lag fix
     * No skill rank up window
-
 * Rydian
     * No black bars
     * Transformation mastery collect mode always enabled
