@@ -1,4 +1,4 @@
-# kanan
+# Kanan's Mabinogi Mod
 Mods for Mabinogi using Javascript
 
 ## Instructions
@@ -30,6 +30,12 @@ prompt then leave it open for now.
     * If kanan.bat does not stay open then something is most likely wrong with
 your python install.
 
+## Contributing
+Contributions are welcome. If you are contributing a patch that you aren't the
+original author of please give credits at the top of the file. If a patch has
+been added and you are the original author of it or know who is, open an issue
+so proper credits may be given (or issue a pull request).
+
 ## Original patch authors
 * Blade3575
     * Bitmap font
@@ -51,28 +57,7 @@ your python install.
     * Objects between camera and character do not become transparent
     * Client side devCat title
 
-## Contributing
-Contributions are welcome. If you are contributing a patch that you aren't the
-original author of please give credits at the top of the file. If a patch has
-been added and you are the original author of it or know who is, open an issue
-so proper credits may be given (or issue a pull request).
-
 ## Contributions
-* Patches provided by QewQew
-    * ElfLagFix.js
-    * NPCFastText.js
-    * OneClickRevive.js
-* Patches provided by C0ZIEST
-    * FreeIndoorCamera.js
-    * HideNPCCurtains.js
-    * HideSecondTitle.js
-    * NoBlackBars.js
-    * NoPlayerZoomTransparency.js
-    * AlwaysTransCollectMode.js
-    * FighterNoForce.js
-    * IgnoreTranslucency.js
-    * ManaTunnelLagFix.js
-    * NoSkillRankUpWindow.js
-    * ClientSideDevCat.js
-
 Thanks to all contributors!
+* QewQew
+* C0ZIEST
