@@ -12,7 +12,7 @@ PATH**
 You can run `python kanan.py -h` for more usage information.
 
 ## Features
-* By default every script (mod) that comes with kanan is enabled. To disable a 
+* By default most scripts (mods) that come with kanan are enabled. To disable a 
 mod go into the `./scripts/` directory and delete it, or add the name of the 
 feature (BitmapFont for example) to `disabled.txt`.
 * You can attach kanan to different processes if you are running multiple clients. Open an adminstrator command prompt where `kanan.py` is located and run 
@@ -48,6 +48,7 @@ Rydian
 * Transformation mastery collect mode always enabled
 * No persistent fighter chain popup
 * Objects between camera and character do not become transparent
+* Client side devCat title
 
 ## Contributing
 Contributions are welcome. If you are contributing a patch that you aren't the
@@ -72,5 +73,6 @@ Patches provided by C0ZIEST
 * IgnoreTranslucency
 * ManaTunnelLagFix
 * NoSkillRankUpWindow
+* ClientSideDevCat
 
 Thanks to all contributors!
