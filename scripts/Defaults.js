@@ -59,7 +59,7 @@ function patch(addr, c) {
     if (!Array.isArray(c)) {
         c = [c];
     }
-    
+
     Memory.protect(addr, c.length, 'rwx');
 
     for (var i = 0; i < c.length; ++i) {
@@ -71,11 +71,11 @@ function patch(addr, c) {
     Memory.protect(addr, c.length, 'r-x');
 }
 
-// Writes a string to allocated memory.  Make sure theres enough room at the 
+// Writes a string to allocated memory.  Make sure theres enough room at the
 // address for str.length + 1 (for the trailing zero).
 function writeStr(address, str) {
     for (var i = 0; i < str.length; ++i) {
-        Memory.writeS8(address.add(i), str.charCodeAt(i)); 
+        Memory.writeS8(address.add(i), str.charCodeAt(i));
     }
 
     Memory.writeU8(address.add(str.length), 0);
@@ -87,7 +87,7 @@ function getProcAddress(moduleName, funcName) {
 }
 
 // Allocates some memory.
-var VirtualAlloc = new NativeFunction(getProcAddress('Kernel32.dll', 'VirtualAlloc'), 
+var VirtualAlloc = new NativeFunction(getProcAddress('Kernel32.dll', 'VirtualAlloc'),
         'pointer', ['pointer', 'ulong', 'uint32', 'uint32'], 'stdcall');
 
 function allocateMemory(len) {
@@ -105,7 +105,7 @@ function freeMemory(address, len) {
     return VirtualFree(address, len, 0x4000);
 }
 
-// Helper that just allocates memory for a str and writes the str to that 
+// Helper that just allocates memory for a str and writes the str to that
 // mem.
 function allocateStr(str) {
     var mem = allocateMemory(str.length + 1);
@@ -117,10 +117,10 @@ function allocateStr(str) {
 
 // Frees an allocated str from allocateStr.
 function freeStr(str) {
-    // We can pass 0 to freeMemory because str must have been allocated with 
-    // allocateStr (see docs on VirtualFree where the address is the address 
+    // We can pass 0 to freeMemory because str must have been allocated with
+    // allocateStr (see docs on VirtualFree where the address is the address
     // returned from VirtualAlloc).
-    freeMemory(str, 0); 
+    freeMemory(str, 0);
 }
 
 // Loads the dll located at filepath.  Returns the base address of the loaded
