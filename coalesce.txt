@@ -1,5 +1,6 @@
 AlwaysTransCollectMode.js
 BitmapFont.js
+ClientSideDevCat.js
 ElfLagFix.js
 FighterNoForce.js
 FreeIndoorCamera.js
@@ -12,5 +13,3 @@ NoPlayerZoomTransparency.js
 NoSkillRankUpWindow.js
 NPCFastText.js
 OneClickRevive.js
-WindowsAppearFaster.js
-ClientSideDevCat.js
