@@ -13,3 +13,4 @@ NoSkillRankUpWindow.js
 NPCFastText.js
 OneClickRevive.js
 WindowsAppearFaster.js
+ClientSideDevCat.js
