@@ -65,9 +65,9 @@ def main():
         print(err)
         usage()
         sys.exit(2)
-    debug_mode = 'false' 
+    debug_mode = 'false'
     test_mode = 'false'
-    pid = None 
+    pid = None
     for o, a in opts:
         if o in ('-h', '--help'):
             usage()
