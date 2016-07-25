@@ -57,7 +57,6 @@ so proper credits may be given (or issue a pull request).
     * Objects between camera and character do not become transparent
     * Client side devCat title
 
-## Contributions
-Thanks to all contributors!
+## Thank you to all contributors!
 * QewQew
 * C0ZIEST
