@@ -1,3 +1,13 @@
+// Sends a msg back to kanan's window with the name of the script prepended.
+function msg(str) {
+    if (scriptName != undefined) {
+        send(scriptName + ": " + str);
+    }
+    else {
+        send(str);
+    }
+}
+
 // Scans for patterns in specific modules code section.
 function scan(name, sig) {
     if (sig == undefined) {
@@ -14,7 +24,7 @@ function scan(name, sig) {
 
         if (results.length > 0) {
             if (debug && results.length > 1) {
-                send("More than 1 result for the following address!");
+                msg("More than 1 result for: " + sig);
             }
 
             address = results[0].address;
@@ -23,7 +33,7 @@ function scan(name, sig) {
     }
 
     if (debug) {
-        send(address);
+        msg(address);
     }
 
     return address;

@@ -116,10 +116,12 @@ def main():
         with open(filename) as f:
             if is_coalesced(filename) and debug_mode == 'false':
                 print("Coalescing " + shortname)
+                coalesced_source += 'var scriptName = "{}";\n'.format(shortname)
                 coalesced_source += f.read()
                 continue
             else:
-                print(shortname)
+                print("Running " + shortname)
+                source += 'var scriptName = "{}";\n'.format(shortname)
                 source += f.read()
         script = session.create_script(source)
         script.on('message', on_message)
@@ -138,7 +140,8 @@ def main():
         shortname = os.path.basename(filename)
         source = script_defaults
         with open(filename) as f:
-            print(shortname)
+            print("Running " + shortname)
+            source += 'var scriptName = "{}";\n'.format(shortname)
             source += f.read()
         script = session.create_script(source)
         script.on('message', on_message)

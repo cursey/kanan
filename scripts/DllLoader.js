@@ -14,14 +14,14 @@ for (var i = 0; i < dlls.length; ++i) {
     var dllPath = path + "\\" + dlls[i];
 
     if (debug) {
-        send ("Attempting to load: " + dllPath);
+        msg("Attempting to load: " + dllPath);
     }
 
     if (loadDll(dllPath).isNull()) {
-        send("Failed to load: " + dllPath);
+        msg("Failed to load: " + dllPath);
     }
     else {
-        send("Loaded: " + dllPath);
+        msg("Loaded: " + dllPath);
     }
 }
 

@@ -27,7 +27,7 @@ details on what to do are located at the top of that file.
 * Closing the command prompt after patches have been applied has caused crashes
 for some users. If you experience a crash immediately after closing the command
 prompt then leave it open for now.
-    * If kanan.bat does not stay open then something is most likely wrong with
+    * If `kanan.bat` does not stay open then something is most likely wrong with
 your python install.
 
 ## Contributing

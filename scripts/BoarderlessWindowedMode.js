@@ -25,8 +25,8 @@ var width = GetSystemMetrics(SM_CXSCREEN);
 var height = GetSystemMetrics(SM_CYSCREEN);
 
 if (debug) {
-    send("Screen width: " + width);
-    send("Screen height: " + height);
+    msg("Screen width: " + width);
+    msg("Screen height: " + height);
 }
 
 // Get the mabi window.
@@ -36,11 +36,11 @@ var mabiWnd = FindWindowA(mabiStr, mabiStr);
 freeStr(mabiStr);
 
 if (debug) {
-    send("Mabinogi window: " + mabiWnd);
+    msg("Mabinogi window: " + mabiWnd);
 }
 
 if (mabiWnd.isNull()) {
-    send("Failed to find mabi window.");
+    msg("Failed to find mabi window.");
 }
 
 // Remove the mabi window styling and fullscreen the window size.
