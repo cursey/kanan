@@ -1,1 +1,3 @@
-WindowsAppearFaster
+WindowsAppearFaster.js
+IgnoreTranslucency.js
+ClientSideDevCat.js
