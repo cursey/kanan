@@ -6,7 +6,6 @@ function scan(name, sig) {
     }
 
     var ranges = Module.enumerateRangesSync(name, 'r-x');
-    
     var address = NULL;
 
     for (var i = 0; i < ranges.length; ++i) {
@@ -14,13 +13,18 @@ function scan(name, sig) {
         var results = Memory.scanSync(range.base, range.size, sig);
 
         if (results.length > 0) {
+            if (debug && results.length > 1) {
+                send("More than 1 result for the following address!");
+            }
+
             address = results[0].address;
             break;
         }
     }
 
-    if (debug)
+    if (debug) {
         send(address);
+    }
 
     return address;
 }
@@ -38,18 +42,23 @@ function moduleOffset(moduleName, offset) {
 
 // Patches an array of bytes.
 function patch(addr, c) {
-    if (!testing) {
-        if (!Array.isArray(c))
-            c = [c];
-		
-        Memory.protect(addr, c.length, 'rwx');
-        for (var i = 0; i < c.length; ++i)
-        {
-            if (c[i] >= 0 && c[i] <= 0xFF)
-                Memory.writeU8(addr.add(i), c[i]);
-        }
-        Memory.protect(addr, c.length, 'r-x');
+    if (testing) {
+        return;
     }
+
+    if (!Array.isArray(c)) {
+        c = [c];
+    }
+    
+    Memory.protect(addr, c.length, 'rwx');
+
+    for (var i = 0; i < c.length; ++i) {
+        if (c[i] >= 0 && c[i] <= 0xFF) {
+            Memory.writeU8(addr.add(i), c[i]);
+        }
+    }
+
+    Memory.protect(addr, c.length, 'r-x');
 }
 
 // Writes a string to allocated memory.  Make sure theres enough room at the 
