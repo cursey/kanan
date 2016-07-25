@@ -37,7 +37,7 @@ def is_disabled(filename):
     with open('disabled.txt') as f:
         disabled_filenames = f.read()
     for disabled in disabled_filenames.splitlines():
-        if len(disabled) > 0 and disabled.lower() in filename.lower():
+        if len(disabled) > 0 and disabled.casefold() in filename.casefold():
             return True
     return False
 
@@ -45,7 +45,7 @@ def is_coalesced(filename):
     with open('coalesce.txt') as f:
         coalesced_filenames = f.read()
     for coalesced in coalesced_filenames.splitlines():
-        if len(coalesced) > 0 and coalesced.lower() in filename.lower():
+        if len(coalesced) > 0 and coalesced.casefold() in filename.casefold():
             return True
     return False
 
@@ -53,7 +53,7 @@ def is_delayed(filename):
     with open('delayed.txt') as f:
         delayed_filenames = f.read()
     for delayed in delayed_filenames.splitlines():
-        if len(delayed) > 0 and delayed.lower() in filename.lower():
+        if len(delayed) > 0 and delayed.casefold() in filename.casefold():
             return True
     return False
 
