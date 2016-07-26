@@ -8,6 +8,7 @@ HideNPCCurtains.js
 HideSecondTitle.js
 IgnoreTranslucency.js
 ManaTunnelLagFix.js
+MoveToSameChannel.js
 NoBlackBars.js
 NoPlayerZoomTransparency.js
 NoSkillRankUpWindow.js
