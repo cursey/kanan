@@ -36,6 +36,10 @@ function scan(name, sig) {
         msg(address);
     }
 
+    if (address.isNull()) {
+        msg("No results for: " + sig);
+    }
+
     return address;
 }
 
@@ -52,6 +56,11 @@ function moduleOffset(moduleName, offset) {
 
 // Patches an array of bytes.
 function patch(addr, c) {
+    if (addr.isNull()) {
+        msg("Failed to patch.");
+        return;
+    }
+
     if (testing) {
         return;
     }
@@ -73,6 +82,11 @@ function patch(addr, c) {
 
 // Copies bytes.
 function copy(dst, src, len) {
+    if (dst.isNull() || src.isNull()) {
+        msg("Failed to copy.");
+        return;
+    }
+
     Memory.protect(dst, len, 'rwx');
     Memory.protect(src, len, 'rwx');
 
