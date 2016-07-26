@@ -9,5 +9,5 @@ if (pattern.isNull()) {
     msg("Failed to apply patch.");
 }
 else {
-    Memory.copy(pattern.add(1), pattern.add(8), 4);
+    copy(pattern.add(1), pattern.add(8), 4);
 }

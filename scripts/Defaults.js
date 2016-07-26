@@ -71,6 +71,21 @@ function patch(addr, c) {
     Memory.protect(addr, c.length, 'r-x');
 }
 
+// Copies bytes.
+function copy(dst, src, len) {
+    Memory.protect(dst, len, 'rwx');
+    Memory.protect(src, len, 'rwx');
+
+    if (testing) {
+        return;
+    }
+
+    Memory.copy(dst, src, len);
+
+    Memory.protect(src, len, 'r-x');
+    Memory.protect(dst, len, 'r-x');
+}
+
 // Writes a string to allocated memory.  Make sure theres enough room at the
 // address for str.length + 1 (for the trailing zero).
 function writeStr(address, str) {
