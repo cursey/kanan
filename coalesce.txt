@@ -1,6 +1,7 @@
 AlwaysTransCollectMode.js
 BitmapFont.js
 ClientSideDevCat.js
+DontTargetNPCs.js
 ElfLagFix.js
 FighterNoForce.js
 FreeIndoorCamera.js
