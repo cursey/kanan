@@ -8,6 +8,13 @@ function msg(str) {
     }
 }
 
+// Same as above but only outputs a msg when in debug mode.
+function dmsg(str) {
+    if (debug) {
+        msg(str);
+    }
+}
+
 // Scans for patterns in specific modules code section.
 function scan(name, sig) {
     if (sig == undefined) {
@@ -23,8 +30,8 @@ function scan(name, sig) {
         var results = Memory.scanSync(range.base, range.size, sig);
 
         if (results.length > 0) {
-            if (debug && results.length > 1) {
-                msg("More than 1 result for: " + sig);
+            if (results.length > 1) {
+                dmsg("More than 1 result for: " + sig);
             }
 
             address = results[0].address;
@@ -32,9 +39,7 @@ function scan(name, sig) {
         }
     }
 
-    if (debug) {
-        msg(address);
-    }
+    dmsg(address);
 
     if (address.isNull()) {
         msg("No results for: " + sig);
@@ -104,10 +109,20 @@ function copy(dst, src, len) {
 // address for str.length + 1 (for the trailing zero).
 function writeStr(address, str) {
     for (var i = 0; i < str.length; ++i) {
-        Memory.writeS8(address.add(i), str.charCodeAt(i));
+        Memory.writeU8(address.add(i), str.charCodeAt(i));
     }
 
     Memory.writeU8(address.add(str.length), 0);
+}
+
+// Writes a wide str (utf16) to allocated memory.  Make sure theres at least
+// str.length * 2 + 2 (for the trailing zero).
+function writeWideStr(address, str) {
+    for (var i = 0; i < str.length; ++i) {
+        Memory.writeU16(address.add(i * 2), str.charCodeAt(i));
+    }
+
+    Memory.writeU16(address.add(str.length * 2), 0);
 }
 
 // Gets the address of an exported function.
@@ -144,12 +159,26 @@ function allocateStr(str) {
     return mem;
 }
 
+// Like above but for wide (utf 16) strings.
+function allocateWideStr(str) {
+    var mem = allocateMemory(str.length * 2 + 2);
+
+    writeWideStr(mem, str);
+
+    return mem;
+}
+
 // Frees an allocated str from allocateStr.
 function freeStr(str) {
     // We can pass 0 to freeMemory because str must have been allocated with
     // allocateStr (see docs on VirtualFree where the address is the address
     // returned from VirtualAlloc).
     freeMemory(str, 0);
+}
+
+// Alias for above.
+function freeWideStr(str) {
+    freeStr(str);
 }
 
 // Loads the dll located at filepath.  Returns the base address of the loaded

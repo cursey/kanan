@@ -9,7 +9,8 @@ PATH**
 `python --version` and you should get a response.
 4. Run the batch file `kanan.bat` as an administrator.
 
-You can run `python kanan.py -h` for more usage information.
+You can run `python kanan.py -h` for more usage information. For best results,
+run kanan before launching mabi and keep it running in the background.
 
 ## Features
 Look in the scripts directory for a full list of mods provided with kanan.
@@ -21,6 +22,10 @@ clients. Open an administrator command prompt where `kanan.py` is located and ru
 `python kanan.py -p<id>` where `id` is the process id you want to attach to.
 * You can use kanan to load dll's into mabi by modifying `DllLoader.js`. More
 details on what to do are located at the top of that file.
+* You can use kanan's data folder as if it was mabi's data folder for file based
+mods. Read `UseDataFolder.js` for more detail. Essentially this feature
+redirects mabi's data folder, to the data folder `kanan.py` is in allowing you
+to fully mod mabi without touching its folder.
 * Simple scripts can be automatically coalesced to cut down on memory usage.
 
 ## Known issues
@@ -60,3 +65,4 @@ so proper credits may be given (or issue a pull request).
 ## Thank you to all contributors!
 * QewQew
 * C0ZIEST
+* Kyralis
