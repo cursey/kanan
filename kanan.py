@@ -27,6 +27,9 @@ usage: python kanan.py <options>
     -t --test
         Runs each script in testing mode where no patches should be applied.
 
+    -v --verbose
+        More information is output to the console by certain scripts.
+
     -p<id> --process <id>
         Attach kanan to a specific instance of mabi given by a process id.
     """)
@@ -60,33 +63,35 @@ def is_delayed(filename):
 def main():
     # Handle command line arguments.
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'hdp:t', ['help', 'debug', 'pid=', 'test'])
+        opts, args = getopt.getopt(sys.argv[1:], 'hdp:tv', ['help', 'debug', 'pid=', 'test', 'verbose'])
     except getopt.GetoptError as err:
         print(err)
         usage()
         sys.exit(2)
-    debug_mode = 'false'
-    test_mode = 'false'
+    debug = 'false'
+    test = 'false'
+    verbose = 'false'
     pid = None
     for o, a in opts:
         if o in ('-h', '--help'):
             usage()
             sys.exit()
         elif o in ('-d', '--debug'):
-            debug_mode = 'true'
+            debug = 'true'
         elif o in ('-p', '--pid'):
             pid = int(a)
         elif o in ('-t', '--test'):
-            test_mode = 'true'
+            test = 'true'
+        elif o in ('-v', '--verbose'):
+            verbose = 'true'
         else:
             assert False, "Unhandled option"
 
-    # Attach and load the scripts.
+    # Attach to Mabinogi.
     print("Kanan's Mabinogi Mod")
     print("Waiting for Client.exe...")
     while windll.user32.FindWindowA(b'Mabinogi', b'Mabinogi') == 0:
         time.sleep(1)
-
     try:
         session = frida.attach('Client.exe' if pid is None else pid)
     except frida.ProcessNotFoundError:
@@ -94,11 +99,14 @@ def main():
         print("Make sure you're running kanan as administrator!")
         input()
         sys.exit()
-
-    print('Attached to Client.exe...')
-    print('Loading scripts...')
+    # Load the scripts.
+    print("Attached to Client.exe...")
+    print("Loading scripts...")
     path = sys.path[0].replace('\\', '\\\\')
-    script_defaults = 'var debug = {};\nvar testing = {};\nvar path = "{}";\n'.format(debug_mode, test_mode, path)
+    script_defaults = ('var debug = {};'
+                       'var testing = {};'
+                       'var verbose = {};'
+                       'var path = "{}";').format(debug, test, verbose, path)
     scripts = []
     delayed_scripts = []
     with open('./scripts/Defaults.js') as f:
@@ -114,7 +122,7 @@ def main():
             continue
         source = script_defaults
         with open(filename) as f:
-            if is_coalesced(filename) and debug_mode == 'false':
+            if is_coalesced(filename) and debug == 'false':
                 print("Coalescing " + shortname)
                 coalesced_source += 'var scriptName = "{}";\n'.format(shortname)
                 coalesced_source += f.read()
@@ -128,7 +136,7 @@ def main():
         script.load()
         scripts.append(script)
     # Execute the coalesced script.
-    if debug_mode == 'false':
+    if debug == 'false':
         print("Running coalesced script...")
         script = session.create_script(coalesced_source)
         script.on('message', on_message)
