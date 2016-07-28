@@ -23,7 +23,7 @@ dmsg("Called CFileSystem::SetLookUpOrder");
 var filenameMem = allocateMemory(4096);
 
 // We intercept the following functions because mabi uses them for file loading
-// and discovery.  
+// and discovery.
 
 //
 // NtCreateFile
