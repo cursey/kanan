@@ -21,255 +21,75 @@ dmsg("Called CFileSystem::SetLookUpOrder");
 
 // Allocate space for the redirected filenames.
 var filenameMem = allocateMemory(4096);
-var utf16Filename = filenameMem;
-
-// Helpers to automatically redirect filenames.
-function getNewUtf16Filename(filenamePtr) {
-    var filename = Memory.readUtf16String(filenamePtr);
-
-    // We only redirect filenames that have \data\ in them.
-    if (filename.includes('\\data\\')) {
-        var newFilename = path + filename.substr(filename.indexOf('\\data\\'));
-
-        Memory.writeUtf16String(utf16Filename, newFilename);
-
-        return utf16Filename;
-    }
-
-    return filenamePtr;
-}
 
 // We intercept the following functions because mabi uses them for file loading
-// and discovery.  We use the above helper to redirect files.
+// and discovery.  
 
 //
-// GetFileAttributes
+// NtCreateFile
 //
-var onGetFileAttributesW = {
+Interceptor.attach(getProcAddress('ntdll.dll', 'NtCreateFile'), {
     onEnter(args) {
-        args[0] = getNewUtf16Filename(args[0]);
+        var ObjectAttributesPtr = args[2];
+        var ObjectNamePtr = Memory.readPointer(ObjectAttributesPtr.add(8));
+        var ObjectNameBufferPtr = Memory.readPointer(ObjectNamePtr.add(4));
+        var ObjectName = Memory.readUtf16String(ObjectNameBufferPtr);
 
-        if (verbose) {
-            dmsg("GetFileAttributesW: " + Memory.readUtf16String(args[0]));
+        // We only redirect filenames that have \data\ in them.
+        if (ObjectName.includes('\\data\\')) {
+            var newFilename = "\\??\\" + path + ObjectName.substr(ObjectName.indexOf('\\data\\'));
+
+            // Write the string.
+            Memory.writeUtf16String(filenameMem, newFilename);
+
+            // Change the UNICODE_STRING.
+            Memory.writeU16(ObjectNamePtr, newFilename.length * 2); // Length
+            Memory.writeU16(ObjectNamePtr.add(2), 4096); // MaximumLength
+            Memory.writePointer(ObjectNamePtr.add(4), filenameMem);
         }
-    }
-};
 
-Interceptor.attach(getProcAddress('kernel32.dll', 'GetFileAttributesW'), onGetFileAttributesW);
-Interceptor.attach(getProcAddress('kernelbase.dll', 'GetFileAttributesW'), onGetFileAttributesW);
-
-//
-// GetFileAttributesEx
-//
-var onGetFileAttributesExW = {
-    onEnter(args) {
-        args[0] = getNewUtf16Filename(args[0]);
-
-        if (verbose) {
-            dmsg("GetFileAttributesExW: " + Memory.readUtf16String(args[0]));
-        }
-    }
-};
-
-Interceptor.attach(getProcAddress('kernel32.dll', 'GetFileAttributesExW'), onGetFileAttributesExW);
-Interceptor.attach(getProcAddress('kernelbase.dll', 'GetFileAttributesExW'), onGetFileAttributesExW);
-
-//
-// GetFullPathName
-//
-var onGetFullPathNameW = {
-    onEnter(args) {
-        args[0] = getNewUtf16Filename(args[0]);
-
-        if (verbose) {
-            dmsg("GetFullPathNameW: " + Memory.readUtf16String(args[0]));
-        }
-    }
-};
-
-Interceptor.attach(getProcAddress('kernel32.dll', 'GetFullPathNameW'), onGetFullPathNameW);
-Interceptor.attach(getProcAddress('kernelbase.dll', 'GetFullPathNameW'), onGetFullPathNameW);
-
-//
-// CreateFile
-//
-var onCreateFileW = {
-    onEnter(args) {
-        args[0] = getNewUtf16Filename(args[0]);
-
-        if (verbose) {
-            dmsg("CreateFileW: " + Memory.readUtf16String(args[0]));
-        }
-    }
-};
-
-Interceptor.attach(getProcAddress('kernel32.dll', 'CreateFileW'), onCreateFileW);
-Interceptor.attach(getProcAddress('kernelbase.dll', 'CreateFileW'), onCreateFileW);
-
-//
-// FindFirstFile
-//
-var onFindFirstFileW = {
-    onEnter(args) {
-        args[0] = getNewUtf16Filename(args[0]);
-
-        if (verbose) {
-            dmsg("FindFirstFileW: " + Memory.readUtf16String(args[0]));
-        }
-    }
-};
-
-Interceptor.attach(getProcAddress('kernel32.dll', 'FindFirstFileW'), onFindFirstFileW);
-Interceptor.attach(getProcAddress('kernelbase.dll', 'FindFirstFileW'), onFindFirstFileW);
-
-//
-// FindFirstFileEx
-//
-var onFindFirstFileExW = {
-    onEnter(args) {
-        args[0] = getNewUtf16Filename(args[0]);
-
-        if (verbose) {
-            dmsg("FindFirstFileExW: " + Memory.readUtf16String(args[0]));
-        }
-    }
-};
-
-Interceptor.attach(getProcAddress('kernel32.dll', 'FindFirstFileExW'), onFindFirstFileExW);
-Interceptor.attach(getProcAddress('kernelbase.dll', 'FindFirstFileExW'), onFindFirstFileExW);
-
-// The following don't modify their arguments because mabi does not directly
-// use the Nt* functions.  These are only intercepted for debugging.
-if (debug && verbose) {
-    //
-    // NtCreateFile
-    //
-    var NtCreateFile = {
-        onEnter(args) {
+        if (debug && verbose) {
             var ObjectAttributesPtr = args[2];
             var ObjectNamePtr = Memory.readPointer(ObjectAttributesPtr.add(8));
             var ObjectNameBufferPtr = Memory.readPointer(ObjectNamePtr.add(4));
             var ObjectName = Memory.readUtf16String(ObjectNameBufferPtr);
-            var filename = ObjectName;
 
-            //var filename = Memory.readUtf16String(filenamePtr);
-
-            // We only redirect filenames that have \data\ in them.
-            if (filename.includes('\\data\\')) {
-                var newFilename = "\\??\\" + path + filename.substr(filename.indexOf('\\data\\'));
-
-                // Write the string.
-                Memory.writeUtf16String(utf16Filename.add(1024), newFilename);
-
-                // Change the UNICODE_STRING.
-                Memory.writeU16(ObjectNamePtr, newFilename.length * 2); // Length
-                Memory.writeU16(ObjectNamePtr.add(2), 1024); // MaximumLength
-                Memory.writePointer(ObjectNamePtr.add(4), utf16Filename.add(1024));
-
-                var ObjectAttributesPtr = args[2];
-                var ObjectNamePtr = Memory.readPointer(ObjectAttributesPtr.add(8));
-                var ObjectNameBufferPtr = Memory.readPointer(ObjectNamePtr.add(4));
-                var ObjectName = Memory.readUtf16String(ObjectNameBufferPtr);
-                var filename = ObjectName;
-
-                msg("NtCreateFile: " + filename);
-                msg("len: " + Memory.readU16(ObjectNamePtr));
-                msg("maxlen: " + Memory.readU16(ObjectNamePtr.add(2)));
-            }
-            else {
-                msg("NtCreateFile: " + filename);
-            }
+            msg("NtCreateFile: " + ObjectName);
         }
-    };
+    }
+});
 
-    Interceptor.attach(getProcAddress('ntdll.dll', 'NtCreateFile'), NtCreateFile);
+//
+// NtOpenFile
+//
+Interceptor.attach(getProcAddress('ntdll.dll', 'NtOpenFile'), {
+    onEnter(args) {
+        var ObjectAttributesPtr = args[2];
+        var ObjectNamePtr = Memory.readPointer(ObjectAttributesPtr.add(8));
+        var ObjectNameBufferPtr = Memory.readPointer(ObjectNamePtr.add(4));
+        var ObjectName = Memory.readUtf16String(ObjectNameBufferPtr);
 
-    //
-    // NtOpenFile
-    //
-    Interceptor.attach(getProcAddress('ntdll.dll', 'NtOpenFile'), {
-        onEnter(args) {
+        // We only redirect filenames that have \data\ in them.
+        if (ObjectName.includes('\\data\\')) {
+            var newFilename = "\\??\\" + path + ObjectName.substr(ObjectName.indexOf('\\data\\'));
+
+            // Write the string.
+            Memory.writeUtf16String(filenameMem, newFilename);
+
+            // Change the UNICODE_STRING.
+            Memory.writeU16(ObjectNamePtr, newFilename.length * 2); // Length
+            Memory.writeU16(ObjectNamePtr.add(2), 4096); // MaximumLength
+            Memory.writePointer(ObjectNamePtr.add(4), filenameMem);
+        }
+
+        if (debug && verbose) {
             var ObjectAttributesPtr = args[2];
             var ObjectNamePtr = Memory.readPointer(ObjectAttributesPtr.add(8));
             var ObjectNameBufferPtr = Memory.readPointer(ObjectNamePtr.add(4));
             var ObjectName = Memory.readUtf16String(ObjectNameBufferPtr);
-            var filename = ObjectName;
 
-            //var filename = Memory.readUtf16String(filenamePtr);
-
-            // We only redirect filenames that have \data\ in them.
-            if (filename.includes('\\data\\')) {
-                var newFilename = "\\??\\" + path + filename.substr(filename.indexOf('\\data\\'));
-
-                // Write the string.
-                Memory.writeUtf16String(utf16Filename.add(1024), newFilename);
-
-                // Change the UNICODE_STRING.
-                Memory.writeU16(ObjectNamePtr, newFilename.length * 2); // Length
-                Memory.writeU16(ObjectNamePtr.add(2), 1024); // MaximumLength
-                Memory.writePointer(ObjectNamePtr.add(4), utf16Filename.add(1024));
-
-                var ObjectAttributesPtr = args[2];
-                var ObjectNamePtr = Memory.readPointer(ObjectAttributesPtr.add(8));
-                var ObjectNameBufferPtr = Memory.readPointer(ObjectNamePtr.add(4));
-                var ObjectName = Memory.readUtf16String(ObjectNameBufferPtr);
-                var filename = ObjectName;
-
-                msg("NtOpenFile: " + filename);
-                msg("len: " + Memory.readU16(ObjectNamePtr));
-                msg("maxlen: " + Memory.readU16(ObjectNamePtr.add(2)));
-            }
-            else {
-                msg("NtOpenFile: " + filename);
-            }
+            msg("NtOpenFile: " + ObjectName);
         }
-    });
+    }
+});
 
-    //
-    // NtQueryDirectoryFile
-    //
-    Interceptor.attach(getProcAddress('ntdll.dll', 'NtQueryDirectoryFile'), {
-        onEnter(args) {
-            var FileNamePtr = args[9];
-
-            if (FileNamePtr.isNull()) {
-                return;
-            }
-
-            var FileNameBufferPtr = Memory.readPointer(FileNamePtr.add(4));
-            var filename = Memory.readUtf16String(FileNameBufferPtr);
-
-            msg("NtQueryDirectoryFile: " + filename);
-        }
-    });
-
-    //
-    // NtQueryFullAttributesFile
-    //
-    Interceptor.attach(getProcAddress('ntdll.dll', 'NtQueryFullAttributesFile'), {
-        onEnter(args) {
-            var ObjectAttributesPtr = args[0];
-            var ObjectNamePtr = Memory.readPointer(ObjectAttributesPtr.add(8));
-            var ObjectNameBufferPtr = Memory.readPointer(ObjectNamePtr.add(4));
-            var ObjectName = Memory.readUtf16String(ObjectNameBufferPtr);
-            var filename = ObjectName;
-
-            msg("NtQueryFullAttributesFile: " + filename);
-        }
-    });
-
-    //
-    // NtQueryAttributesFile
-    //
-    Interceptor.attach(getProcAddress('ntdll.dll', 'NtQueryAttributesFile'), {
-        onEnter(args) {
-            var ObjectAttributesPtr = args[0];
-            var ObjectNamePtr = Memory.readPointer(ObjectAttributesPtr.add(8));
-            var ObjectNameBufferPtr = Memory.readPointer(ObjectNamePtr.add(4));
-            var ObjectName = Memory.readUtf16String(ObjectNameBufferPtr);
-            var filename = ObjectName;
-
-            msg("NtQueryAttributesFile: " + filename);
-        }
-    });
-}
