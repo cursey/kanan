@@ -34,36 +34,6 @@ usage: python kanan.py <options>
         Attach kanan to a specific instance of mabi given by a process id.
     """)
 
-def is_disabled(filename):
-    # Determines if a filename has been disabled by the user.
-    if 'Defaults.js' in filename:
-        return True
-    with open('disabled.txt') as f:
-        disabled_filenames = f.read()
-    for disabled in disabled_filenames.splitlines():
-        if len(disabled) > 0 and disabled.casefold() in filename.casefold():
-            return True
-    return False
-
-def is_coalesced(filename):
-    # Determines if a filename is eligable to be coalesced according to the 
-    # user.
-    with open('coalesce.txt') as f:
-        coalesced_filenames = f.read()
-    for coalesced in coalesced_filenames.splitlines():
-        if len(coalesced) > 0 and coalesced.casefold() in filename.casefold():
-            return True
-    return False
-
-def is_delayed(filename):
-    # Determines if a filename is to be loaded last by the user.
-    with open('delayed.txt') as f:
-        delayed_filenames = f.read()
-    for delayed in delayed_filenames.splitlines():
-        if len(delayed) > 0 and delayed.casefold() in filename.casefold():
-            return True
-    return False
-
 class KananApp:
     def __init__(self):
         self.debug = 'false'
@@ -73,6 +43,35 @@ class KananApp:
         self.path = sys.path[0].replace('\\', '\\\\')
         self.script_defaults = ''
         self.scripts = []
+        with open('disabled.txt') as f:
+            self.disabled_filenames = f.read().splitlines()
+        self.disabled_filenames.append('Defaults.js')
+        with open('coalesce.txt') as f:
+            self.coalesced_filenames = f.read().splitlines()
+        with open('delayed.txt') as f:
+            self.delayed_filenames = f.read().splitlines()
+
+    def is_disabled(self, filename):
+        # Determines if a filename has been disabled by the user.
+        for disabled in self.disabled_filenames:
+            if len(disabled) > 0 and disabled.casefold() in filename.casefold():
+                return True
+        return False
+
+    def is_coalesced(self, filename):
+        # Determines if a filename is eligable to be coalesced according to the
+        # user.
+        for coalesced in self.coalesced_filenames:
+            if len(coalesced) > 0 and coalesced.casefold() in filename.casefold():
+                return True
+        return False
+
+    def is_delayed(self, filename):
+        # Determines if a filename is to be loaded last by the user.
+        for delayed in self.delayed_filenames:
+            if len(delayed) > 0 and delayed.casefold() in filename.casefold():
+                return True
+        return False
 
     def _parse_command_line(self):
         # Handle command line arguments.
@@ -115,7 +114,9 @@ class KananApp:
 
     def _load_defaults(self):
         # Load Defaults.js and set additional variables that are available to
-        # every loaded script.
+        # every loaded script.  The reason we don't load defaults in the
+        # constructor is because we need to wait till the command line args
+        # have been parsed.
         self.script_defaults = ('var debug = {};'
                            'var testing = {};'
                            'var verbose = {};'
@@ -133,18 +134,13 @@ class KananApp:
     def _run_scripts(self):
         # Loads and runs all the scripts according to the settings.
         self._load_defaults()
-        delayed_scripts = []
         coalesced_source = self.script_defaults
         for filename in glob.iglob('./scripts/*.js'):
             shortname = os.path.basename(filename)
-            if is_disabled(filename):
-                continue
-            if is_delayed(filename):
-                print("Delaying " + shortname)
-                delayed_scripts.append(filename)
+            if self.is_disabled(filename) or self.is_delayed(filename):
                 continue
             with open(filename) as f:
-                if is_coalesced(filename) and self.debug == 'false':
+                if self.is_coalesced(filename) and self.debug == 'false':
                     print("Coalescing " + shortname)
                     coalesced_source += 'var scriptName = "{}";\n'.format(shortname)
                     coalesced_source += f.read()
@@ -158,11 +154,13 @@ class KananApp:
         # Execute the coalesced script.
         if self.debug == 'false':
             print("Running coalesced script...")
-            self._run_script(self.coalesced_source)
+            self._run_script(coalesced_source)
         # Execute delayed scripts.
         print("Running delayed scripts...")
-        for filename in delayed_scripts:
+        for filename in glob.iglob('./scripts/*.js'):
             shortname = os.path.basename(filename)
+            if self.is_disabled(filename) or not self.is_delayed(filename):
+                continue
             with open(filename) as f:
                 print("Running " + shortname)
                 source = self.script_defaults
