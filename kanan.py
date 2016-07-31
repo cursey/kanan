@@ -6,14 +6,15 @@ import time
 import os
 from ctypes import *
 
-# Called when a script sends us a message.
 def on_message(message, data):
+    # Called when a script sends us a message.
     if message['type'] == 'send':
         print(message['payload'])
     elif message['type'] == 'error':
         print(message['stack'])
 
 def usage():
+    # Prints usage information about how to use kanan.
     print("""
 usage: python kanan.py <options>
 
@@ -34,6 +35,7 @@ usage: python kanan.py <options>
     """)
 
 def is_disabled(filename):
+    # Determines if a filename has been disabled by the user.
     if 'Defaults.js' in filename:
         return True
     with open('disabled.txt') as f:
@@ -44,6 +46,8 @@ def is_disabled(filename):
     return False
 
 def is_coalesced(filename):
+    # Determines if a filename is eligable to be coalesced according to the 
+    # user.
     with open('coalesce.txt') as f:
         coalesced_filenames = f.read()
     for coalesced in coalesced_filenames.splitlines():
@@ -52,6 +56,7 @@ def is_coalesced(filename):
     return False
 
 def is_delayed(filename):
+    # Determines if a filename is to be loaded last by the user.
     with open('delayed.txt') as f:
         delayed_filenames = f.read()
     for delayed in delayed_filenames.splitlines():
@@ -65,6 +70,9 @@ class KananApp:
         self.test = 'false'
         self.verbose = 'false'
         self.pid = None
+        self.path = sys.path[0].replace('\\', '\\\\')
+        self.script_defaults = ''
+        self.scripts = []
 
     def _parse_command_line(self):
         # Handle command line arguments.
@@ -102,10 +110,12 @@ class KananApp:
             sys.exit()
 
     def _detach(self):
+        # Detach from Mabinogi.
         self.session.detach()
 
     def _load_defaults(self):
-        self.path = sys.path[0].replace('\\', '\\\\')
+        # Load Defaults.js and set additional variables that are available to
+        # every loaded script.
         self.script_defaults = ('var debug = {};'
                            'var testing = {};'
                            'var verbose = {};'
@@ -113,60 +123,61 @@ class KananApp:
         with open('./scripts/Defaults.js') as f:
             self.script_defaults += f.read()
 
+    def _run_script(self, source):
+        # Run a single script and add it to the list of scripts.
+        script = self.session.create_script(source)
+        script.on('message', on_message)
+        script.load()
+        self.scripts.append(script)
+
     def _run_scripts(self):
+        # Loads and runs all the scripts according to the settings.
         self._load_defaults()
-        self.scripts = []
-        self.delayed_scripts = []
-        self.coalesced_source = self.script_defaults
+        delayed_scripts = []
+        coalesced_source = self.script_defaults
         for filename in glob.iglob('./scripts/*.js'):
             shortname = os.path.basename(filename)
             if is_disabled(filename):
                 continue
             if is_delayed(filename):
                 print("Delaying " + shortname)
-                self.delayed_scripts.append(filename)
+                delayed_scripts.append(filename)
                 continue
-            source = self.script_defaults
             with open(filename) as f:
                 if is_coalesced(filename) and self.debug == 'false':
                     print("Coalescing " + shortname)
-                    self.coalesced_source += 'var scriptName = "{}";\n'.format(shortname)
-                    self.coalesced_source += f.read()
+                    coalesced_source += 'var scriptName = "{}";\n'.format(shortname)
+                    coalesced_source += f.read()
                     continue
                 else:
                     print("Running " + shortname)
+                    source = self.script_defaults
                     source += 'var scriptName = "{}";\n'.format(shortname)
                     source += f.read()
-            script = self.session.create_script(source)
-            script.on('message', on_message)
-            script.load()
-            self.scripts.append(script)
+                    self._run_script(source)
         # Execute the coalesced script.
         if self.debug == 'false':
             print("Running coalesced script...")
-            script = self.session.create_script(self.coalesced_source)
-            script.on('message', on_message)
-            script.load()
-            self.scripts.append(script)
+            self._run_script(self.coalesced_source)
         # Execute delayed scripts.
         print("Running delayed scripts...")
-        for filename in self.delayed_scripts:
+        for filename in delayed_scripts:
             shortname = os.path.basename(filename)
-            source = self.script_defaults
             with open(filename) as f:
                 print("Running " + shortname)
+                source = self.script_defaults
                 source += 'var scriptName = "{}";\n'.format(shortname)
                 source += f.read()
-            script = self.session.create_script(source)
-            script.on('message', on_message)
-            script.load()
-            self.scripts.append(script)
+                self._run_script(source)
 
     def _unload_scripts(self):
+        # Unloads all the loaded scripts and clears the loaded scripts list.
         for script in self.scripts:
             script.unload()
+        self.scripts = []
 
     def run(self):
+        # Runs kanan.
         self._parse_command_line()
         print("Kanan's Mabinogi Mod")
         print("Waiting for Client.exe...")
