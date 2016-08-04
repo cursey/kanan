@@ -27,6 +27,8 @@ mods. Read `UseDataFolder.js` for more detail. Essentially this feature
 redirects mabi's data folder, to the data folder `kanan.py` is in allowing you
 to fully mod mabi without touching its folder.
 * Simple scripts can be automatically coalesced to cut down on memory usage.
+* `PatternScanSnapshot.js` automatically disassembles the locations of patterns
+used by each script for archiving and easier updating when something breaks.
 
 ## Known issues
 * Closing the command prompt after patches have been applied has caused crashes
