@@ -44,6 +44,10 @@ function scan(name, sig) {
     if (address.isNull()) {
         msg("No results for: " + sig);
     }
+    else if (debug) {
+        // Send the results of the scan back to kanan.py
+        send({script: scriptName, signature: sig, address: address});
+    }
 
     return address;
 }
@@ -92,12 +96,12 @@ function copy(dst, src, len) {
         return;
     }
 
-    Memory.protect(dst, len, 'rwx');
-    Memory.protect(src, len, 'rwx');
-
     if (testing) {
         return;
     }
+
+    Memory.protect(dst, len, 'rwx');
+    Memory.protect(src, len, 'rwx');
 
     Memory.copy(dst, src, len);
 

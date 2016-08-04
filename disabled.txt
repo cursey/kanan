@@ -1,1 +1,2 @@
 ClientSideDevCat.js
+PatternScanSnapshot.js

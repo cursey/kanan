@@ -4,14 +4,8 @@ import sys
 import getopt
 import time
 import os
+import json
 from ctypes import *
-
-def on_message(message, data):
-    # Called when a script sends us a message.
-    if message['type'] == 'send':
-        print(message['payload'])
-    elif message['type'] == 'error':
-        print(message['stack'])
 
 def usage():
     # Prints usage information about how to use kanan.
@@ -30,6 +24,9 @@ usage: python kanan.py <options>
     -v --verbose
         More information is output to the console by certain scripts.
 
+    -a --all
+        Run all scripts regardless of disabled.txt
+
     -p<id> --process <id>
         Attach kanan to a specific instance of mabi given by a process id.
     """)
@@ -39,6 +36,7 @@ class KananApp:
         self.debug = 'false'
         self.test = 'false'
         self.verbose = 'false'
+        self.run_all = 'false'
         self.pid = None
         self.path = sys.path[0].replace('\\', '\\\\')
         self.script_defaults = ''
@@ -50,9 +48,27 @@ class KananApp:
             self.coalesced_filenames = f.read().splitlines()
         with open('delayed.txt') as f:
             self.delayed_filenames = f.read().splitlines()
+        self.scans = []
+
+    def on_message(self, message, data):
+        # Called when a script sends us a message.
+        if message['type'] == 'send':
+            payload = message['payload']
+            if type(payload) is dict:
+                if 'signature' in payload:
+                    self.scans.append(payload)
+                elif 'file' in payload:
+                    with open('./output/' + payload['file'], 'w') as f:
+                        print(payload['data'], file=f)
+            else:
+                print(payload)
+        elif message['type'] == 'error':
+            print(message['stack'])
 
     def is_disabled(self, filename):
         # Determines if a filename has been disabled by the user.
+        if self.run_all == 'true':
+            return 'Defaults.js'.casefold() in filename.casefold()
         for disabled in self.disabled_filenames:
             if len(disabled) > 0 and disabled.casefold() in filename.casefold():
                 return True
@@ -76,7 +92,7 @@ class KananApp:
     def _parse_command_line(self):
         # Handle command line arguments.
         try:
-            opts, args = getopt.getopt(sys.argv[1:], 'hdp:tv', ['help', 'debug', 'pid=', 'test', 'verbose'])
+            opts, args = getopt.getopt(sys.argv[1:], 'hdp:tva', ['help', 'debug', 'pid=', 'test', 'verbose', 'all'])
         except getopt.GetoptError as err:
             print(err)
             usage()
@@ -93,6 +109,8 @@ class KananApp:
                 self.test = 'true'
             elif o in ('-v', '--verbose'):
                 self.verbose = 'true'
+            elif o in ('-a', '--all'):
+                self.run_all = 'true'
             else:
                 assert False, "Unhandled option"
 
@@ -117,17 +135,19 @@ class KananApp:
         # every loaded script.  The reason we don't load defaults in the
         # constructor is because we need to wait till the command line args
         # have been parsed.
-        self.script_defaults = ('var debug = {};'
-                           'var testing = {};'
-                           'var verbose = {};'
-                           'var path = "{}";').format(self.debug, self.test, self.verbose, self.path)
+        self.script_defaults = 'var debug = {};\n'.format(self.debug)
+        self.script_defaults += 'var testing = {};\n'.format(self.test)
+        self.script_defaults += 'var verbose = {};\n'.format(self.verbose)
+        self.script_defaults += 'var path = "{}";\n'.format(self.path)
         with open('./scripts/Defaults.js') as f:
             self.script_defaults += f.read()
 
     def _run_script(self, source):
         # Run a single script and add it to the list of scripts.
+        if self.debug == 'true': # Prepend the results of every scan to the source
+            source = 'var scans = {};\n'.format(json.dumps(self.scans)) + source
         script = self.session.create_script(source)
-        script.on('message', on_message)
+        script.on('message', lambda message, data: self.on_message(message, data))
         script.load()
         self.scripts.append(script)
 
