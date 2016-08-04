@@ -10,7 +10,10 @@ from ctypes import *
 def usage():
     # Prints usage information about how to use kanan.
     print("""
-usage: python kanan.py <options>
+usage: python kanan.py <options> [scripts]
+
+    If [scripts] is empty then all scripts in the ./scripts directory will be
+    loaded based on the current configuration.
 
     -h --help
         Displays this help text.
@@ -49,6 +52,7 @@ class KananApp:
         with open('delayed.txt') as f:
             self.delayed_filenames = f.read().splitlines()
         self.scans = []
+        self.scripts_to_load = [] # from the command line args.
 
     def on_message(self, message, data):
         # Called when a script sends us a message.
@@ -113,6 +117,7 @@ class KananApp:
                 self.run_all = 'true'
             else:
                 assert False, "Unhandled option"
+        self.scripts_to_load = args
 
     def _attach(self):
         # Attach to Mabinogi.
@@ -154,6 +159,17 @@ class KananApp:
     def _run_scripts(self):
         # Loads and runs all the scripts according to the settings.
         self._load_defaults()
+        # If we have a specific list of scripts to load from the command line
+        # then load those and return.
+        if self.scripts_to_load:
+            for filename in self.scripts_to_load:
+                shortname = os.path.basename(filename)
+                with open(filename) as f:
+                    source = self.script_defaults
+                    source += 'var scriptName = "{}";\n'.format(shortname)
+                    source += f.read()
+                    self._run_script(source)
+            return
         coalesced_source = self.script_defaults
         for filename in glob.iglob('./scripts/*.js'):
             shortname = os.path.basename(filename)
