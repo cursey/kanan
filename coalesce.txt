@@ -5,6 +5,7 @@ DontTargetNPCs.js
 ElfLagFix.js
 FighterNoForce.js
 FreeIndoorCamera.js
+FreeZoom.js
 HideNPCCurtains.js
 HideSecondTitle.js
 IgnoreTranslucency.js
