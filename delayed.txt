@@ -1,2 +1,3 @@
 BorderlessWindowedMode.js
+EnableMultiClient.js
 PatternScanSnapshot.js
