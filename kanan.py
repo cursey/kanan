@@ -64,6 +64,8 @@ class KananApp:
                 elif 'file' in payload:
                     with open('./output/' + payload['file'], 'w') as f:
                         print(payload['data'], file=f)
+            elif self.debug == 'true':
+                print(time.strftime("%I:%M:%S ") + payload)
             else:
                 print(payload)
         elif message['type'] == 'error':
