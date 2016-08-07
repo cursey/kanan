@@ -13,6 +13,7 @@ IgnoreTranslucency.js
 ManaTunnelLagFix.js
 MoveToSameChannel.js
 NoBlackBars.js
+NoChannelMoveDescription.js
 NoPlayerZoomTransparency.js
 NoSkillRankUpWindow.js
 NPCFastText.js
