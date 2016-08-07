@@ -1,3 +1,6 @@
 /scripts/EvGAutoRevive.js
 /scripts/RemoveSunglare.js
 /output/disasm.txt
+data/
+scripts/AutoAttack.js
+scripts/Test.js
