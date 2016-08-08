@@ -2,7 +2,7 @@
 // xrefs
 // Should be in a switch statement where you can see other denail strings being
 // referenced.
-// Skip over the siwtch statement.
-var switchBoundsJa = scan('0F 87 ?? ?? ?? ?? FF 24 85 ?? ?? ?? ?? 68 ?? ?? ?? ?? 8D 4D E8 E8 ?? ?? ?? ?? C6 45 FC 01 8D 4D E8');
+// Change the first jz in this function to skip all the checks.
+var firstJz = scan('0F 84 ?? ?? ?? ?? 89 5D F0 89 5D FC 8B 8E');
 
-patch(switchBoundsJa, [0x90, 0xE9]);
+patch(firstJz, [0x90, 0xE9]);
