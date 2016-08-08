@@ -13,9 +13,7 @@ var dlls = [];
 for (var i = 0; i < dlls.length; ++i) {
     var dllPath = path + "\\" + dlls[i];
 
-    if (debug) {
-        msg("Attempting to load: " + dllPath);
-    }
+    dmsg("Attempting to load: " + dllPath);
 
     if (loadDll(dllPath).isNull()) {
         msg("Failed to load: " + dllPath);
