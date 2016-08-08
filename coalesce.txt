@@ -15,6 +15,7 @@ MoveToSameChannel.js
 NoBlackBars.js
 NoChannelMoveDescription.js
 NoChannelMoveDenial.js
+NoLogoutPenaltyMsg.js
 NoPlayerZoomTransparency.js
 NoSkillRankUpWindow.js
 NPCFastText.js
