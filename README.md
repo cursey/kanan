@@ -63,8 +63,10 @@ so proper credits may be given (or issue a pull request).
     * No persistent fighter chain popup
     * Objects between camera and character do not become transparent
     * Client side devCat title
+    * Hide main title
 
 ## Thank you to all contributors!
 * QewQew
 * C0ZIEST
 * Kyralis
+* x99user
