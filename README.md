@@ -29,6 +29,8 @@ to fully mod mabi without touching its folder.
 * Simple scripts can be automatically coalesced to cut down on memory usage.
 * `PatternScanSnapshot.js` automatically disassembles the locations of patterns
 used by each script for archiving and easier updating when something breaks.
+* Keep kanan running in the background and whenever you close and relaunch mabi
+kanan will automatically rerun all the scripts.
 
 ## Known issues
 * Closing the command prompt after patches have been applied has caused crashes

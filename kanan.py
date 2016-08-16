@@ -52,7 +52,7 @@ class KananApp:
         with open('delayed.txt') as f:
             self.delayed_filenames = f.read().splitlines()
         self.scans = []
-        self.scripts_to_load = [] # from the command line args.
+        self.scripts_to_load = [] # From the command line args.
 
     def on_message(self, message, data):
         # Called when a script sends us a message.
@@ -135,7 +135,10 @@ class KananApp:
 
     def _detach(self):
         # Detach from Mabinogi.
-        self.session.detach()
+        try:
+            self.session.detach()
+        except:
+            pass
 
     def _load_defaults(self):
         # Load Defaults.js and set additional variables that are available to
@@ -209,24 +212,29 @@ class KananApp:
     def _unload_scripts(self):
         # Unloads all the loaded scripts and clears the loaded scripts list.
         for script in self.scripts:
-            script.unload()
+            try:
+                script.unload()
+            except:
+                pass
         self.scripts = []
 
     def run(self):
         # Runs kanan.
         self._parse_command_line()
         print("Kanan's Mabinogi Mod")
-        print("Waiting for Client.exe...")
-        self._attach()
-        print("Attached to Client.exe...")
-        print("Running scripts...")
-        self._run_scripts()
-        print("All done!")
-        input()
-        print("Unloading scripts (patches may stay applied)...")
-        self._unload_scripts()
-        print("Detaching from Client.exe...")
-        self._detach()
+        while True:
+            print("Waiting for Client.exe...")
+            self._attach()
+            print("Attached to Client.exe...")
+            print("Running scripts...")
+            self._run_scripts()
+            print("All done!")
+            while windll.user32.FindWindowA(b'Mabinogi', b'Mabinogi') != 0:
+                time.sleep(1)
+            print("Unloading scripts (patches may stay applied)...")
+            self._unload_scripts()
+            print("Detaching from Client.exe...")
+            self._detach()
 
 def main():
     app = KananApp()
