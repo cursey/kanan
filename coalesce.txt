@@ -21,5 +21,6 @@ NoPlayerZoomTransparency.js
 NoSkillRankUpWindow.js
 NPCFastText.js
 OneClickRevive.js
+RemoveScreenShake.js
 ShowItemTradePrice.js
 WindowsAppearFaster.js
