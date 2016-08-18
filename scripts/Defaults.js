@@ -15,12 +15,26 @@ function dmsg(str) {
     }
 }
 
+// Fixes the signature so single ?'s are converted to ??'s.
+function fixSig(sig) {
+    var oldLen = sig.length;
+    var newLen = 0;
+
+    while ((newLen = (sig = sig.replace(' ? ', ' ?? ')).length) != oldLen) {
+        oldLen = sig.length;
+    }
+
+    return sig;
+}
+
 // Scans for patterns in specific modules code section.
 function scan(name, sig) {
     if (sig == undefined) {
         sig = name;
         name = 'client.exe';
     }
+
+    sig = fixSig(sig);
 
     var ranges = Module.enumerateRangesSync(name, 'r-x');
     var address = NULL;
