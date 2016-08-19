@@ -77,9 +77,15 @@ function moduleOffset(moduleName, offset) {
     return baseAddress.add(offset);
 }
 
+// Validates a patch address.
+// TODO: Make this more robust.
+function isValidPatchAddress(addr) {
+    return (!addr.isNull() && addr.toInt32() > 1000);
+}
+
 // Patches an array of bytes.
 function patch(addr, c) {
-    if (addr.isNull()) {
+    if (!isValidPatchAddress(addr)) {
         msg("Failed to patch.");
         return;
     }
@@ -105,7 +111,7 @@ function patch(addr, c) {
 
 // Copies bytes.
 function copy(dst, src, len) {
-    if (dst.isNull() || src.isNull()) {
+    if (!isValidPatchAddress(dst) || !isValidPatchAddress(src)) {
         msg("Failed to copy.");
         return;
     }
