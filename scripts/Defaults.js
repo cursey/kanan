@@ -56,7 +56,7 @@ function scan(name, sig) {
     dmsg(address);
 
     if (address.isNull()) {
-        msg("No results for: " + sig);
+        dmsg("No results for: " + sig);
     }
     else if (debug) {
         // Send the results of the scan back to kanan.py
