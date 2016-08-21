@@ -75,6 +75,8 @@ class KananApp:
         # Determines if a filename has been disabled by the user.
         if self.run_all == 'true':
             return 'Defaults.js'.casefold() in filename.casefold()
+        if '.disabled' in filename:
+            return True
         for disabled in self.disabled_filenames:
             if len(disabled) > 0 and disabled.casefold() in filename.casefold():
                 return True
@@ -83,6 +85,8 @@ class KananApp:
     def is_coalesced(self, filename):
         # Determines if a filename is eligable to be coalesced according to the
         # user.
+        if '.coalesce' in filename:
+            return True
         for coalesced in self.coalesced_filenames:
             if len(coalesced) > 0 and coalesced.casefold() in filename.casefold():
                 return True
@@ -90,6 +94,8 @@ class KananApp:
 
     def is_delayed(self, filename):
         # Determines if a filename is to be loaded last by the user.
+        if '.delayed' in filename:
+            return True
         for delayed in self.delayed_filenames:
             if len(delayed) > 0 and delayed.casefold() in filename.casefold():
                 return True
@@ -176,7 +182,7 @@ class KananApp:
                     self._run_script(source)
             return
         coalesced_source = self.script_defaults
-        for filename in glob.iglob('./scripts/*.js'):
+        for filename in glob.iglob('./scripts/**/*.js', recursive=True):
             shortname = os.path.basename(filename)
             if self.is_disabled(filename) or self.is_delayed(filename):
                 continue
@@ -198,7 +204,7 @@ class KananApp:
             self._run_script(coalesced_source)
         # Execute delayed scripts.
         print("Running delayed scripts...")
-        for filename in glob.iglob('./scripts/*.js'):
+        for filename in glob.iglob('./scripts/**/*.js', recursive=True):
             shortname = os.path.basename(filename)
             if self.is_disabled(filename) or not self.is_delayed(filename):
                 continue
