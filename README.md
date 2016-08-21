@@ -2,7 +2,7 @@
 Mods for Mabinogi using JavaScript
 
 ## Instructions
-1. Download Python 3 from [python.org](https://www.python.org/downloads/).
+1. Download Python >=3.5 from [python.org](https://www.python.org/downloads/).
 2. While installing it make sure you check the box that says **Add Python 3.x to
 PATH**
 3. To make sure Python was installed correctly, open a command prompt and type
@@ -12,7 +12,7 @@ PATH**
 You can run `python kanan.py -h` for more usage information. For best results,
 run kanan before launching mabi and keep it running in the background.
 
-## Features
+## Features at a glance
 Look in the scripts directory for a full list of mods provided with kanan.
 * By default most scripts (mods) that come with kanan are enabled. To disable a
 mod go into the `./scripts/` directory and delete it, or add the name of the
