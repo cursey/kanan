@@ -14,9 +14,11 @@ IgnoreTranslucency.js
 ManaTunnelLagFix.js
 MoveToSameChannel.js
 NoBlackBars.js
+NoBrownieRequired.js
 NoChannelMoveDescription.js
 NoChannelMoveDenial.js
 NoLogoutPenaltyMsg.js
+NoPersonalShopCreationMsg.js
 NoPlayerZoomTransparency.js
 NoSkillRankUpWindow.js
 NPCFastText.js
