@@ -4,6 +4,7 @@ ChatAllowSameMsg.js
 ClientSideDevCat.js
 DontTargetNPCs.js
 ElfLagFix.js
+EnableInterfaceWhileDead.js
 FarAltText.js
 FighterNoForce.js
 FreeIndoorCamera.js
