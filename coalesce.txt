@@ -1,5 +1,6 @@
 AlwaysTransCollectMode.js
 BitmapFont.js
+ChatAllowSameMsg.js
 ClientSideDevCat.js
 DontTargetNPCs.js
 ElfLagFix.js
