@@ -11,17 +11,17 @@
 // Open the message list to prompt a read from that address.
 // The location CE should find will be the function wcscpy_s.
 // CE BP on the function and note the return value.
-// The return value is function that mabi's packer has created to hide the
+// The return value is a function that mabi's packer has created to hide the
 // import.
 // Now you can start actively using kanan to aide in development.
-// Find the return value of the packers wrapper of wcscpy_s ONLY when its
+// Find the return address of the packers wrapper of wcscpy_s ONLY when its
 // copying a string with your name in it as you send a chat message (using
 // kanan to do this is easiest).
-// Of the return values you find, there will be two of interest.
+// Of the return addresses you find, there will be two of interest.
 // One will have two loops in it, this is where you get the offset to the buffer
 // containing the text in mabi's version of a string.
-// The other one will be where you need to find the next return value of.
-// I used kanan to help find the return value of interest (since its called a
+// The other one will be where you need to find the next return address of.
+// I used kanan to help find the return address of interest (since its called a
 // lot with things that have nothing to do with chat).
 // Finally, we are at where the chat message is being de constructed before it
 // is placed into a list of strings for the chat box.
