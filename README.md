@@ -40,6 +40,13 @@ prompt then leave it open for now.
     * If `kanan.bat` does not stay open then something is most likely wrong with
 your python install.
 
+## The following scripts are disabled by default
+* ClientSideDevCat.js
+* PatternScanSnapshot.js
+* LargerTTFontResize.js
+
+Learn about configuring kanan on our [[wiki|wiki]].
+
 ## Contributing
 Contributions are welcome. If you are contributing a patch that you aren't the
 original author of please give credits at the top of the file. If a patch has
@@ -73,3 +80,4 @@ so proper credits may be given (or issue a pull request).
 * C0ZIEST
 * Kyralis
 * x99user
+* Aahzmandius
