@@ -45,7 +45,7 @@ your python install.
 * PatternScanSnapshot.js
 * LargerTTFontResize.js
 
-Learn about configuring kanan on our [[wiki|wiki]].
+Learn about configuring kanan on our wiki.
 
 ## Contributing
 Contributions are welcome. If you are contributing a patch that you aren't the
