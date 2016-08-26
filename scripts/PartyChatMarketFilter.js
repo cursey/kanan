@@ -15,7 +15,8 @@
 // import.
 // Now you can start actively using kanan to aide in development.
 // Find the return value of the packers wrapper of wcscpy_s ONLY when its
-// copying a string with your name it as you send a chat message (using kanan).
+// copying a string with your name in it as you send a chat message (using
+// kanan to do this is easiest).
 // Of the return values you find, there will be two of interest.
 // One will have two loops in it, this is where you get the offset to the buffer
 // containing the text in mabi's version of a string.
@@ -44,7 +45,14 @@ for (var i = 0; i < filter.length; ++i) {
     filter[i] = filter[i].toLowerCase();
 }
 
-Interceptor.attach(ptr('0x636780'), {
+// Get the address of the function we need to itnercept. There are duplicates
+// of this function so we can't just take a pattern of it, instead this is the
+// pattern of where its called and I grab the address from it.
+var thecall = scan('E8 ? ? ? ? 83 C4 1C E9 ? ? ? ? 8D 4D 08');
+var theoffset = Memory.readS32(thecall.add(1));
+var theaddress = thecall.add(5).toInt32() + theoffset;
+
+Interceptor.attach(ptr(theaddress), {
     onEnter(args) {
         var msgType = args[6].and(0xFF);
 
