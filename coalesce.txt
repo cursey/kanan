@@ -16,6 +16,7 @@ HideNPCCurtains.js
 HideSecondTitle.js
 IgnoreTranslucency.js
 ManaTunnelLagFix.js
+MinuteClock.js
 MoveToSameChannel.js
 NoBlackBars.js
 NoBrownieRequired.js
