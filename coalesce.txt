@@ -29,6 +29,7 @@ NoSkillRankUpWindow.js
 NPCFastText.js
 OneClickRevive.js
 RemoveScreenShake.js
+SecondTimer.js
 ShowDeadlyHP.js
 ShowItemTradePrice.js
 WindowsAppearFaster.js
