@@ -33,3 +33,4 @@ SecondTimer.js
 ShowDeadlyHP.js
 ShowItemTradePrice.js
 WindowsAppearFaster.js
+ZeroFogDistance.js
