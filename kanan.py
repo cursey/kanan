@@ -5,7 +5,8 @@ import getopt
 import time
 import os
 import json
-from ctypes import *
+from ctypes import windll
+
 
 def usage():
     # Prints usage information about how to use kanan.
@@ -34,6 +35,7 @@ usage: python kanan.py <options> [scripts]
         Attach kanan to a specific instance of mabi given by a process id.
     """)
 
+
 class KananApp:
     def __init__(self):
         self.debug = 'false'
@@ -52,7 +54,7 @@ class KananApp:
         with open('delayed.txt') as f:
             self.delayed_filenames = f.read().splitlines()
         self.scans = []
-        self.scripts_to_load = [] # From the command line args.
+        self.scripts_to_load = []  # From the command line args.
 
     def on_message(self, message, data):
         # Called when a script sends us a message.
@@ -160,7 +162,7 @@ class KananApp:
 
     def _run_script(self, source):
         # Run a single script and add it to the list of scripts.
-        if self.debug == 'true': # Prepend the results of every scan to the source
+        if self.debug == 'true':  # Prepend the results of every scan to the source
             source = 'var scans = {};\n'.format(json.dumps(self.scans)) + source
         script = self.session.create_script(source)
         script.on('message', lambda message, data: self.on_message(message, data))
@@ -241,6 +243,7 @@ class KananApp:
             self._unload_scripts()
             print("Detaching from Client.exe...")
             self._detach()
+
 
 def main():
     app = KananApp()
