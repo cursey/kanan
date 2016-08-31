@@ -5,6 +5,9 @@ import getopt
 import time
 import os
 import json
+import tempfile
+import shutil
+from pathlib import Path
 from ctypes import windll
 
 
@@ -245,7 +248,20 @@ class KananApp:
             self._detach()
 
 
+def cleanup_tmp_frida_trash():
+    # Frida creates a new directory and extracts necessary files each time you
+    # run it. They aren't necessary after the game closes/crashes so we can
+    # delete them here.
+    tempdir = Path(tempfile.gettempdir())
+    for folder in glob.iglob(str(tempdir / 'frida*')):
+        try:
+            shutil.rmtree(folder)
+        except PermissionError:
+            pass
+
+
 def main():
+    cleanup_tmp_frida_trash()
     app = KananApp()
     app.run()
 
