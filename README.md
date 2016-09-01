@@ -81,3 +81,4 @@ so proper credits may be given (or issue a pull request).
 * Kyralis
 * x99user
 * Aahzmandius
+* poshwosh
