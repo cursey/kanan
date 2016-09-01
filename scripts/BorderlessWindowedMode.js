@@ -9,7 +9,7 @@ var FindWindowA = new NativeFunction(getProcAddress('User32.dll', 'FindWindowA')
         'pointer', ['pointer', 'pointer'], 'stdcall');
 var GetSystemMetrics = new NativeFunction(getProcAddress('User32.dll', 'GetSystemMetrics'),
         'int', ['int'], 'stdcall');
-var SystemParametersInfo = new NativeFunction(getProcAddress('User32.dll', 'SystemParametersInfoA'),
+var SystemParametersInfoA = new NativeFunction(getProcAddress('User32.dll', 'SystemParametersInfoA'),
         'int', ['uint', 'uint', 'pointer', 'uint'], 'stdcall');
 
 // Constants used by the native methods.
@@ -36,10 +36,12 @@ if (debug) {
 // Get the work area (thanks Warsen).
 var rect = allocateMemory(16);
 
-SystemParametersInfo(SPI_GETWORKAREA, 0, rect, 0);
+SystemParametersInfoA(SPI_GETWORKAREA, 0, rect, 0);
 
-var width = Memory.readInt(rect.add(8));
-var height = Memory.readInt(rect.add(12));
+var x = Memory.readInt(rect);
+var y = Memory.readInt(rect.add(4));
+var width = Memory.readInt(rect.add(8)) - x;
+var height = Memory.readInt(rect.add(12)) - y;
 
 freeMemory(rect, 16);
 
@@ -61,7 +63,7 @@ if (mabiWnd.isNull()) {
 var oldStyle = 0;
 
 while (oldStyle == 0) {
-    SetWindowPos(mabiWnd, HWND_TOP, 0, 0, width, height, SWP_FRAMECHANGED);
+    SetWindowPos(mabiWnd, HWND_TOP, x, y, width, height, SWP_FRAMECHANGED);
 
     var wndStyle = GetWindowLongA(mabiWnd, GWL_STYLE) & ~(WS_BORDER | WS_CAPTION | WS_THICKFRAME);
 
