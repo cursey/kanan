@@ -67,6 +67,8 @@ so proper credits may be given (or issue a pull request).
     * Mana tunnel lag fix
     * No skill rank up window
     * Windows appear faster
+    * Uncapped auto production
+    * Mini title menu (TitleOrganize)
 * Rydian
     * No black bars
     * Transformation mastery collect mode always enabled

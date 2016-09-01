@@ -16,6 +16,7 @@ HideNPCCurtains.js
 HideSecondTitle.js
 IgnoreTranslucency.js
 ManaTunnelLagFix.js
+MiniTitleMenu.js
 MinuteClock.js
 MoveToSameChannel.js
 NoBlackBars.js
@@ -33,5 +34,6 @@ RemoveScreenShake.js
 SecondTimer.js
 ShowDeadlyHP.js
 ShowItemTradePrice.js
+UncapAutoProduction.js
 WindowsAppearFaster.js
 ZeroFogDistance.js
