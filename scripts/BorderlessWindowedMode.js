@@ -9,6 +9,8 @@ var FindWindowA = new NativeFunction(getProcAddress('User32.dll', 'FindWindowA')
         'pointer', ['pointer', 'pointer'], 'stdcall');
 var GetSystemMetrics = new NativeFunction(getProcAddress('User32.dll', 'GetSystemMetrics'),
         'int', ['int'], 'stdcall');
+var SystemParametersInfo = new NativeFunction(getProcAddress('User32.dll', 'SystemParametersInfoA'),
+        'int', ['uint', 'uint', 'pointer', 'uint'], 'stdcall');
 
 // Constants used by the native methods.
 var SM_CXSCREEN = 0;
@@ -19,15 +21,27 @@ var WS_CAPTION = 0x00C00000;
 var WS_THICKFRAME = 0x00040000;
 var HWND_TOP = ptr(0);
 var SWP_FRAMECHANGED = 0x0020;
+var SPI_GETWORKAREA = 0x0030;
 
 // Get the screen size.
-var width = GetSystemMetrics(SM_CXSCREEN);
+/*var width = GetSystemMetrics(SM_CXSCREEN);
 var height = GetSystemMetrics(SM_CYSCREEN);
 
 if (debug) {
     msg("Screen width: " + width);
     msg("Screen height: " + height);
 }
+*/
+
+// Get the work area (thanks Warsen).
+var rect = allocateMemory(16);
+
+SystemParametersInfo(SPI_GETWORKAREA, 0, rect, 0);
+
+var width = Memory.readInt(rect.add(8));
+var height = Memory.readInt(rect.add(12));
+
+freeMemory(rect, 16);
 
 // Get the mabi window.
 var mabiStr = allocateStr('Mabinogi');

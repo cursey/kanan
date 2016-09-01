@@ -82,3 +82,4 @@ so proper credits may be given (or issue a pull request).
 * x99user
 * Aahzmandius
 * poshwosh
+* Warsen
