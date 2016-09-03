@@ -7,8 +7,9 @@ import os
 import json
 import tempfile
 import shutil
+import subprocess
+import ctypes
 from pathlib import Path
-from ctypes import windll
 
 
 def usage():
@@ -36,6 +37,9 @@ usage: python kanan.py <options> [scripts]
 
     -p<id> --process <id>
         Attach kanan to a specific instance of mabi given by a process id.
+
+    -s --start
+        kanan will attempt to start mabi for you (useful for multi-client).
     """)
 
 
@@ -46,6 +50,7 @@ class KananApp:
         self.verbose = 'false'
         self.run_all = 'false'
         self.pid = None
+        self.auto_start = False
         self.path = sys.path[0].replace('\\', '\\\\')
         self.script_defaults = ''
         self.scripts = []
@@ -88,7 +93,7 @@ class KananApp:
         return False
 
     def is_coalesced(self, filename):
-        # Determines if a filename is eligable to be coalesced according to the
+        # Determines if a filename is eligible to be coalesced according to the
         # user.
         if '.coalesce' in filename:
             return True
@@ -109,7 +114,7 @@ class KananApp:
     def _parse_command_line(self):
         # Handle command line arguments.
         try:
-            opts, args = getopt.getopt(sys.argv[1:], 'hdp:tva', ['help', 'debug', 'pid=', 'test', 'verbose', 'all'])
+            opts, args = getopt.getopt(sys.argv[1:], 'hdp:tvas', ['help', 'debug', 'pid=', 'test', 'verbose', 'all', 'start'])
         except getopt.GetoptError as err:
             print(err)
             usage()
@@ -128,13 +133,15 @@ class KananApp:
                 self.verbose = 'true'
             elif o in ('-a', '--all'):
                 self.run_all = 'true'
+            elif o in ('-s', '--start'):
+                self.auto_start = True
             else:
                 assert False, "Unhandled option"
         self.scripts_to_load = args
 
     def _attach(self):
         # Attach to Mabinogi.
-        while windll.user32.FindWindowA(b'Mabinogi', b'Mabinogi') == 0:
+        while ctypes.windll.user32.FindWindowA(b'Mabinogi', b'Mabinogi') == 0:
             time.sleep(1)
         try:
             self.session = frida.attach('Client.exe' if self.pid is None else self.pid)
@@ -167,10 +174,21 @@ class KananApp:
         # Run a single script and add it to the list of scripts.
         if self.debug == 'true':  # Prepend the results of every scan to the source
             source = 'var scans = {};\n'.format(json.dumps(self.scans)) + source
-        script = self.session.create_script(source)
-        script.on('message', lambda message, data: self.on_message(message, data))
-        script.load()
-        self.scripts.append(script)
+        script_loaded = False
+        num_failed_load_attempts = 0
+        while not script_loaded and num_failed_load_attempts < 3:
+            try:
+                script = self.session.create_script(source)
+                script.on('message', self.on_message)
+                script.load()
+                script_loaded = True
+            except frida.TransportError:
+                print("Retrying...")
+                num_failed_load_attempts += 1
+        if script_loaded:
+            self.scripts.append(script)
+        else:
+            print("Failed to load script!!!")
 
     def _run_scripts(self):
         # Loads and runs all the scripts according to the settings.
@@ -229,10 +247,51 @@ class KananApp:
                 pass
         self.scripts = []
 
+    def _process_alive(self, pid):
+        # Checks if a process with the supplied pid is active.
+        processes = [line.split() for line in subprocess.check_output('tasklist').splitlines()]
+        # Skip the malformed entries at the beginning.
+        [processes.pop(i) for i in [0, 1, 2]]
+        pidstr = str(pid).encode('utf-8')
+        for process in processes:
+            if process[1] == pidstr:
+                return True
+        return False
+
+    def _start_mabi(self):
+        # Starts mabinogi if it can. Hopefully this can be improved so it
+        # doesn't rely on the config files in the future.
+        with open('directory.txt') as f:
+            mabidir = Path(f.read().splitlines()[0])
+        with open('args.txt') as f:
+            args = f.read().splitlines()[0]
+        if not mabidir.exists():
+            print("Couldn't find Client.exe in " + str(mabidir))
+            print("Please check directory.txt is correct.")
+            print("Will wait for Client.exe to begin instead.")
+            return None
+        print("Starting Client.exe...")
+        mabipath = str(mabidir)
+        clientpath = str(mabidir / "Client.exe")
+        # Try starting mabi.
+        try:
+            mabi = subprocess.Popen(clientpath + " " + args, cwd=mabipath)
+        except OSError:
+            print("Couldn't start Client.exe.")
+            print("Make sure you're running kanan as administrator!")
+            input()
+            sys.exit()
+        # Now we need to wait until mabi has been unpacked.
+        # TODO: Figure out a better way please!!!
+        time.sleep(1)
+        return mabi.pid
+
     def run(self):
         # Runs kanan.
         self._parse_command_line()
         print("Kanan's Mabinogi Mod")
+        if self.auto_start:
+            self.pid = self._start_mabi()
         while True:
             print("Waiting for Client.exe...")
             self._attach()
@@ -240,12 +299,18 @@ class KananApp:
             print("Running scripts...")
             self._run_scripts()
             print("All done!")
-            while windll.user32.FindWindowA(b'Mabinogi', b'Mabinogi') != 0:
-                time.sleep(1)
+            if self.pid:
+                while self._process_alive(self.pid):
+                    time.sleep(1)
+            else:
+                while ctypes.windll.user32.FindWindowA(b'Mabinogi', b'Mabinogi') != 0:
+                    time.sleep(1)
             print("Unloading scripts (patches may stay applied)...")
             self._unload_scripts()
             print("Detaching from Client.exe...")
             self._detach()
+            if self.pid:
+                return
 
 
 def cleanup_tmp_frida_trash():

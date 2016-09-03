@@ -21,6 +21,8 @@ feature (BitmapFont for example) to `disabled.txt`.
 * You can attach kanan to different processes if you are running multiple
 clients. Open an administrator command prompt where `kanan.py` is located and
 run `python kanan.py -p<id>` where `id` is the process id you want to attach to.
+ You can also have kanan start multiple clients by running 
+`kanan auto-start.bat` or `python kanan.py -s`.
 * You can use kanan to load dll's into mabi by modifying `DllLoader.js`. More
 details on what to do are located at the top of that file.
 * You can use kanan's data folder as if it was mabi's data folder for file based
