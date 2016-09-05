@@ -14,6 +14,7 @@ FreeZoom.js
 HideMainTitle.js
 HideNPCCurtains.js
 HideSecondTitle.js
+HotkeyAnyItem.js
 IgnoreTranslucency.js
 ManaTunnelLagFix.js
 MiniTitleMenu.js
@@ -35,5 +36,6 @@ SecondTimer.js
 ShowDeadlyHP.js
 ShowItemTradePrice.js
 UncapAutoProduction.js
+ViewNPCEquipment.js
 WindowsAppearFaster.js
 ZeroFogDistance.js
