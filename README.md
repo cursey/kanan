@@ -56,6 +56,8 @@ been added and you are the original author of it or know who is, open an issue
 so proper credits may be given (or issue a pull request).
 
 ## Original patch authors
+kanan comes with more mods than are listed here, this is just the list of patch
+authors who haven't directly contributed via GitHub's pull requests.
 * Blade3575
     * Bitmap font
     * Elf lag
