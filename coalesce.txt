@@ -20,6 +20,7 @@ ManaTunnelLagFix.js
 MiniTitleMenu.js
 MinuteClock.js
 MoveToSameChannel.js
+MuteCommerceImp.js
 NoBlackBars.js
 NoBrownieRequired.js
 NoChannelMoveDescription.js

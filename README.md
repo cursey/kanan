@@ -71,6 +71,7 @@ so proper credits may be given (or issue a pull request).
     * Windows appear faster
     * Uncapped auto production
     * Mini title menu (TitleOrganize)
+    * Mute commerce imp (NoImp)
 * Rydian
     * No black bars
     * Transformation mastery collect mode always enabled
