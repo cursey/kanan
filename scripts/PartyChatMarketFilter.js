@@ -49,7 +49,15 @@ var filter = [
     'trad',
     '@home',
     '@house',
-    'nmo'
+    'nmo',
+    's<',
+    'b<',
+    'lf<',
+    'l4<',
+    's <',
+    'b <',
+    'lf <',
+    'l4 <'
 ];
 
 // Make all the filters lowercase to be case insensitive.
