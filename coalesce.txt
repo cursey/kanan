@@ -6,6 +6,7 @@ ClientSideDevCat.js
 ColorAltText.js
 DontTargetNPCs.js
 ElfLagFix.js
+EnableFSAA.js
 EnableInterfaceWhileDead.js
 FarAltText.js
 FighterNoForce.js
