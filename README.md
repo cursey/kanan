@@ -16,8 +16,7 @@ run kanan before launching mabi and keep it running in the background.
 ## Features at a glance
 Look in the scripts directory for a full list of mods provided with kanan.
 * By default most scripts (mods) that come with kanan are enabled. To disable a
-mod go into the `./scripts/` directory and delete it, or add the name of the
-feature (BitmapFont for example) to `disabled.txt`.
+mod you can either add ".disabled" as a suffix to the respective file's name (FreeZoom.js > FreeZoom.disabled.js) in the `./scripts/` directory, or add the file name (BitmapFont.js for example) to `disabled.txt` in the main directory.
 * You can attach kanan to different processes if you are running multiple
 clients. Open an administrator command prompt where `kanan.py` is located and
 run `python kanan.py -p<id>` where `id` is the process id you want to attach to.
@@ -47,7 +46,7 @@ your python install.
 * PatternScanSnapshot.js
 * LargerTTFontResize.js
 
-Learn about configuring kanan on our wiki.
+Learn about configuring kanan on our [wiki](https://github.com/cursey/kanan/wiki).
 
 ## Contributing
 Contributions are welcome. If you are contributing a patch that you aren't the
@@ -88,6 +87,6 @@ authors who haven't directly contributed via GitHub's pull requests.
 * Kyralis
 * x99user
 * Aahzmandius
-* poshwosh
+* Poshwosh
 * Warsen
 * Rydian
