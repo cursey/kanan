@@ -12,6 +12,7 @@ EnableInterfaceWhileDead.js
 FarAltText.js
 FighterNoForce.js
 FreeIndoorCamera.js
+FreezeTimeOfDay.js
 FreeZoom.js
 HideMainTitle.js
 HideNPCCurtains.js
