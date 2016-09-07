@@ -1,6 +1,7 @@
 AlwaysTransCollectMode.js
 BitmapFont.js
 ChatAllowSameMsg.js
+ChatNoRateLimit.js
 ChatToMiniGamers.js
 ClientSideDevCat.js
 ColorAltText.js
