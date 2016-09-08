@@ -63,7 +63,9 @@ if (mabiWnd.isNull()) {
 var oldStyle = 0;
 
 while (oldStyle == 0) {
-    SetWindowPos(mabiWnd, HWND_TOP, x, y, width, height, SWP_FRAMECHANGED);
+    if (SetWindowPos(mabiWnd, HWND_TOP, x, y, width, height, SWP_FRAMECHANGED) == 0) {
+        continue;
+    }
 
     var wndStyle = GetWindowLongA(mabiWnd, GWL_STYLE) & ~(WS_BORDER | WS_CAPTION | WS_THICKFRAME);
 
