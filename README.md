@@ -90,3 +90,4 @@ authors who haven't directly contributed via GitHub's pull requests.
 * Poshwosh
 * Warsen
 * Rydian
+* y3tii
