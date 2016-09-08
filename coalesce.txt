@@ -5,7 +5,9 @@ ChatNoRateLimit.js
 ChatToMiniGamers.js
 ClientSideDevCat.js
 ColorAltText.js
+DisableScreenFlash.js
 DontTargetNPCs.js
+DungeonMapResize.js
 ElfLagFix.js
 EnableFSAA.js
 EnableInterfaceWhileDead.js
@@ -16,6 +18,7 @@ FreezeTimeOfDay.js
 FreeZoom.js
 HideMainTitle.js
 HideNPCCurtains.js
+HideObjects.js
 HideSecondTitle.js
 HotkeyAnyItem.js
 IgnoreTranslucency.js

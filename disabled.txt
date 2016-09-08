@@ -1,2 +1,3 @@
+HideObjects.js
 PatternScanSnapshot.js
 LargerTTFontResize.js
