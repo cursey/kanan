@@ -51,6 +51,7 @@ prompt then leave it open for now.
 your python install.
 
 ## The following scripts are disabled by default
+* DisableScreenFlash.js (issue with meteor strike)
 * PatternScanSnapshot.js
 * LargerTTFontResize.js
 * HideObjects.js
