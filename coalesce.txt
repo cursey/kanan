@@ -36,6 +36,7 @@ NoPlayerZoomTransparency.js
 NoSkillRankUpWindow.js
 NPCFastText.js
 OneClickRevive.js
+RangedAttackSwap.js
 RemoveDungeonFog.js
 RemoveScreenShake.js
 SecondTimer.js
