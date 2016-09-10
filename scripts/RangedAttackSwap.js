@@ -12,4 +12,4 @@ var pattern = scan('B8 09 52 00 00 5F');
 //patch(pattern.add(1), 0x0F, 0x52); //Mirage Missile
 //patch(pattern.add(1), 0xFB, 0x55); //Crash Shot
 //patch(pattern.add(1), 0x14, 0x52); //Spider Shot
-//patch(pattern.add(1), 0x14, 0x52); //Urgent Shot
+//patch(pattern.add(1), 0x16, 0x52); //Urgent Shot
