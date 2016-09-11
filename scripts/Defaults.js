@@ -230,7 +230,12 @@ function getProcAddress(moduleName, funcName) {
 
     // Otherwise, fallback to the win32 api way of doing things. If the module
     // isn't already loaded it will be.
-    return GetProcAddress(loadDll(moduleName), funcName);
+    var str = allocateStr(funcName);
+    var result = GetProcAddress(loadDll(moduleName), str);
+
+    freeStr(str);
+
+    return result;
 }
 
 // Wrapper for NativeFunction that uses the above getProcAddress.
