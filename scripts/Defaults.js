@@ -1,6 +1,12 @@
 // This file is prepended to every script before it is ran by kanan, making
 // everything within this file available to all scripts.
 
+
+//
+// NativeFunctions used by the functions in this script.
+//
+
+
 // Sends a msg back to kanan's window with the name of the script prepended.
 function msg(str) {
     if (scriptName != undefined) {
@@ -152,15 +158,17 @@ function writeWideStr(address, str) {
     Memory.writeU16(address.add(str.length * 2), 0);
 }
 
-// Gets the address of an exported function.
-function getProcAddress(moduleName, funcName) {
-    return Module.findExportByName(moduleName, funcName);
-}
+// NativeFunctions used by the following functions.
+var LoadLibraryA = new NativeFunction(Module.findExportByName('Kernel32.dll', 'LoadLibraryA'),
+    'pointer', ['pointer'], 'stdcall');
+var GetProcAddress = new NativeFunction(Module.findExportByName('Kernel32.dll', 'GetProcAddress'),
+    'pointer', ['pointer', 'pointer'], 'stdcall');
+var VirtualAlloc = new NativeFunction(Module.findExportByName('Kernel32.dll', 'VirtualAlloc'),
+    'pointer', ['pointer', 'ulong', 'uint32', 'uint32'], 'stdcall');
+var VirtualFree = new NativeFunction(Module.findExportByName('Kernel32.dll', 'VirtualFree'),
+    'int', ['pointer', 'ulong', 'uint32'], 'stdcall');
 
 // Allocates some memory.
-var VirtualAlloc = new NativeFunction(getProcAddress('Kernel32.dll', 'VirtualAlloc'),
-        'pointer', ['pointer', 'ulong', 'uint32', 'uint32'], 'stdcall');
-
 function allocateMemory(len) {
     // 0x3000 = MEM_COMMIT | MEM_RESERVE
     // 0x40 = PAGE_EXECUTE_READWRITE
@@ -168,9 +176,6 @@ function allocateMemory(len) {
 }
 
 // Frees memory allocated with allocateMemory.
-var VirtualFree = new NativeFunction(getProcAddress('Kernel32.dll', 'VirtualFree'),
-        'int', ['pointer', 'ulong', 'uint32'], 'stdcall');
-
 function freeMemory(address, len) {
     // 0x4000 = MEM_DECOMMIT
     return VirtualFree(address, len, 0x4000);
@@ -210,9 +215,6 @@ function freeWideStr(str) {
 
 // Loads the dll located at filepath.  Returns the base address of the loaded
 // dll or NULL.
-var LoadLibraryA = new NativeFunction(getProcAddress('Kernel32.dll', 'LoadLibraryA'),
-        'pointer', ['pointer'], 'stdcall');
-
 function loadDll(filepath) {
     var str = allocateStr(filepath);
     var result = LoadLibraryA(str);
@@ -222,3 +224,21 @@ function loadDll(filepath) {
     return result;
 }
 
+// Gets the address of an exported function.
+function getProcAddress(moduleName, funcName) {
+    // Search the currently loaded modules for the function.
+    var addr = Module.findExportByName(moduleName, funcName);
+
+    if (!addr.isNull()) {
+        return addr;
+    }
+
+    // Otherwise, fallback to the win32 api way of doing things. If the module
+    // isn't already loaded it will be.
+    return GetProcAddress(loadDll(moduleName), funcName);
+}
+
+// Wrapper for NativeFunction that uses the above getProcAddress.
+function native(moduleName, funcName, returnType, paramTypes, callType) {
+    return new NativeFunction(getProcAddress(moduleName, funcName), returnType, paramTypes, callType);
+}
