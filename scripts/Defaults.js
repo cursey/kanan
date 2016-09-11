@@ -2,11 +2,6 @@
 // everything within this file available to all scripts.
 
 
-//
-// NativeFunctions used by the functions in this script.
-//
-
-
 // Sends a msg back to kanan's window with the name of the script prepended.
 function msg(str) {
     if (scriptName != undefined) {
