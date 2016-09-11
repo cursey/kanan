@@ -19,12 +19,9 @@
 // process here.
 
 // The native functions we use.
-var SetHandleInformation = new NativeFunction(getProcAddress('kernel32.dll', 'SetHandleInformation'),
-        'int', ['pointer', 'uint32', 'uint32'], 'stdcall');
-var CloseHandle = new NativeFunction(getProcAddress('kernel32.dll', 'CloseHandle'),
-        'int', ['pointer'], 'stdcall');
-var GetLastError = new NativeFunction(getProcAddress('kernel32.dll', 'GetLastError'),
-        'uint32', [], 'stdcall');
+var SetHandleInformation = native('kernel32.dll', 'SetHandleInformation', 'int', ['pointer', 'uint32', 'uint32'], 'stdcall');
+var CloseHandle = native('kernel32.dll', 'CloseHandle', 'int', ['pointer'], 'stdcall');
+var GetLastError = native('kernel32.dll', 'GetLastError', 'uint32', [], 'stdcall');
 
 // Find the mutex handle.
 var movHandle = scan('B9 ?? ?? ?? ?? E8 ?? ?? ?? ?? 84 C0 74 52 A1');
