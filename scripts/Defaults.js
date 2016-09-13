@@ -287,7 +287,7 @@ function insertJmp(address, destination) {
     var p = unprotect(address, 5);
 
     Memory.writeU8(address, 0xE9);
-    Memory.writeS32(address.add(1), address.sub(destination).sub(5));
+    Memory.writeS32(address.add(1), address.toInt32() - destination.toInt32() - 5);
 
     protect(address, 5, p);
 }
