@@ -7,6 +7,6 @@
 //Change the je to a jmp to change the logic so you can always log.
 
 //The pattern matches two code samples, right now we want the first.
-var pattern = scan('84 C0 74 19 B8 02 00 00 00 8B 4D F4');
+var pattern = scan('84 C0 74 19 B8 ?? ?? ?? ?? 8B 4D F4 64 89 0D ?? ?? ?? ?? 59 5F 5E 5B 8B E5 5D C2 04 00');
 
 patch(pattern.add(2), 0xEB);
