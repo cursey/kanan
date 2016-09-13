@@ -81,57 +81,6 @@ function moduleOffset(moduleName, offset) {
     return baseAddress.add(offset);
 }
 
-// Validates a patch address.
-// TODO: Make this more robust.
-function isValidPatchAddress(addr) {
-    return (!addr.isNull() && addr.toInt32() > 1000);
-}
-
-// Patches an array of bytes.
-function patch(addr, c) {
-    if (!isValidPatchAddress(addr)) {
-        msg("Failed to patch.");
-        return;
-    }
-
-    if (testing) {
-        return;
-    }
-
-    if (!Array.isArray(c)) {
-        c = [c];
-    }
-
-    Memory.protect(addr, c.length, 'rwx');
-
-    for (var i = 0; i < c.length; ++i) {
-        if (c[i] >= 0 && c[i] <= 0xFF) {
-            Memory.writeU8(addr.add(i), c[i]);
-        }
-    }
-
-    Memory.protect(addr, c.length, 'r-x');
-}
-
-// Copies bytes.
-function copy(dst, src, len) {
-    if (!isValidPatchAddress(dst) || !isValidPatchAddress(src)) {
-        msg("Failed to copy.");
-        return;
-    }
-
-    if (testing) {
-        return;
-    }
-
-    Memory.protect(dst, len, 'rwx');
-    Memory.protect(src, len, 'rwx');
-
-    Memory.copy(dst, src, len);
-
-    Memory.protect(src, len, 'r-x');
-    Memory.protect(dst, len, 'r-x');
-}
 
 // Writes a string to allocated memory.  Make sure theres enough room at the
 // address for str.length + 1 (for the trailing zero).
@@ -153,6 +102,7 @@ function writeWideStr(address, str) {
     Memory.writeU16(address.add(str.length * 2), 0);
 }
 
+
 // NativeFunctions used by the following functions.
 var LoadLibraryA = new NativeFunction(Module.findExportByName('Kernel32.dll', 'LoadLibraryA'),
     'pointer', ['pointer'], 'stdcall');
@@ -162,18 +112,45 @@ var VirtualAlloc = new NativeFunction(Module.findExportByName('Kernel32.dll', 'V
     'pointer', ['pointer', 'ulong', 'uint32', 'uint32'], 'stdcall');
 var VirtualFree = new NativeFunction(Module.findExportByName('Kernel32.dll', 'VirtualFree'),
     'int', ['pointer', 'ulong', 'uint32'], 'stdcall');
+var VirtualProtect = new NativeFunction(Module.findExportByName('Kernel32.dll', 'VirtualProtect'),
+    'int', ['pointer', 'ulong', 'uint32', 'pointer'], 'stdcall');
+
+// Constants used by the following functions.
+var MEM_COMMIT = 0x00001000;
+var MEM_RESERVE = 0x00002000;
+var MEM_DECOMMIT = 0x4000;
+var PAGE_EXECUTE_READWRITE = 0x40;
 
 // Allocates some memory.
 function allocateMemory(len) {
-    // 0x3000 = MEM_COMMIT | MEM_RESERVE
-    // 0x40 = PAGE_EXECUTE_READWRITE
-    return VirtualAlloc(NULL, len, 0x3000, 0x40);
+    return VirtualAlloc(NULL, len, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 }
 
 // Frees memory allocated with allocateMemory.
 function freeMemory(address, len) {
-    // 0x4000 = MEM_DECOMMIT
-    return VirtualFree(address, len, 0x4000);
+    return VirtualFree(address, len, MEM_DECOMMIT);
+}
+
+// Protects an area of memory and returns the old protection (0 on failure).
+function protect(address, len, protect) {
+    var oldProtectPtr = allocateMemory(4);
+    var result = VirtualProtect(address, len, protect, oldProtectPtr);
+    var oldProtect = Memory.readU32(oldProtectPtr);
+
+    freeMemory(oldProtectPtr, 4);
+
+    if (result == 0) {
+        msg("Failed to protect " + address);
+        return 0; 
+    }
+
+    return oldProtect;
+}
+
+// Unprotects (sets read, write and executable) an area of memory and returns 
+// the old protection (0 on failure).
+function unprotect(address, len) {
+    return protect(address, len, PAGE_EXECUTE_READWRITE);
 }
 
 // Helper that just allocates memory for a str and writes the str to that
@@ -241,4 +218,76 @@ function getProcAddress(moduleName, funcName) {
 // Wrapper for NativeFunction that uses the above getProcAddress.
 function native(moduleName, funcName, returnType, paramTypes, callType) {
     return new NativeFunction(getProcAddress(moduleName, funcName), returnType, paramTypes, callType);
+}
+
+// Validates a patch address.
+// TODO: Make this more robust.
+function isValidPatchAddress(addr) {
+    return (!addr.isNull() && addr.toInt32() > 1000);
+}
+
+// Patches an array of bytes.
+function patch(addr, c) {
+    if (!isValidPatchAddress(addr)) {
+        msg("Failed to patch.");
+        return;
+    }
+
+    if (testing) {
+        return;
+    }
+
+    if (!Array.isArray(c)) {
+        c = [c];
+    }
+
+    var p = unprotect(addr, c.length);
+
+    for (var i = 0; i < c.length; ++i) {
+        if (c[i] >= 0 && c[i] <= 0xFF) {
+            Memory.writeU8(addr.add(i), c[i]);
+        }
+    }
+
+    protect(addr, c.length, p);
+}
+
+// Copies bytes.
+function copy(dst, src, len) {
+    if (!isValidPatchAddress(dst) || !isValidPatchAddress(src)) {
+        msg("Failed to copy.");
+        return;
+    }
+
+    if (testing) {
+        return;
+    }
+
+    var dstp = unprotect(dst, len);
+    var srcp = unprotect(src, len);
+
+    Memory.copy(dst, src, len);
+
+    protect(src, len, srcp);
+    protect(dst, len, dstp);
+}
+
+// Inserts a 5-byte jmp at the address to the destination. 
+// NOTE: Make sure there is room for the jmp!!!!
+function insertJmp(address, destination) {
+    if (!isValidPatchAddress(address)) {
+        msg("Failed to insert jmp.");
+        return;
+    }
+
+    if (testing) {
+        return;
+    }
+
+    var p = unprotect(address, 5);
+
+    Memory.writeU8(address, 0xE9);
+    Memory.writeS32(address.add(1), address.sub(destination).sub(5));
+
+    protect(address, 5, p);
 }
