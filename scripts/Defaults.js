@@ -369,7 +369,7 @@ function patchPointer(addr, c) {
     var p = unprotect(addr, 4);
 
     Memory.writePointer(addr, c);
-    protect(addr, 8, p);
+    protect(addr, 4, p);
 }
 
 // Same as above but called address instead.
