@@ -37,10 +37,4 @@ patch(setTimeOfDay, thePatch);
 
 // We aren't done yet though, we need to replace the placeholder 0xFFFFFFFF with 
 // the desired time of day.
-var buf = new ArrayBuffer(4);
-var bytes = new Uint8Array(buf);
-var floats = new Float32Array(buf);
-
-floats[0] = desiredTimeOfDay / 24.0;
-
-patch(setTimeOfDay.add(5), Array.from(bytes));
+patchFloat(setTimeOfDay.add(5), desiredTimeOfDay / 24.0);
