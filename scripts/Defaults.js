@@ -355,6 +355,26 @@ function patchDouble(addr, c) {
     protect(addr, 8, p);
 }
 
+// Patches a pointer.
+function patchPointer(addr, c) {
+    if (!isValidPatchAddress(addr)) {
+        msg("Failed to patch pointer.");
+        return;
+    }
+
+    if (testing) {
+        return;
+    }
+
+    var p = unprotect(addr, 4);
+
+    Memory.writePointer(addr, c);
+    protect(addr, 8, p);
+}
+
+// Same as above but called address instead.
+var patchAddress = patchPointer;
+
 // Aliases for the above functions.
 var writeByte = patchByte;
 var writeWord = patchWord;
@@ -362,6 +382,8 @@ var writeDword = patchDword;
 var writeQword = patchQword;
 var writeFloat = patchFloat;
 var writeDouble = patchDouble;
+var writePointer = patchPointer;
+var writeAddress = patchAddress;
 
 // Copies bytes.
 function copy(dst, src, len) {
