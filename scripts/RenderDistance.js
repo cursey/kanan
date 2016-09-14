@@ -1,4 +1,4 @@
-//Render distance modification (?)
+// Render distance modification (?)
 
 // Set this to your desired range of vision.
 // For reference, Dunbarton maxes out at 15K.
@@ -27,13 +27,7 @@ dmsg(ourCodeLocation);
 patch(ourCodeLocation, thePatch);
 
 // Replace the placeholder 0xFFFFFFFF with the desired range of vision.
-var buf = new ArrayBuffer(4);
-var bytes = new Uint8Array(buf);
-var floats = new Float32Array(buf);
-floats[0] = desiredRangeOfVision;
-
-// Write the above custom bytes to the right offset in the new code.
-patch(ourCodeLocation.add(9), Array.from(bytes));
+patchFloat(ourCodeLocation.add(9), desiredRangeOfVision);
 
 // Insert the jmp at the end of our code block back to the normal code.
 insertJmp(ourCodeLocation.add(thePatch.length), thePatchLocation.add(6));
