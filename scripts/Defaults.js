@@ -226,7 +226,7 @@ function isValidPatchAddress(addr) {
     return (!addr.isNull() && addr.toInt32() > 1000);
 }
 
-// Patches an array of bytes.
+// Patches an array of bytes or a single byte.
 function patch(addr, c) {
     if (!isValidPatchAddress(addr)) {
         msg("Failed to patch.");
@@ -251,6 +251,117 @@ function patch(addr, c) {
 
     protect(addr, c.length, p);
 }
+
+// Patches a byte (8 bits). This is the same as calling the above patch() 
+// function with a single byte as the argument.
+function patchByte(addr, c) {
+    if (!isValidPatchAddress(addr)) {
+        msg("Failed to patch byte.");
+        return;
+    }
+
+    if (testing) {
+        return;
+    }
+
+    var p = unprotect(addr, 1);
+
+    Memory.writeU8(addr, c);
+    protect(addr, 1, p);
+}
+
+// Patches a word (16 bits, shorts).
+function patchWord(addr, c) {
+    if (!isValidPatchAddress(addr)) {
+        msg("Failed to patch word.");
+        return;
+    }
+
+    if (testing) {
+        return;
+    }
+
+    var p = unprotect(addr, 2);
+
+    Memory.writeU16(addr, c);
+    protect(addr, 2, p);
+}
+
+// Patches a dword (32 bits, ints, longs, addresses).
+function patchDword(addr, c) {
+    if (!isValidPatchAddress(addr)) {
+        msg("Failed to patch dword.");
+        return;
+    }
+
+    if (testing) {
+        return;
+    }
+
+    var p = unprotect(addr, 4);
+
+    Memory.writeU32(addr, c);
+    protect(addr, 4, p);
+}
+
+// Patches a qword (64 bits, long longs, 64-bit addresses).
+function patchQword(addr, c) {
+    if (!isValidPatchAddress(addr)) {
+        msg("Failed to patch qword.");
+        return;
+    }
+
+    if (testing) {
+        return;
+    }
+
+    var p = unprotect(addr, 8);
+
+    Memory.writeU64(addr, c);
+    protect(addr, 8, p);
+}
+
+// Patches a float (32 bits, no doubles).
+function patchFloat(addr, c) {
+    if (!isValidPatchAddress(addr)) {
+        msg("Failed to patch float.");
+        return;
+    }
+
+    if (testing) {
+        return;
+    }
+
+    var p = unprotect(addr, 4);
+
+    Memory.writeFloat(addr, c);
+    protect(addr, 4, p);
+}
+
+// Patches a double (64 bits).
+function patchDouble(addr, c) {
+    if (!isValidPatchAddress(addr)) {
+        msg("Failed to patch double.");
+        return;
+    }
+
+    if (testing) {
+        return;
+    }
+
+    var p = unprotect(addr, 8);
+
+    Memory.writeDouble(addr, c);
+    protect(addr, 8, p);
+}
+
+// Aliases for the above functions.
+var writeByte = patchByte;
+var writeWord = patchWord;
+var writeDword = patchDword;
+var writeQword = patchQword;
+var writeFloat = patchFloat;
+var writeDouble = patchDouble;
 
 // Copies bytes.
 function copy(dst, src, len) {
