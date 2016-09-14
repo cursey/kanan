@@ -16,12 +16,15 @@ FighterNoForce.js
 FreeIndoorCamera.js
 FreezeTimeOfDay.js
 FreeZoom.js
+GlobalHeightOverride.js
 HideMainTitle.js
 HideNPCCurtains.js
 HideObjects.js
 HideSecondTitle.js
 HotkeyAnyItem.js
 IgnoreTranslucency.js
+LargerTTFontResize.js
+LogOutInConversation.js
 ManaTunnelLagFix.js
 MiniTitleMenu.js
 MinuteClock.js
@@ -39,6 +42,7 @@ OneClickRevive.js
 RangedAttackSwap.js
 RemoveDungeonFog.js
 RemoveScreenShake.js
+RenderDistance.js
 SecondTimer.js
 ShowDeadlyHP.js
 ShowItemTradePrice.js
