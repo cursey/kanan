@@ -1,4 +1,3 @@
-DisableScreenFlash.js
 GlobalHeightOverride.js
 HideObjects.js
 PatternScanSnapshot.js
