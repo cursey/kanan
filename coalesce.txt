@@ -13,6 +13,7 @@ EnableFSAA.js
 EnableInterfaceWhileDead.js
 FarAltText.js
 FighterNoForce.js
+FOVChange.js
 FreeIndoorCamera.js
 FreezeTimeOfDay.js
 FreeZoom.js
