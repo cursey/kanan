@@ -1,3 +1,8 @@
+// Description:
+// Remove the limitation of one client.exe instance, allowing you to launch multiple clients. 
+// Take note you'll need a method to bypass the launcher as well, for more information refer to https://github.com/cursey/kanan/wiki/List-of-modifications#enablemulticlientjs-created-by-cursey
+
+// Walkthrough:
 // Intuition: win32 apps use CreateMutex* to limit the number of instances
 // (see https://support.microsoft.com/en-us/kb/243953).  Turns out mabi does
 // this as well.  So all we need to do is close the handle to the mutex mabi
