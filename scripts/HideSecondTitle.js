@@ -1,5 +1,6 @@
-// Hide Second Titles Of All Players (Step29)
+// Description: 
+// Hide away the graphical icon display of secondary titles worn by players. (created by Step29)
 
-var pattern = scan('c1 e9 14 f6 c1 01 75 ?? 8b');
+var pattern = scan('C1 E9 14 F6 C1 01 75 ?? 8B');
 
 patch(pattern.add(6), 0xEB);
