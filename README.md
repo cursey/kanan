@@ -95,6 +95,8 @@ Many original patches/ideas came from the following projects:
 * MNG
 * Noginogi-Party
 
+And to all the patchers that came before, and all that will come after.
+
 ## Thank you to all contributors!
 * QewQew
 * C0ZIEST
