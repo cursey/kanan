@@ -87,6 +87,13 @@ authors who haven't directly contributed via GitHub's pull requests.
     * Objects between camera and character do not become transparent
     * Hide main title
 
+Many original patches/ideas came from the following projects:
+* Fantasia
+* MAMP
+* JAP
+* Gerent/GerentxNogi
+* MNG
+
 ## Thank you to all contributors!
 * QewQew
 * C0ZIEST
