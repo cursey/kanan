@@ -93,6 +93,7 @@ Many original patches/ideas came from the following projects:
 * JAP
 * Gerent/GerentxNogi
 * MNG
+* Noginogi-Party
 
 ## Thank you to all contributors!
 * QewQew
