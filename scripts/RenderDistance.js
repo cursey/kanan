@@ -1,9 +1,11 @@
-// Render distance modification (?)
+// Description:
+// Override and increase the Range of Vision value in the Options menu to render more from distance. (created by Rydian)
 
-// Set this to your desired range of vision.
-// For reference, Dunbarton maxes out at 15K.
+// Configuration:
+// Set this to your desired range of vision. For reference, Dunbarton maxes out at 15000.
 var desiredRangeOfVision = 30000.0;
 
+// Walkthrough:
 // This is the target location we will patch (hook at).
 // There's an fld [ebp+0Ch] which is followed by fst [esi+40h]. We want to overwrite
 // the fst, but do not have enough bytes to do so so we'll copy the relevant code
