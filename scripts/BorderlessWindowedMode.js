@@ -1,3 +1,6 @@
+// Description:
+// While in windowed mode, stretch Mabinogi's window till the edges of the screen just until the taskbar and remove all borders around it.
+
 // Native methods used by this script.
 var SetWindowPos = native('User32.dll', 'SetWindowPos', 'int', ['pointer', 'pointer', 'int', 'int', 'int', 'int', 'uint'], 'stdcall');
 var GetWindowLongA = native('User32.dll', 'GetWindowLongA', 'long', ['pointer', 'int'], 'stdcall');
@@ -52,5 +55,3 @@ while (oldStyle == 0) {
 
     oldStyle = SetWindowLongA(mabiWnd, GWL_STYLE, wndStyle);
 }
-
-
