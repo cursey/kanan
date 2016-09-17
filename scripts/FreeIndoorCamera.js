@@ -1,4 +1,5 @@
-// Free Indoor Camera To Rotate Indoors (Step29)
+// Description:
+// Allows you to freely rotate the camera while indoors. (created by Step29)
 
 var pattern = scan('57 8b 7d 08 0f 84 22 02 00 00');
 

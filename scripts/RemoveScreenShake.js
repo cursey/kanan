@@ -1,5 +1,8 @@
+// Description: 
+// Stops the screen from shaking when using Fireball, summoning a dragon, etc.
+
+// Walkthrough: 
 // Intuition: A timer is started at the beginning of a screen shake.
-//
 // So to find the function responsible for screen shake simply start searching
 // for an unknown 4 byte value (mabi uses timeGetTime() for timing it seems).
 // Then force your screen to shake by summoning a pet or however you want and

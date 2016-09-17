@@ -1,7 +1,7 @@
-// Changes the color of the text you see when holding down alt.
-//
-// By default we change it to white.
-//
+// Description:
+// Changes the text color of entities while holding down ALT to white (#FFFFFF).
+
+// Walkthrough:
 // Find the function that generates the alt text (see ShowCombatPower.js).
 // The function that calls that text generating function also sets the the color
 // that the text will be, so xrefs to find the calling function.

@@ -1,6 +1,7 @@
-// This script makes the clock show every minute that passes by in mabi instead
-// of every 10 minutes.
-//
+// Description: 
+// Updates the clock on a 1 minute basis as opposed to 10 minutes.
+
+// Walkthrough:
 // From data/code/interface.english.txt look for A.M. (as it appears in the
 // clock).  Gives us the following string.
 // IDA unicode string view -> code.interface.window.clock.am

@@ -1,5 +1,66 @@
-// This script will filter out trading/buying messages from party chat.
-//
+// Description:
+// Filter out buying and selling marketing-related Party messages in chat.
+
+// Configuration:
+// Filter messages that look like these. (Case insensitive)
+var filter = [
+    'b>',
+    's>',
+    't>',
+    'tf>',
+    'lf>',
+    't4>',
+    'l4>',
+    'b >',
+    's >',
+    't >',
+    'tf >',
+    'lf >',
+    't4 >',
+    'l4 >',
+    'b<',
+    's<',
+    't<',
+    'tf<',
+    'lf<',
+    't4<',
+    'l4<',
+    'b <',
+    's <',
+    't <',
+    'tf <',
+    'lf <',
+    't4 <',
+    'l4 <',
+    'b:',
+    's:',
+    't:',
+    'tf:',
+    'lf:',
+    't4:',
+    'l4:',
+    'b.',
+    's.',
+    't.',
+    'tf.',
+    'lf.',
+    't4.',
+    'l4.',
+    'b/',
+    's/',
+    't/',
+    'tf/',
+    'lf/',
+    't4/',
+    'l4/',
+    'trad',
+    '@home',
+    '@house',
+    'sale',
+    'nmo'
+];
+
+// Walkthrough: 
 // This was not the easiest feature to figure out but heres loosely the steps
 // I would follow if I needed to reimplement it from scratch.  I may have
 // missed some steps because I didn't write as I reversed.
@@ -27,38 +88,6 @@
 // is placed into a list of strings for the chat box.
 // Find a function that is being passed 7 parameters and thats the one we
 // intercept.
-//
-
-// Filter messages that look like these. Case insensitive.
-var filter = [
-    'b>',
-    's>',
-    'b:',
-    's:',
-    'b >',
-    's >',
-    'b.',
-    's.',
-    'b/',
-    's/',
-    't>',
-    'tf>',
-    'lf>',
-    't4>',
-    'l4>',
-    'trad',
-    '@home',
-    '@house',
-    'nmo',
-    's<',
-    'b<',
-    'lf<',
-    'l4<',
-    's <',
-    'b <',
-    'lf <',
-    'l4 <'
-];
 
 // Make all the filters lowercase to be case insensitive.
 for (var i = 0; i < filter.length; ++i) {

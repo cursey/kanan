@@ -1,3 +1,7 @@
+// Description: 
+// Bypasses the "Currently logged channel." error message and allows you to move to the same channel.
+
+// Walkthrough:
 // In IDA string view -> unicode strings
 // Search for 'code.interface.msg.channel_move.current'.
 // Look @ the xrefs.

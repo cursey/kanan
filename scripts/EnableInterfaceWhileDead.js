@@ -1,3 +1,7 @@
+// Description:
+// Take full control of the interface while in unconcious state (dead!!).
+
+// Walkthrough:
 // Finding the address is kind of tricky but:
 // CE while alive scan for 4 byte value 0
 // CE while dead continue scan for changed values (the value you are looking

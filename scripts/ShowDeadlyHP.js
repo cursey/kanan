@@ -1,5 +1,7 @@
-// Show your negative HP instead of DEADLY
-//
+// Description:
+// Unveil the player character's negative HP instead of just being displayed as DEADLY.
+
+// Walkthrough:
 // Easy enough, in IDA unicode string view -> <color=4>DEADLY</color>
 // xrefs.
 // There should be 3 or so, we will be changing all of them in the same way.

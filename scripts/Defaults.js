@@ -1,5 +1,7 @@
-// This file is prepended to every script before it is ran by kanan, making
-// everything within this file available to all scripts.
+// Description:
+// This file is not a modification, but a script that is prepended to every script
+// before it is ran by kanan, making everything within this file available to all
+// scripts.
 
 
 // Sends a msg back to kanan's window with the name of the script prepended.

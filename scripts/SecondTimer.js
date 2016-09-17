@@ -1,6 +1,7 @@
-// This script makes it so the timers in missions show each second instead of
-// every 15 seconds.
-//
+// Description:
+// Update the time elapsed timer in theatre/shadow missions every 1 second as opposed to every 15 seconds.
+
+// Walkthrough: 
 // Read over MinuteClock.js for the bit about magic number division.
 // String of interest is 'Elapsed Time'
 // IDA unicode string view -> code.interface.pli_windowtaskbar.31

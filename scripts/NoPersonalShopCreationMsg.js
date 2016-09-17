@@ -1,3 +1,7 @@
+// Description:
+// Automatically confirms the "A shop has been created. ... Beware that if you are more than 5 yards away, the shop will close." warning message when creating a personal shop.
+
+// Walkthrough:
 // IDA unicode string view -> code.client.msg.ps_shop.opened2
 // xrefs
 // Scroll down just a bit in graph view and you'll see a function being called
