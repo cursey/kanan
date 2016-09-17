@@ -2,3 +2,4 @@ BorderlessWindowedMode.js
 EnableMultiClient.js
 PatternScanSnapshot.js
 SkipGraphicsCardMsg.js
+UseDataFolder.js
