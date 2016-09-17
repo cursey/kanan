@@ -1,18 +1,21 @@
-//Global height override (Rydian)
+// Description: 
+// Override the height (or age) of every character including players, pets, enemies and NPCs. (created by Rydian)
 
-//1.0 = Normal
-//0.2 = Child
-//-0.4 = Tin Potion
+// Configuration:
+// 1.0 = Normal
+// 0.2 = Child
+// -0.4 = Tin Potion
 var desiredHeight = -0.4;
 
-//Find the fld that loads an entity's height value (+88)
-//when it comes into render distance or changes stats/looks.
-//We want to inject code to overwrite this read.
+// Walkthrough: 
+// Find the fld that loads an entity's height value (+88)
+// when it comes into render distance or changes stats/looks.
+// We want to inject code to overwrite this read.
 
-//The original code signature.
+// The original code signature.
 var thePatchLocation = scan('D9 81 88 00 00 00 C3 CC CC CC CC CC CC CC CC CC D9');
 
-//The new code that'll be injected.
+// The new code that'll be injected.
 var thePatch = [
 	0x50,							// push eax
 	0xB8, 0x00, 0x00, 0x1D, 0x08,				// mov eax,081D0000
