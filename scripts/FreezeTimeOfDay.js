@@ -1,3 +1,11 @@
+// Description:
+// Freeze time and adjust it to your preferred time.
+
+// Configuration:
+// Set this value to your desired time of day. The value must be in 24-hour format and in decimal. For example, if you want to set it to 9 PM, it would be 21.0. By default, it is set to 12 PM, noon.
+var desiredTimeOfDay = 12.0;
+
+// Walkthrough: 
 // Intution: The current time of day is a value from 0.0 to 1.0
 // Turns out this is correct. It resets at midnight from 1.0 to 0.0.
 // Finding the value in CE is easy enough.
@@ -13,13 +21,6 @@
 // Thats 17 times too many for me to want to figure out the interesting calls.
 // Since the function is small, we can replace it with something that just sets 
 // [eax+0Ch] to our desired time of day.
-
-// Set this to your desired time of day (any number, from 0 to 24 will work, 
-// including decimal values so if you want 7:35 to be your time of day, just
-// set it to 7.35).
-var desiredTimeOfDay = 12.0;
-
-
 
 // mov eax, [ecx] is from the original function. We move the hex representation
 // of our floating point time of day (0.0 - 1.0) to eax+0Ch then return.
