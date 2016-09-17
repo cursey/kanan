@@ -1,4 +1,5 @@
-// Disables the restriction of resizing the minimap while in dungeons. (Created by Step29, fixed by Poshwosh)
+// Description: 
+// Disables the restriction of resizing the map while inside dungeons. (created by Step29)
 
 var pattern1 = scan('C2 8D ?? ?? ?? ?? ?? ?? B8 B4 00 00 00');
 patch(pattern1.add(9), 0xFF);
