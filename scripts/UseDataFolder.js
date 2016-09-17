@@ -1,11 +1,7 @@
-// This script tells mabi to load from its /data/ folder before looking through
-// its loaded .pack files.  It also redirects mabi's /data/ folder to be
-// kanan's /data/ folder so that you may mod files without touching mabi's
-// directory.
-//
+// Description:
+// Load files in the /data/ folder of kanan before reading .pack files, then redirect them to Mabinogi without touching Mabinogi's directory.
 // This script is most effective when kanan is ran **BEFORE** mabi starts.
-//
-// NOTE: When running this script in debug mode, expect a crazy amount of
+// When running this script in debug mode, expect a crazy amount of
 // output.  Because of the crazy amount of debug text, most of it is only
 // outputed when also ran in verbose mode (-d -v).
 
