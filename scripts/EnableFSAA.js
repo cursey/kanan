@@ -1,5 +1,7 @@
-// This lets you turn on FSAA in mabi's option menu if you want.
-//
+// Description:
+// Enables the option to turn on Full-screen Anti-aliasing in Mabinogi's Options menu.
+
+// Walkthrough:
 // IDA unicode string view -> code.interface.window.option.fsaa_text.
 // xrefs should show 2 references in the same function.
 // The call above the first reference should be a function called approx. 2033 
