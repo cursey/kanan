@@ -1,7 +1,11 @@
-// Refer to http://wiki.mabinogiworld.com/view/Lag#Lowering_your_Maximum_Transmission_Unit_.28MTU.29
-// To change MTU on channel change/login
-//  1. Set NET_INTERFACE to the correct interface name for your computer
-//  2. Set LOW_MTU to the lowest value you're comfortable with, 386 is a good default
+// Description: 
+// Lower your MTU to reduce latency between the client and server.
+// Fore more information refer to http://wiki.mabinogiworld.com/view/Lag#Lowering_your_Maximum_Transmission_Unit_.28MTU.29
+
+// Configuration:
+// To change MTU on login/channel change:
+// 1. Set NET_INTERFACE to the correct interface name for your computer.
+// 2. Set LOW_MTU to the lowest value you're comfortable with, 386 is a good default.
 var NET_INTERFACE = "Ethernet"; //"Wi-Fi";
 var LOW_MTU = 386;
 var NORM_MTU = 1500;
