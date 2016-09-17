@@ -1,3 +1,6 @@
+// Description: 
+// Disable Nagle's algorithm to reduce latency between the client and server if it wasn't already disabled.
+
 // Native functions used by this script.
 var setsockopt = native('Ws2_32.dll', 'setsockopt', 'int', ['uint', 'int', 'int', 'pointer', 'int'], 'stdcall');
 var WSAGetLastError = native('Ws2_32.dll', 'WSAGetLastError', 'int', [], 'stdcall');
