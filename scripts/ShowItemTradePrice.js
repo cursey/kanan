@@ -1,3 +1,7 @@
+// Description:
+// Always show purchase and resale value of items when viewing tooltips, not just in trade window.
+
+// Walkthrough:
 // This one's really simple.  Turns out theres two obvious strings for us to
 // find!  Finding out what the strings were was easy enough.  Just open up
 // interface.english.txt and search for 'Shop Purchase Price:'.  This tells
