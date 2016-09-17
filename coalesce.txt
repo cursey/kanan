@@ -23,6 +23,7 @@ HideNPCCurtains.js
 HideObjects.js
 HideSecondTitle.js
 HotkeyAnyItem.js
+IgnoreMaintainFrame.js
 IgnoreTranslucency.js
 LargerTTFontResize.js
 LogOutInConversation.js
@@ -34,6 +35,7 @@ MuteCommerceImp.js
 NoBrownieRequired.js
 NoChannelMoveDescription.js
 NoChannelMoveDenial.js
+NoFullscreenChange.js
 NoLogoutPenaltyMsg.js
 NoPersonalShopCreationMsg.js
 NoPlayerZoomTransparency.js
