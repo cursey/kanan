@@ -49,6 +49,7 @@ RenderDistance.js
 SecondTimer.js
 ShowDeadlyHP.js
 ShowItemTradePrice.js
+TalkToEgo.js
 UncapAutoProduction.js
 ViewNPCEquipment.js
 WindowsAppearFaster.js
