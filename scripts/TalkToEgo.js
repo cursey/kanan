@@ -13,4 +13,4 @@
 
 var pattern = scan('0F 85 8F 00 00 00 68 D8 3C 9B 02');
 
-patch(pattern.add(1), [0x90, 0xE9]);
+patch(pattern.add(0), [0x90, 0xE9]);
