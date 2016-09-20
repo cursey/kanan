@@ -27,7 +27,7 @@ var strongStr = strMem.add(400);
 var awfulStr = strMem.add(600);
 var bossStr = strMem.add(800);
 
-Memory.protect(switchptr, 1000, 'rwx');
+var p = unprotect(switchptr, 1000);
 
 // Overwrite the location of the default strings with our new strings.
 Memory.writePointer(switchptr.add(7 + 1), weakestStr);
@@ -42,7 +42,7 @@ var jmptable = Memory.readPointer(switchptr.add(3));
 
 copy(jmptable.add(8), jmptable.add(4), 4);
 
-Memory.protect(switchptr, 1000, 'r-x');
+protect(switchptr, 1000, p);
 
 var createAltNameStr = scan('55 8B EC 6A FF 68 ?? ?? ?? ?? 64 A1 ?? ?? ?? ?? 50 83 EC 18 53 56 57 A1 ?? ?? ?? ?? 33 C5 50 8D 45 F4 64 A3 ?? ?? ?? ?? 8B F1 33 DB 89 5D E0');
 
