@@ -1,3 +1,5 @@
+// Originally found in Gerent/GerentxNogi by Joe.
+
 // Description:
 // Automatically confirms the "Moving to another channel incurs same penalties as re-login." warning message when opening the move channel window.
 

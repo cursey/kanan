@@ -1,3 +1,5 @@
+// Originally found in JAP.
+
 // Description:
 // Remove the fog on the map while in dungeons, automatically unveiling them. (created by ???)
 

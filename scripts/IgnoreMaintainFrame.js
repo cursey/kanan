@@ -1,3 +1,5 @@
+// Originally found in JinsuNogi.
+
 // Description:
 // Ignore the maintain frame setting during character minimization. (created Rydian)
 

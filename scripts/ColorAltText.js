@@ -1,3 +1,5 @@
+// Originally found in Fantasia.
+
 // Description:
 // Changes the text color of entities while holding down ALT to white (#FFFFFF).
 

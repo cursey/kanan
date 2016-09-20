@@ -1,4 +1,6 @@
-//Talk to unequipped ego.
+// Originally found in JinsuNogi.
+
+//Talk to unequipped ego (by Rydian).
 
 //"Please equip the spirit weapon-"
 

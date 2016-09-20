@@ -1,3 +1,5 @@
+// Originally found in Fantasia.
+
 // Description:
 // Load files in the /data/ folder of kanan before reading .pack files, then redirect them to Mabinogi without touching Mabinogi's directory.
 // This script is most effective when kanan is ran **BEFORE** mabi starts.

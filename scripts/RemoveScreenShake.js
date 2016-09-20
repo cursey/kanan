@@ -1,3 +1,5 @@
+// Originally found in Abyss by Blade3575.
+
 // Description: 
 // Stops the screen from shaking when using Fireball, summoning a dragon, etc.
 

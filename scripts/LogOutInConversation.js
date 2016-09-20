@@ -1,3 +1,5 @@
+// Originally found in JinsuNogi.
+
 // Description:
 // Automatically confirms the "You cannot log off while in conversation with an NPC." error message while attempting to log off in NPC conversation. (created by Rydian)
 

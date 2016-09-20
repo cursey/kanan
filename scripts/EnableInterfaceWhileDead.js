@@ -1,3 +1,5 @@
+// Originally found in Jinsu Nogi by garang.
+
 // Description:
 // Take full control of the interface while in unconcious state (dead!!).
 

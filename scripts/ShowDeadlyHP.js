@@ -1,3 +1,5 @@
+// Originally found in MAMP by Tyne and IBWK.
+
 // Description:
 // Unveil the player character's negative HP instead of just being displayed as DEADLY.
 

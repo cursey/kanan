@@ -1,3 +1,5 @@
+// Originally found in Fantasia.
+
 // Description: 
 // Display Combat Power (CP) information when holding down ALT in numerical value as opposed to just ranking. (example: weakest White Spider > 50 weakest White Spider)
 

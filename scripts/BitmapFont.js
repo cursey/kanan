@@ -1,3 +1,5 @@
+// Originally found in Fantasia by spr33.
+
 // Description:
 // Reduces font size to bitmap-size, close to 8px in size. (created by Blade3575)
 

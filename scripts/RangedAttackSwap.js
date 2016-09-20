@@ -1,3 +1,5 @@
+// Originally found in JAP.
+
 // Swaps the default skill used when using ranged weapons. (created by Rydian)
 
 // Configuration:

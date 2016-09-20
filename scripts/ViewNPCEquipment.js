@@ -1,3 +1,5 @@
+// Originally found in JinsuNogi.
+
 // Description:
 // Adds the option "View Equipment" while mouse right-clicking NPCs. (created by ???)
 

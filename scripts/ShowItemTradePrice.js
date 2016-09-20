@@ -1,3 +1,5 @@
+// Originally found in JinsuNogi.
+
 // Description:
 // Always show purchase and resale value of items when viewing tooltips, not just in trade window.
 

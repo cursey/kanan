@@ -1,3 +1,5 @@
+// Originally found in Fantasia.
+
 // Description: 
 // Bypasses the "Currently logged channel." error message and allows you to move to the same channel.
 

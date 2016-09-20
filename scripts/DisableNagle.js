@@ -1,3 +1,5 @@
+// Originally found in mod_kirisame.
+
 // Description: 
 // Disable Nagle's algorithm to reduce latency between the client and server if it wasn't already disabled.
 

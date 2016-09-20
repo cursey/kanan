@@ -1,3 +1,5 @@
+// Originally found in Fantasia.
+
 // Description:
 // Enables the option to turn on Full-screen Anti-aliasing in Mabinogi's Options menu.
 

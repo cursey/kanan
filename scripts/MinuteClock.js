@@ -1,3 +1,5 @@
+// Originally found in Fantasia.
+
 // Description: 
 // Updates the clock on a 1 minute basis as opposed to 10 minutes.
 

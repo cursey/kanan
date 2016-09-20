@@ -1,3 +1,5 @@
+// Originally found in JinsuNogi.
+
 // Description:
 // Automatically confirms the "You cannot switch to another channel while in conversation with an NPC." error message when attempting to change channels in NPC conversation.
 

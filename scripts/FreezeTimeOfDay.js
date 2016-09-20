@@ -1,3 +1,5 @@
+// Originally found in JAP.
+
 // Description:
 // Freeze time and adjust it to your preferred time.
 

@@ -1,3 +1,5 @@
+// Originally found in JAP by kotarou3.
+
 // Description:
 // Allows you to see entities while holding down ALT from much further away.
 
