@@ -40,6 +40,7 @@ NoLogoutPenaltyMsg.js
 NoPersonalShopCreationMsg.js
 NoPlayerZoomTransparency.js
 NoSkillRankUpWindow.js
+NoRenderSky.js
 NPCFastText.js
 OneClickRevive.js
 RangedAttackSwap.js

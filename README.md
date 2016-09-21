@@ -81,6 +81,7 @@ authors who haven't directly contributed via GitHub's pull requests.
     * Uncapped auto production
     * Mini title menu (TitleOrganize)
     * Mute commerce imp (NoImp)
+    * No render sky
 * Rydian
     * Transformation mastery collect mode always enabled
     * No persistent fighter chain popup
@@ -107,3 +108,4 @@ And to all the patchers that came before, and all that will come after.
 * Warsen
 * Rydian
 * y3tii
+* miawsama
