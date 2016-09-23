@@ -43,6 +43,7 @@ NoSkillRankUpWindow.js
 NoRenderSky.js
 NPCFastText.js
 OneClickRevive.js
+PartyNoClose.js
 RangedAttackSwap.js
 RemoveDungeonFog.js
 RemoveScreenShake.js
