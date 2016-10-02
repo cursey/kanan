@@ -1,6 +1,8 @@
+// Originally from Step29 and kotarou3.
+
 // This script inserts commas in long numbers such as the price of items.
 
-// These are the steps I follows to create this script:
+// These are the steps I followed to create this script:
 // Have Rydian send you a picture of where the price of an item is being read
 // from memory. 
 //
