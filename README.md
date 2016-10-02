@@ -3,8 +3,8 @@ Mods for Mabinogi using JavaScript
 
 ## Installation
 1. Download the repository by clicking the green **Clone or Download** button, and extract it anywhere on your computer. Alternatively you can download it through the Github desktop application.
-2. Download Python 3.5 (or greater) from
-[python.org](https://www.python.org/downloads/).
+2. Download Python 3.5 x86-64 (the **64 bit** version) from
+[python.org](https://www.python.org/downloads/release/python-352/) (near the bottom) or use this [direct link](https://www.python.org/ftp/python/3.5.2/python-3.5.2-amd64.exe).
 3. While installing Python, make sure you check the box that says **Add Python 3.x to
 PATH** or **Add Python to environment variables**, depending on the version you downloaded.
 4. To make sure Python was installed correctly, open a command prompt from the start menu and type
