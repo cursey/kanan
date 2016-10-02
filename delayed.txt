@@ -1,4 +1,5 @@
 BorderlessWindowedMode.js
+MaximizeWindow.js
 EnableMultiClient.js
 PatternScanSnapshot.js
 SkipGraphicsCardMsg.js
