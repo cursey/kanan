@@ -55,6 +55,7 @@ your python install.
 * PatternScanSnapshot.js
 * LargerTTFontResize.js
 * HideObjects.js
+* MaximizeWindow.js 
 
 ## Contributing
 Contributions are welcome. If you are contributing a patch that you aren't the
