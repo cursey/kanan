@@ -14,21 +14,13 @@ var desiredHeightCap = 2000;
 //The original code signature.
 var thePatchLocation = scan('D9 05 04 4A 8A 02 5D C2 04 00 8B 41 10');
 
-//The custom value placeholder.
-var thePatch = [
-	0xFF, 0xFF, 0xFF, 0xFF
-];
-
 //Allocate the memory for the custom value.
-var ourCodeLocation = allocateMemory(thePatch.length);
-
+var ourFloat = allocateMemory(4);
 //Debug message to show where the custom value is.
-dmsg(ourCodeLocation);
-//Write the (still placeholder) custom value to the location.
-patch(ourCodeLocation, thePatch);
+dmsg(ourFloat);
 
-//Replace the placeholder value with the desired value.
-patchFloat(ourCodeLocation.add(0), desiredHeightCap);
+//Write the custom value to the location.
+patchFloat(ourFloat, desiredHeightCap);
 
-//Now overwrite the address in the fdiv of the original code with our address.
-patchAddress(thePatchLocation.add(2), ourCodeLocation);
+//Replace the address in the target code with the new address.
+patchAddress(thePatchLocation.add(2), ourFloat);
