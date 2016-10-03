@@ -4,7 +4,7 @@
 
 // These are the steps I followed to create this script:
 // Have Rydian send you a picture of where the price of an item is being read
-// from memory. 
+// from memory.
 //
 // Or find the function that references the string:
 // code.interface.window.buy.price_text
@@ -15,17 +15,17 @@
 // Notice that one of the functions references the string `%s`.
 // This is the 'format string' string which means the number is being converted
 // to a string prior to that function being called.
-// Look above to see the function called immediately after reading the price 
-// and notice that its return value is being fed into the format string 
+// Look above to see the function called immediately after reading the price
+// and notice that its return value is being fed into the format string
 // function we found.
 // That function is the one that converts an integer to a string.
-// Reverse that function and find a call to a function that calls itow_s 
-// multipul times. 
+// Reverse that function and find a call to a function that calls itow_s
+// multipul times.
 // itow_s converts an integer to a wide string.
 // Notice that the actual itow_s calls don't seem to be called all that
 // regularly though.
-// Notice that the function also references the string `%d`. 
-// This is the 'format decimal' string, which means this could also be 
+// Notice that the function also references the string `%d`.
+// This is the 'format decimal' string, which means this could also be
 // converting our number.
 // Notice that this part of the function is called as expected.
 // Intercept the function and fix the number on return.

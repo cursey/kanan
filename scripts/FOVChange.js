@@ -1,7 +1,7 @@
-// Description: 
+// Description:
 // Modify the camera's Field of View. (created by Rydian)
 
-// Configuration: 
+// Configuration:
 // 180 = Mabi's normal value.
 // 120 = A common compromise.
 // 90 = Quake Pro MLG Airhorn
@@ -16,7 +16,7 @@ var thePatchLocation = scan('D9 45 10 D9 56 44 DC 0D ?? ?? ?? 02 DC 35 ?? ?? ?? 
 
 // The custom value placeholder.
 var thePatch = [
-	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
 ];
 
 // Allocate the memory for the custom value.

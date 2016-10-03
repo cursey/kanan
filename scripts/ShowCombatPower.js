@@ -1,9 +1,9 @@
 // Originally found in Fantasia.
 
-// Description: 
+// Description:
 // Display Combat Power (CP) information when holding down ALT in numerical value as opposed to just ranking. (example: weakest White Spider > 50 weakest White Spider)
 
-// Walkthrough: 
+// Walkthrough:
 // IDA unicode string view -> <mini>WEAKEST </mini> (there are others for
 // strong, awful, etc)
 // check the xrefs (should only be one)

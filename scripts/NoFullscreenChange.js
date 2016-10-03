@@ -1,7 +1,7 @@
 // Description:
 // Disable changing between fullscreen and windowed mode. (created by Rydian)
 //
-// Walkthrough: 
+// Walkthrough:
 // There's a byte for if you're in windowed mode (1) or fullscreen (0).
 // A lot of adresses behave like this, one example in one run was
 // 098B6D6C, careful about messing with addresses too early in memory.

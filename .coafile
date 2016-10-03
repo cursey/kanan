@@ -1,0 +1,5 @@
+[Default]
+bears = SpaceConsistencyBear
+files = **.(py|js)
+use_spaces = True
+default_actions = *: ApplyPatchAction

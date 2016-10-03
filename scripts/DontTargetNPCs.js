@@ -1,7 +1,7 @@
 // Description:
 // Disable targeting NPCs while holding down CTRL.
 
-// Walkthrough: 
+// Walkthrough:
 // Don't target NPCs when holding ctrl.
 // In IDA string view -> unicode strings
 // Search for 'enemy > npc'.

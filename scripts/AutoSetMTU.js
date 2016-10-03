@@ -1,4 +1,4 @@
-// Description: 
+// Description:
 // Lower your MTU to reduce latency between the client and server.
 // Fore more information refer to http://wiki.mabinogiworld.com/view/Lag#Lowering_your_Maximum_Transmission_Unit_.28MTU.29
 
@@ -32,17 +32,17 @@ var FALSE = 0;
 var CREATE_NO_WINDOW = 0x08000000;
 var NORMAL_PRIORITY_CLASS = 0x00000020;
 
-// Returns -1 on failure, otherwise returns the exitcode of the process it 
+// Returns -1 on failure, otherwise returns the exitcode of the process it
 // it created.
-// 
-// NOTE: If the process' exitcode is -1 then who knows if this function was 
+//
+// NOTE: If the process' exitcode is -1 then who knows if this function was
 // successful or not.
 function runProcess(name, params) {
     var paramsPtr = allocateStr(name + ' ' + params);
     var startupInfoPtr = allocateMemory(68);
     var processInfoPtr = allocateMemory(16);
 
-    patchDword(startupInfoPtr, 68); // STARTUPINFO.cb = sizeof(STARTUPINFO) 
+    patchDword(startupInfoPtr, 68); // STARTUPINFO.cb = sizeof(STARTUPINFO)
 
     var result = CreateProcessA(NULL, paramsPtr, NULL, NULL, FALSE, CREATE_NO_WINDOW | NORMAL_PRIORITY_CLASS, NULL, NULL, startupInfoPtr, processInfoPtr);
 
@@ -87,10 +87,10 @@ var createConnectionPtr = scan('55 8B EC 83 EC 08 56 57 8B 7D 0C 8B CF');
 Interceptor.attach(createConnectionPtr, {
     onEnter(args) {
         // Lower MTU
-        runProcess('netsh.exe', 'interface ipv4 set subinterface "' + NET_INTERFACE + '" mtu=' + LOW_MTU + ' store=persistent'); 
+        runProcess('netsh.exe', 'interface ipv4 set subinterface "' + NET_INTERFACE + '" mtu=' + LOW_MTU + ' store=persistent');
     },
     onLeave(retval) {
         // Raise MTU back to normal (1500)
-        runProcess('netsh.exe', 'interface ipv4 set subinterface "' + NET_INTERFACE + '" mtu=' + NORM_MTU + ' store=persistent'); 
+        runProcess('netsh.exe', 'interface ipv4 set subinterface "' + NET_INTERFACE + '" mtu=' + NORM_MTU + ' store=persistent');
     }
 });

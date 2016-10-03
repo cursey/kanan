@@ -3,7 +3,7 @@
 // Description:
 // Ignore the maintain frame setting during character minimization. (created Rydian)
 
-// Walkthrough: 
+// Walkthrough:
 // When you change the framerate and save the options screen,
 // the game writes the value somewhere.  This is a different
 // address than the temporary one it uses while in the options.

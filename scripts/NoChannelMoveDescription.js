@@ -3,7 +3,7 @@
 // Description:
 // Automatically confirms the "Moving to another channel incurs same penalties as re-login." warning message when opening the move channel window.
 
-// Walkthrough: 
+// Walkthrough:
 // IDA unicode string view -> code.interface.msg.channel_move.desc
 // xrefs
 // Scroll down till you find a basic block that pushes the value 1 three times

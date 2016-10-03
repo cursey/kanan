@@ -1,7 +1,7 @@
 // Description:
 // Update the time elapsed timer in theatre/shadow missions every 1 second as opposed to every 15 seconds.
 
-// Walkthrough: 
+// Walkthrough:
 // Read over MinuteClock.js for the bit about magic number division.
 // String of interest is 'Elapsed Time'
 // IDA unicode string view -> code.interface.pli_windowtaskbar.31

@@ -1,9 +1,9 @@
 // Originally found in Abyss by Blade3575.
 
-// Description: 
+// Description:
 // Stops the screen from shaking when using Fireball, summoning a dragon, etc.
 
-// Walkthrough: 
+// Walkthrough:
 // Intuition: A timer is started at the beginning of a screen shake.
 // So to find the function responsible for screen shake simply start searching
 // for an unknown 4 byte value (mabi uses timeGetTime() for timing it seems).

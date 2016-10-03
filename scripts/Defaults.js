@@ -143,13 +143,13 @@ function protect(address, len, protect) {
 
     if (result == 0) {
         msg("Failed to protect " + address);
-        return 0; 
+        return 0;
     }
 
     return oldProtect;
 }
 
-// Unprotects (sets read, write and executable) an area of memory and returns 
+// Unprotects (sets read, write and executable) an area of memory and returns
 // the old protection (0 on failure).
 function unprotect(address, len) {
     return protect(address, len, PAGE_EXECUTE_READWRITE);
@@ -254,7 +254,7 @@ function patch(addr, c) {
     protect(addr, c.length, p);
 }
 
-// Patches a byte (8 bits). This is the same as calling the above patch() 
+// Patches a byte (8 bits). This is the same as calling the above patch()
 // function with a single byte as the argument.
 function patchByte(addr, c) {
     if (!isValidPatchAddress(addr)) {
@@ -407,7 +407,7 @@ function copy(dst, src, len) {
     protect(dst, len, dstp);
 }
 
-// Inserts a 5-byte jmp at the address to the destination. 
+// Inserts a 5-byte jmp at the address to the destination.
 // NOTE: Make sure there is room for the jmp!!!!
 function insertJmp(address, destination) {
     if (!isValidPatchAddress(address)) {

@@ -5,8 +5,8 @@
 // Configuration:
 // Down below, uncomment the line for the skill you want Ranged Attack to be replaced as by removing the '//' at the beginning of the line.
 
-// Walkthrough: 
-// Find mov eax,00005209 
+// Walkthrough:
+// Find mov eax,00005209
 // That's the ranged attack skill ID to change. (21001)
 
 var pattern = scan('B8 09 52 00 00 5F');

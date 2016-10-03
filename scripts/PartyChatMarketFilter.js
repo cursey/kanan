@@ -60,7 +60,7 @@ var filter = [
     'nmo'
 ];
 
-// Walkthrough: 
+// Walkthrough:
 // This was not the easiest feature to figure out but heres loosely the steps
 // I would follow if I needed to reimplement it from scratch.  I may have
 // missed some steps because I didn't write as I reversed.

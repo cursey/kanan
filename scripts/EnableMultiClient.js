@@ -1,7 +1,7 @@
 // Originally found in JinsuNogi.
 
 // Description:
-// Remove the limitation of one client.exe instance, allowing you to launch multiple clients. 
+// Remove the limitation of one client.exe instance, allowing you to launch multiple clients.
 // Take note you'll need a method to bypass the launcher as well, for more information refer to https://github.com/cursey/kanan/wiki/List-of-modifications#enablemulticlientjs-created-by-cursey
 
 // Walkthrough:

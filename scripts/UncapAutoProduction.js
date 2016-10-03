@@ -1,4 +1,4 @@
-// Description: 
+// Description:
 // Removes the default cap when producing items through automatic production with the skills Refining, Weaving, Potion Making, Handicraft, Carpentry, Engineering and Magic Craft. (created by Step29)
 
 var pattern1 = scan('66 39 86 ?? ?? ?? ?? 76 07 66');

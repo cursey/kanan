@@ -1,4 +1,4 @@
-// Description: 
+// Description:
 // Skips the animation when opening interface windows, causing them to open instantly. (created by Step29)
 
 var pattern1 = scan('74 6F E8 ?? ?? ?? ?? 85 C0 74 10');

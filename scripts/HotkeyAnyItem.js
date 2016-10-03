@@ -1,6 +1,6 @@
 // Originally found in JinsuNogi.
 
-// Description: 
+// Description:
 // Allows not just potions to be placed on the hotkey bar, but ANY sort of usable item. This includes different types of phoenix feathers, holy water, etc. (created by ???)
 
 // References:

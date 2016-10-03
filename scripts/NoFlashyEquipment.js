@@ -1,7 +1,7 @@
-//Description: 
+//Description:
 //Override the meta/flashy byte of item color codes on render to stop them from flashing (created by Rydian)
 
-//Walkthrough: 
+//Walkthrough:
 //When items are equipped/rendered, the color codes are written elsewhere in
 //memory for the model rendering code to pick up on.  Searching for color 1
 //should find it, with colors 2 and 3 right after it.  This patch has additional
@@ -13,67 +13,67 @@ var thePatchLocation = scan('8B 10 89 57 1C 8B 50 04');
 
 // The new code that'll be injected.
 var thePatch = [
-	0x51,								//push ecx
-	0x31, 0xC9,							//xor ecx,ecx
-	0x80, 0x78, 0x01, 0x00,				//cmp byte ptr [eax+01],00
-	0x75, 0x01,							//jne +1
-	0x41,								//inc ecx
-	0x80, 0x78, 0x02, 0x00,				//cmp byte ptr [eax+02],00
-	0x75, 0x01,							//jne +1
-	0x41,								//inc ecx
-	0x80, 0x78, 0x03, 0x10,				//cmp byte ptr [eax+03],10
-	0x75, 0x01,							//jne +1
-	0x41,								//inc ecx
-	0x83, 0xF9, 0x03,					//cmp ecx,03
-	0x59,								//pop ecx
-	0x0F, 0x84, 0x61, 0x00, 0x00, 0x00,	//je skipoverwrite
-	0x51,								//push ecx
-	0x31, 0xC9,							//xor ecx,ecx
-	0x80, 0x78, 0x03, 0x00,				//cmp byte ptr [eax+03],00
-	0x75, 0x01,							//jne +1
-	0x41,								//inc ecx
-	0x80, 0x78, 0x03, 0xFF,				//cmp byte ptr [eax+03],FF
-	0x75, 0x01,							//jne +1
-	0x41,								//inc ecx
-	0x83, 0xF9, 0x00,					//cmp ecx,00
-	0x75, 0x0A,							//jne +A
-	0x52,								//push edx
-	0x8A, 0x10,							//mov dl,[eax]
-	0x88, 0x50, 0x01,					//mov [eax+01],dl
-	0x88, 0x50, 0x02,					//mov [eax+02],dl
-	0x5A,								//pop edx
-	0x31, 0xC9,							//xor ecx,ecx
-	0x80, 0x78, 0x07, 0x00,				//cmp byte ptr [eax+07],00
-	0x75, 0x01,							//jne +1
-	0x41,								//inc ecx
-	0x80, 0x78, 0x07, 0xFF,				//cmp byte ptr [eax+07],-01
-	0x75, 0x01,							//jne +1
-	0x41,								//inc ecx
-	0x83, 0xF9, 0x00,					//cmp ecx,00
-	0x75, 0x0B,							//jne +B
-	0x52,								//push edx
-	0x8A, 0x50, 0x04,					//mov dl,[eax+04]
-	0x88, 0x50, 0x05,					//mov [eax+05],dl
-	0x88, 0x50, 0x06,					//mov [eax+06],dl
-	0x5A,								//pop edx
-	0x31, 0xC9,							//xor ecx,ecx
-	0x80, 0x78, 0x0B, 0x00,				//cmp byte ptr [eax+0B],00
-	0x75, 0x01,							//jne +1
-	0x41,								//inc ecx
-	0x80, 0x78, 0x0B, 0xFF,				//cmp byte ptr [eax+0B],FF
-	0x75, 0x01,							//jne +1
-	0x41,								//inc ecx
-	0x83, 0xF9, 0x00,					//cmp ecx,00
-	0x75, 0x0B,							//jne +B
-	0x52,								//push edx
-	0x8A, 0x50, 0x08,					//mov dl,[eax+08]
-	0x88, 0x50, 0x09,					//mov [eax+09],dl
-	0x88, 0x50, 0x0A,					//mov [eax+0A],dl
-	0x5A,								//pop edx
-	0x59,								//pop ecx
-										//skipoverwrite:
-	0x8B, 0x10,							//mov edx,[eax]
-	0x89, 0x57, 0x1C,					//mov [edi+1C],edx
+    0x51,                               //push ecx
+    0x31, 0xC9,                         //xor ecx,ecx
+    0x80, 0x78, 0x01, 0x00,             //cmp byte ptr [eax+01],00
+    0x75, 0x01,                         //jne +1
+    0x41,                               //inc ecx
+    0x80, 0x78, 0x02, 0x00,             //cmp byte ptr [eax+02],00
+    0x75, 0x01,                         //jne +1
+    0x41,                               //inc ecx
+    0x80, 0x78, 0x03, 0x10,             //cmp byte ptr [eax+03],10
+    0x75, 0x01,                         //jne +1
+    0x41,                               //inc ecx
+    0x83, 0xF9, 0x03,                   //cmp ecx,03
+    0x59,                               //pop ecx
+    0x0F, 0x84, 0x61, 0x00, 0x00, 0x00, //je skipoverwrite
+    0x51,                               //push ecx
+    0x31, 0xC9,                         //xor ecx,ecx
+    0x80, 0x78, 0x03, 0x00,             //cmp byte ptr [eax+03],00
+    0x75, 0x01,                         //jne +1
+    0x41,                               //inc ecx
+    0x80, 0x78, 0x03, 0xFF,             //cmp byte ptr [eax+03],FF
+    0x75, 0x01,                         //jne +1
+    0x41,                               //inc ecx
+    0x83, 0xF9, 0x00,                   //cmp ecx,00
+    0x75, 0x0A,                         //jne +A
+    0x52,                               //push edx
+    0x8A, 0x10,                         //mov dl,[eax]
+    0x88, 0x50, 0x01,                   //mov [eax+01],dl
+    0x88, 0x50, 0x02,                   //mov [eax+02],dl
+    0x5A,                               //pop edx
+    0x31, 0xC9,                         //xor ecx,ecx
+    0x80, 0x78, 0x07, 0x00,             //cmp byte ptr [eax+07],00
+    0x75, 0x01,                         //jne +1
+    0x41,                               //inc ecx
+    0x80, 0x78, 0x07, 0xFF,             //cmp byte ptr [eax+07],-01
+    0x75, 0x01,                         //jne +1
+    0x41,                               //inc ecx
+    0x83, 0xF9, 0x00,                   //cmp ecx,00
+    0x75, 0x0B,                         //jne +B
+    0x52,                               //push edx
+    0x8A, 0x50, 0x04,                   //mov dl,[eax+04]
+    0x88, 0x50, 0x05,                   //mov [eax+05],dl
+    0x88, 0x50, 0x06,                   //mov [eax+06],dl
+    0x5A,                               //pop edx
+    0x31, 0xC9,                         //xor ecx,ecx
+    0x80, 0x78, 0x0B, 0x00,             //cmp byte ptr [eax+0B],00
+    0x75, 0x01,                         //jne +1
+    0x41,                               //inc ecx
+    0x80, 0x78, 0x0B, 0xFF,             //cmp byte ptr [eax+0B],FF
+    0x75, 0x01,                         //jne +1
+    0x41,                               //inc ecx
+    0x83, 0xF9, 0x00,                   //cmp ecx,00
+    0x75, 0x0B,                         //jne +B
+    0x52,                               //push edx
+    0x8A, 0x50, 0x08,                   //mov dl,[eax+08]
+    0x88, 0x50, 0x09,                   //mov [eax+09],dl
+    0x88, 0x50, 0x0A,                   //mov [eax+0A],dl
+    0x5A,                               //pop edx
+    0x59,                               //pop ecx
+                                        //skipoverwrite:
+    0x8B, 0x10,                         //mov edx,[eax]
+    0x89, 0x57, 0x1C,                   //mov [edi+1C],edx
 ];
 
 // Allocate 5 extra bytes beyond the above to fit the jmp back to normal code.

@@ -1,4 +1,4 @@
-// Description: 
+// Description:
 // Load other utilities of the .DLL extension onto the Mabinogi client.
 
 // Configuration:

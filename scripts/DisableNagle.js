@@ -1,6 +1,6 @@
 // Originally found in mod_kirisame.
 
-// Description: 
+// Description:
 // Disable Nagle's algorithm to reduce latency between the client and server if it wasn't already disabled.
 
 // Native functions used by this script.
@@ -11,10 +11,10 @@ var WSAGetLastError = native('Ws2_32.dll', 'WSAGetLastError', 'int', [], 'stdcal
 var IPPROTO_TCP = 6;
 var TCP_NODELAY = 0x0001;
 
-// This is actually not the call to socket(), but the call to the wrapper 
+// This is actually not the call to socket(), but the call to the wrapper
 // function Mabi's packer has created to hide the import. Intercepting this just
 // as if it was socket() is fine, but I got NGS kicked when intercepting the
-// actual socket() function (could have been a fluke I didn't do further 
+// actual socket() function (could have been a fluke I didn't do further
 // testing).
 var socketCall = scan('E8 ? ? ? ? 8B F0 83 C4 0C 83 FE FF');
 var socketOffset = Memory.readS32(socketCall.add(1));
@@ -29,7 +29,7 @@ Interceptor.attach(ptr(socketAddress), {
         Memory.writeU32(nodelay, 1);
 
         dmsg("Socket: " + socket);
-        dmsg("Setting TCP_NODELAY: " + setsockopt(socket, IPPROTO_TCP, TCP_NODELAY, nodelay, 4)); 
+        dmsg("Setting TCP_NODELAY: " + setsockopt(socket, IPPROTO_TCP, TCP_NODELAY, nodelay, 4));
         dmsg("WSAGetLastError: " + WSAGetLastError());
 
         freeMemory(nodelay, 4);

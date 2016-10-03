@@ -1,4 +1,4 @@
-// Description: 
+// Description:
 // Increase the font size close to 14px in size. (created by ???)
 // Note that it is incompatible with BitmapFont.js, it will break image searching bots, and there's also some text overflow/overlap on some windows to live with.
 

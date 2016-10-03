@@ -34,6 +34,6 @@ while (oldStyle == 0) {
     var wndStyle = GetWindowLongA(mabiWnd, GWL_STYLE) | WS_MAXIMIZEBOX;
 
     oldStyle = SetWindowLongA(mabiWnd, GWL_STYLE, wndStyle);
-	
-	ShowWindow(mabiWnd, SW_MAXIMIZE);
+
+    ShowWindow(mabiWnd, SW_MAXIMIZE);
 }
