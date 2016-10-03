@@ -11,6 +11,7 @@ DungeonMapResize.js
 ElfLagFix.js
 EnableFSAA.js
 EnableInterfaceWhileDead.js
+EnableMinimapZoom.js
 FarAltText.js
 FighterNoForce.js
 FOVChange.js
@@ -35,6 +36,7 @@ MuteCommerceImp.js
 NoBrownieRequired.js
 NoChannelMoveDescription.js
 NoChannelMoveDenial.js
+NoFlashyEquipment.js
 NoFullscreenChange.js
 NoLogoutPenaltyMsg.js
 NoPersonalShopCreationMsg.js
