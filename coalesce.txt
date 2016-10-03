@@ -28,7 +28,6 @@ IgnoreMaintainFrame.js
 IgnoreTranslucency.js
 LargerTTFontResize.js
 LogOutInConversation.js
-ManaTunnelLagFix.js
 MiniTitleMenu.js
 MinuteClock.js
 MoveToSameChannel.js
