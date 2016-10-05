@@ -50,6 +50,7 @@ RemoveDungeonFog.js
 RemoveScreenShake.js
 RenderDistance.js
 SecondTimer.js
+SelfRightClickable.js
 ShowDeadlyHP.js
 ShowItemTradePrice.js
 TalkToEgo.js
