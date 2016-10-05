@@ -15,6 +15,11 @@
 //
 // I think the first part of the color code is alpha.
 
+
+// ARGB hex format.
+var desiredColor = 0xFFFFFFFF;
+
+
 var movColor = scan('C7 46 ? ? ? ? ? C7 46 ? ? ? ? ? 68');
 
-patch(movColor.add(3), [0xFF, 0xFF, 0xFF, 0xFF]);
+patchDword(movColor.add(3), desiredColor);
