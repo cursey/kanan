@@ -30,6 +30,7 @@ IgnoreMaintainFrame.js
 IgnoreTranslucency.js
 LargerTTFontResize.js
 LogOutInConversation.js
+LongerLanceCounter.js
 MiniTitleMenu.js
 MinuteClock.js
 MoveToSameChannel.js
