@@ -29,6 +29,6 @@ var theAddress = theCall.add(5).toInt32() + theOffset;
 
 // patch expects a NativePointer so use the ptr function to conver theAddress
 // from a javascript Number to a NativePointer.
-patch(ptr(theAddress), [0xB8, 0xFF, 0xFF, 0xFF, 0xFF, 0xC2, 0x04, 0x00, 0x90, 0x90]);
+patch(ptr(theAddress), [0xB8, 0x00, 0x00, 0x00, 0x00, 0xC2, 0x04, 0x00, 0x90, 0x90]);
 patchDword(ptr(theAddress).add(1), desiredLanceCounterTime);
 
