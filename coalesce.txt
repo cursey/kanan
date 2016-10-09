@@ -1,5 +1,6 @@
 AlwaysTransCollectMode.js
 BitmapFont.js
+CancelableLanceCounter.js
 ChatAllowSameMsg.js
 ChatNoRateLimit.js
 ChatToMiniGamers.js
