@@ -9,6 +9,13 @@
 
 // SetLookUpOrder is only called once shortly after mabi starts, so we call it
 // again telling it to load from the data folder.
+// To find SetLookUpOrder search for a function that references the string:
+// $BASEDIR
+// It wont be the only one, but SetLookUpOrder is called at the end of one of
+// the functions.
+// The one that only references '$BASEDIR' and 'list<T> too long'.
+// To find the CFileSystem pointer just find what calls that function and see
+// whats moved into ecx.
 var SetLookUpOrderPtr = scan('55 8B EC 6A FF 68 ?? ?? ?? ?? 64 A1 ?? ?? ?? ?? 50 83 EC 0C 53 56 57 A1 ?? ?? ?? ?? 33 C5 50 8D 45 F4 64 A3 ?? ?? ?? ?? 8B F1 89 75 EC E8 ?? ?? ?? ?? 84 C0');
 var SetLookUpOrder = new NativeFunction(SetLookUpOrderPtr, 'int', ['pointer', 'int'], 'thiscall');
 var CFileSystem = Memory.readPointer(scan('B9 ?? ?? ?? ?? E8 ?? ?? ?? ?? 80 7B 13 00').add(1));
