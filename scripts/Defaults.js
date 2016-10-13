@@ -426,3 +426,39 @@ function insertJmp(address, destination) {
 
     protect(address, 5, p);
 }
+
+// Inserts a 5-byte call at the address to the destination.
+function insertCall(address, destination) {
+    if (!isValidPatchAddress(address)) {
+        msg("Failed to insert call.");
+        return;
+    }
+    
+    if (testing) {
+        return;
+    }
+    
+    var p = unprotect(address, 5);
+    
+    Memory.writeU8(address, 0xE8);
+    Memory.writeS32(address.add(1), destination.toInt32() - address.toInt32() - 5);
+    
+    protect(address, 5, p);
+}
+
+// Calculates the absolute address from an instruction that uses a relative
+// one.
+function calcAbsAddress(address, offset, sizeofInstruction) {
+    if (offset == undefined) {
+        offset = 1;
+    }
+    
+    if (sizeofInstruction == undefined) {            
+        sizeofInstruction = 5;
+    }
+    
+    var theOffset = Memory.readS32(address.add(offset));
+    var theAddress = address.add(sizeofInstruction).toInt32() + theOffset;
+    
+    return ptr(theAddress);
+}
