@@ -12,7 +12,7 @@ var desiredHeightCap = 2000;
 //10000 was determined by finding the flight height normally and estimating the cap.
 
 //The original code signature.
-var thePatchLocation = scan('D9 05 04 4A 8A 02 5D C2 04 00 8B 41 10');
+var thePatchLocation = scan('D9 05 ?? ?? ?? ?? 5D C2 04 00 8B 41 10');
 
 //Allocate the memory for the custom value.
 var ourFloat = allocateMemory(4);
