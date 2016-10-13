@@ -41,6 +41,7 @@ NoChannelMoveDenial.js
 NoFlashyEquipment.js
 NoFullscreenChange.js
 NoLogoutPenaltyMsg.js
+NoPartnerZoom.js
 NoPersonalShopCreationMsg.js
 NoPlayerZoomTransparency.js
 NoSkillRankUpWindow.js
