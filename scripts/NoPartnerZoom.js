@@ -11,14 +11,14 @@ var theFstp = scan('D9 5E 1C E8 ? ? ? ? 8B 0E 8B 01 83 C4 04 3B C1 74 1B 8B 48 0
 // it so we need to keep the address thats being called so we can do the call
 // ourselves in our patch.
 var theCall = theFstp.add(3);
-var theCallAddress = calcAbsAddress(theCall); 
+var theCallAddress = calcAbsAddress(theCall);
 
 // We will be comparing against this value in our patch.
 var float100 = allocateMemory(4);
 
 patchFloat(float100, 100);
 
-// Our patch which compares the zoom value thats trying to be set to 100 which 
+// Our patch which compares the zoom value thats trying to be set to 100 which
 // is the zoom value that is set when talking to a partner. If the zoom value
 // being set is 100, we simply skip the instruction that sets the zoom.
 var thePatch = [
@@ -30,10 +30,10 @@ var thePatch = [
     0x74, 0x05,                     // jz popfloat;
     0xD9, 0x5E, 0x1C,               // fstp [esi+0x1c]; the original instruction.
     0xEB, 0x02,                     // jmp done;
-    
+
     // popfloat:
     0xDD, 0xD8                      // fstp st
-    
+
     // done:
 ];
 
@@ -53,7 +53,7 @@ insertCall(ourPatch.add(thePatch.length), theCallAddress);
 insertJmp(ourPatch.add(thePatch.length + 5), theFstp.add(5));
 
 
-// Nop the instructions at the original code to make room for the jump to our 
+// Nop the instructions at the original code to make room for the jump to our
 // patch.
 patch(theFstp, Array(8).fill(0x90));
 

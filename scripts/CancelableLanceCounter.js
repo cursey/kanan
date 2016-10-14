@@ -1,6 +1,6 @@
 // This script lets you cancle lance counter once its been loaded.
 
-// This was just updated from an old patchers source code (JAP). 
+// This was just updated from an old patchers source code (JAP).
 
 // The function references the string: LIMIT_T
 // It is not the only function that references LIMIT_T but it is one of three.

@@ -1,7 +1,7 @@
-//Description: 
+//Description:
 //Change the maximum flight height cap, allowing you to go much higher or stay low (created by Rydian).
 
-//Configuration: 
+//Configuration:
 //50000 = I can see my house from here!
 //10000 = Mabi's normal limit.
 //2000 = Low safe value, also grants instant takeoff.

@@ -9,19 +9,19 @@
 // Stumbled upon this by reversing things around the function that is patched
 // by CancelableLanceCounter.js
 // Find the other function that references the string LIMIT_T and also LS_LUT.
-// A call or two above the first reference to LIMIT_T will be a small function 
-// that gets called whenever you load lance counter and it also returns the 
+// A call or two above the first reference to LIMIT_T will be a small function
+// that gets called whenever you load lance counter and it also returns the
 // constant 0x3A98 in one of its branches (that isn't taken by default). After
-// forcing it to take that branch (by changing the jump) notice that lance 
-// counter now lasts 0x3A98 milliseconds (15000 or 15 seconds). 
+// forcing it to take that branch (by changing the jump) notice that lance
+// counter now lasts 0x3A98 milliseconds (15000 or 15 seconds).
 // Make this function return our desired time.
 
 // In milliseconds (1 minute by default).
 var desiredLanceCounterTime = 60000;
 
 // The signature for the function ended up being really long (because there are
-// similar functions for other skills most likely) so we take the pattern from 
-// where it was called in the function that referenced the LIMIT_T and LS_LUT 
+// similar functions for other skills most likely) so we take the pattern from
+// where it was called in the function that referenced the LIMIT_T and LS_LUT
 // strings.
 var theCall = scan('E8 ? ? ? ? 8B 13 50 8B 42 68');
 var theOffset = Memory.readS32(theCall.add(1));
