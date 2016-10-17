@@ -17,7 +17,7 @@
 // Make this function return our desired time.
 
 // In milliseconds (1 minute by default).
-var desiredLanceCounterTime = 60000;
+var desiredLanceCounterTime = getConfigValue('lance_counter_time', 60000);
 
 // The signature for the function ended up being really long (because there are
 // similar functions for other skills most likely) so we take the pattern from

@@ -1,0 +1,399 @@
+[AutoStart]
+directory = 'C:\Nexon\Library\mabinogi\appdata'
+args = 'code:1622 ver:143 logip:208.85.109.35 logport:11000 chatip:208.85.109.37 chatport:8002 setting:"file://data/features.xml=Regular, USA"' 
+
+[AlwaysTransCollectMode]
+enable = true
+coalesce = true
+delay = false
+
+[AutoSetMTU]
+enable = true
+coalesce = false
+delay = false
+net_interface = "Ethernet"
+low_mtu = 386
+norm_mtu = 1500
+
+[BitmapFont]
+enable = true
+coalesce = true
+delay = false
+
+[BorderlessWindowedMode]
+enable = true
+coalesce = false
+delay = true
+
+[CancelableLanceCounter]
+enable = true
+coalesce = true
+delay = false
+
+[ChatAllowSameMsg]
+enable = true
+coalesce = true
+delay = false
+
+[ChatNoRateLimit]
+enable = true
+coalesce = true
+delay = false
+
+[ChatToMiniGamers]
+enable = true
+coalesce = true
+delay = false
+
+[ClientSideDevCat]
+enable = false
+coalesce = true
+delay = false
+
+[ColorAltText]
+enable = true
+coalesce = true
+delay = false
+
+[DisableNagle]
+enable = true
+coalesce = false
+delay = false
+
+[DisableScreenFlash]
+enable = true
+coalesce = true
+delay = false
+
+[DllLoader]
+enable = false 
+coalesce = false
+delay = false
+
+[DontTargetNPCs]
+enable = true
+coalesce = true
+delay = false
+
+[DungeonMapResize]
+enable = true
+coalesce = true
+delay = false
+
+[ElfLagFix]
+enable = true
+coalesce = true
+delay = false
+
+[EnableFSAA]
+enable = true
+coalesce = true
+delay = false
+
+[EnableInterfaceWhileDead]
+enable = true
+coalesce = true
+delay = false
+
+[EnableMinimapZoom]
+enable = true
+coalesce = true
+delay = false
+
+[EnableMultiClient]
+enable = true
+coalesce = false
+delay = true
+
+[FarAltText]
+enable = true
+coalesce = true
+delay = false
+
+[FighterNoForce]
+enable = true
+coalesce = true
+delay = false
+
+[FlightMaxChange]
+enable = true
+coalesce = true
+delay = false
+height_cap = 2000
+
+[FOVChange]
+enable = true
+coalesce = true
+delay = false
+fov = 120
+
+[FreeIndoorCamera]
+enable = true
+coalesce = true
+delay = false
+
+[FreezeTimeOfDay]
+enable = true
+coalesce = true
+delay = false
+time_of_day = 12
+
+[FreeZoom]
+enable = true
+coalesce = true
+delay = false
+
+[FriendlyNumbers]
+enable = true
+coalesce = false
+delay = false
+
+[GlobalHeightOverride]
+enable = false 
+coalesce = true
+delay = false
+height = -0.4
+
+[HideMainTitle]
+enable = true
+coalesce = true
+delay = false
+
+[HideNPCCurtains]
+enable = true
+coalesce = true
+delay = false
+
+[HideObjects]
+enable = false
+coalesce = true
+delay = false
+
+[HideSecondTitle]
+enable = true
+coalesce = true
+delay = false
+
+[HotkeyAnyItem]
+enable = true
+coalesce = true
+delay = false
+
+[IgnoreMaintainFrame]
+enable = true
+coalesce = true
+delay = false
+
+[IgnoreTranslucency]
+enable = true
+coalesce = true
+delay = false
+
+[LargerTTFontResize]
+enable = false
+coalesce = true
+delay = false
+
+[LogOutInConversation]
+enable = true
+coalesce = true
+delay = false
+
+[LongerLanceCounter]
+enable = true
+coalesce = true
+delay = false
+lance_counter_time = 60000
+
+[MaximizeWindow]
+enable = false 
+coalesce = false
+delay = true
+
+[MiniTitleMenu]
+enable = true
+coalesce = true
+delay = false
+
+[MinuteClock]
+enable = true
+coalesce = true
+delay = false
+
+[MoveToSameChannel]
+enable = true
+coalesce = true
+delay = false
+
+[MuteCommerceImp]
+enable = true
+coalesce = true
+delay = false
+
+[NoChannelMoveDenial]
+enable = true
+coalesce = true
+delay = false
+
+[NoChannelMoveDescription]
+enable = true
+coalesce = true
+delay = false
+
+[NoFlashyEquipment]
+enable = true
+coalesce = true
+delay = false
+
+[NoFullscreenChange]
+enable = true
+coalesce = true
+delay = false
+
+[NoLogoutPenaltyMsg]
+enable = true
+coalesce = true
+delay = false
+
+[NoPartnerZoom]
+enable = true
+coalesce = true
+delay = false
+
+[NoPersonalShopCreationMsg]
+enable = true
+coalesce = true
+delay = false
+
+[NoPlayerZoomTransparency]
+enable = true
+coalesce = true
+delay = false
+
+[NoSkillRankUpWindow]
+enable = true
+coalesce = true
+delay = false
+
+[NoRenderSky]
+enable = true
+coalesce = true
+delay = false
+
+[NPCFastText]
+enable = true
+coalesce = true
+delay = false
+
+[OneClickRevive]
+enable = true
+coalesce = true
+delay = false
+
+[PartyChatMarketFilter]
+enable = true
+coalesce = false
+delay = false
+
+[PartyNoClose]
+enable = true
+coalesce = true
+delay = false
+
+[PatternScanSnapshot]
+enable = false
+coalesce = false
+delay = true
+
+[RangedAttackSwap]
+enable = true
+coalesce = true
+delay = false
+
+# Change swapped_skill to one of the following values
+# 0 = Normal ranged attack
+# 1 = Magnum shot
+# 2 = Arrow revolver
+# 3 = Support shot
+# 4 = Mirage Missile
+# 5 = Crash shot
+# 6 = Spider shot
+# 7 = Urgent shot
+swapped_skill = 0
+
+[RemoveDungeonFog]
+enable = true
+coalesce = true
+delay = false
+
+[RemoveScreenShake]
+enable = true
+coalesce = true
+delay = false
+
+[RenderDistance]
+enable = true
+coalesce = true
+delay = false
+range = 30000 
+
+[SecondTimer]
+enable = true
+coalesce = true
+delay = false
+
+[SelfRightClickable]
+enable = true
+coalesce = true
+delay = false
+
+[ShowCombatPower]
+enable = true
+coalesce = false
+delay = false
+
+[ShowDeadlyHP]
+enable = true
+coalesce = true
+delay = false
+
+[ShowItemTradePrice]
+enable = true
+coalesce = true
+delay = false
+
+[SkipGraphicsCardMsg]
+enable = true
+coalesce = true
+delay = false
+
+[TalkToEgo]
+enable = true
+coalesce = true
+delay = false
+
+[UncapAutoProduction]
+enable = true
+coalesce = true
+delay = false
+
+[UseDataFolder]
+enable = true
+coalesce = false
+delay = true
+
+[ViewNPCEquipment]
+enable = true
+coalesce = true
+delay = false
+
+[WindowsAppearFaster]
+enable = true
+coalesce = true
+delay = false
+
+[ZeroFogDistance]
+enable = true
+coalesce = true
+delay = false
+

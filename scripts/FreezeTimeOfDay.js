@@ -5,7 +5,7 @@
 
 // Configuration:
 // Set this value to your desired time of day. The value must be in 24-hour format and in decimal. For example, if you want to set it to 9 PM, it would be 21.0. By default, it is set to 12 PM, noon.
-var desiredTimeOfDay = 12.0;
+var desiredTimeOfDay = getConfigValue('time_of_day', 12.0);
 
 // Walkthrough:
 // Intution: The current time of day is a value from 0.0 to 1.0

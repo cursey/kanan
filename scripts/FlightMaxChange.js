@@ -5,7 +5,7 @@
 //50000 = I can see my house from here!
 //10000 = Mabi's normal limit.
 //2000 = Low safe value, also grants instant takeoff.
-var desiredHeightCap = 2000;
+var desiredHeightCap = getConfigValue('height_cap', 2000);
 
 //Walkthrough:
 //Find a float of 10000 in early static memory that's read when flying upwards.

@@ -3,6 +3,23 @@
 // before it is ran by kanan, making everything within this file available to all
 // scripts.
 
+// Returns a mods configuration option value. If the option is missing, a 
+// message will be sent and the def value will be returned.
+function getConfigValue(option, def) {
+    if (modName in config) {
+        if (option in config[modName]) {
+            return config[modName][option];
+        }
+        else {
+            msg("NOTICE: " + modName + " is missing the '" + option + "' entry in config.toml");
+        }
+    }
+    else {
+        msg("NOTICE: " + modName + " does not have a config.toml entry");
+    }
+    
+    return def;
+}
 
 // Sends a msg back to kanan's window with the name of the script prepended.
 function msg(str) {

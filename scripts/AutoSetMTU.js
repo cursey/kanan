@@ -6,9 +6,9 @@
 // To change MTU on login/channel change:
 // 1. Set NET_INTERFACE to the correct interface name for your computer.
 // 2. Set LOW_MTU to the lowest value you're comfortable with, 386 is a good default.
-var NET_INTERFACE = "Ethernet"; //"Wi-Fi";
-var LOW_MTU = 386;
-var NORM_MTU = 1500;
+var NET_INTERFACE = getConfigValue('net_interface', 'Ethernet'); //"Wi-Fi";
+var LOW_MTU = getConfigValue('low_mtu', 386);
+var NORM_MTU = getConfigValue('norm_mtu', 1500);
 /*
       1500 <768 < 512 < 386 < 256 < 128 < 48
   Slow<------------------------------------>Fast

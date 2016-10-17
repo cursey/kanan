@@ -3,7 +3,7 @@
 
 // Configuration:
 // Set this to your desired range of vision. For reference, Dunbarton maxes out at 15000.
-var desiredRangeOfVision = 30000.0;
+var desiredRangeOfVision = getConfigValue('range', 30000.0);
 
 // Walkthrough:
 // This is the target location we will patch (hook at).
