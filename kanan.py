@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import ctypes
 import toml
+import psutil
 from pathlib import Path
 
 
@@ -41,6 +42,9 @@ usage: python kanan.py <options> [scripts]
 
     -s --start
         kanan will attempt to start mabi for you (useful for multi-client).
+    
+    -m --morrighan
+        kanan will attempt to start mabi with Morrighan for you.
     """)
 
 
@@ -53,6 +57,7 @@ class KananApp:
         self.pid = None
         self.session = None
         self.auto_start = False
+        self.morrighan = False
         self.path = sys.path[0].replace('\\', '\\\\')
         self.script_defaults = ''
         self.scripts = []
@@ -120,8 +125,8 @@ class KananApp:
         # Handle command line arguments.
         try:
             opts, args = getopt.getopt(sys.argv[1:],
-                                       'hdp:tvas',
-                                       ['help', 'debug', 'pid=', 'test', 'verbose', 'all', 'start'])
+                                       'hdp:tvasm',
+                                       ['help', 'debug', 'pid=', 'test', 'verbose', 'all', 'start', 'morrighan'])
         except getopt.GetoptError as err:
             print(err)
             usage()
@@ -142,6 +147,8 @@ class KananApp:
                 self.run_all = 'true'
             elif opt in ('-s', '--start'):
                 self.auto_start = True
+            elif opt in ('-m', '--morrighan'):
+                self.morrighan = True
             else:
                 assert False, "Unhandled option"
         self.scripts_to_load = args
@@ -285,9 +292,13 @@ class KananApp:
             print("Please check directory.txt is correct.")
             print("Will wait for Client.exe to begin instead.")
             return None
-        print("Starting Client.exe...")
         mabipath = str(mabidir)
-        clientpath = str(mabidir / "Client.exe")
+        if self.morrighan:
+            print("Starting Morrighan.exe...")
+            clientpath = str(mabidir / "Morrighan.exe")
+        else:
+            print("Starting Client.exe...")
+            clientpath = str(mabidir / "Client.exe")
         # Try starting mabi.
         try:
             mabi = subprocess.Popen(clientpath + " " + args, cwd=mabipath)
@@ -299,7 +310,7 @@ class KananApp:
         # Now we need to wait until mabi has been unpacked.
         # TODO: Figure out a better way please!!!
         time.sleep(1)
-        return mabi.pid
+        return get_newest_client_pid()
 
     def run(self):
         """Runs kanan."""
@@ -339,6 +350,17 @@ def cleanup_tmp_frida_trash():
         except PermissionError:
             pass
 
+def get_newest_client_pid():
+    """Searches through all the Client.exe's to find the newest one.
+    Returns -1 if Client.exe is not found."""
+    time = 0
+    pid = -1
+    for proc in psutil.process_iter():
+        if proc.name() == 'Client.exe':
+            if time < proc.create_time():
+                time = proc.create_time()
+                pid = proc.pid
+    return pid
 
 def main():
     """The entrypoint for kanan"""
