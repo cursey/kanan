@@ -61,8 +61,11 @@ class KananApp:
         with open('config.toml') as conf:
             config = conf.read()
         config += '\n'
-        with open('private.toml') as conf:
-            config += conf.read()
+        try:
+            with open('private.toml') as conf:
+                config += conf.read()
+        except FileNotFoundError:
+            pass
         self.config = toml.loads(config)
 
     def on_message(self, message, data):
