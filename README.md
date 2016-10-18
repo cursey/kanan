@@ -110,3 +110,4 @@ And to all the patchers that came before, and all that will come after.
 * Rydian
 * y3tii
 * miawsama
+* vurtic
