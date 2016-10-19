@@ -235,7 +235,7 @@ enable = true
 coalesce = true
 delay = false
 
-#The "Minimuze Characters" setting in the game renders players as simple
+#The "Minimize Characters" setting in the game renders players as simple
 #robed characters for speed.  Normally the game will only do this if the FPS
 #falls below a specified amount.  This mod makes it always happen regardless.
 [IgnoreMaintainFrame]
@@ -411,7 +411,7 @@ coalesce = true
 delay = false
 swapped_skill = 0
 
-#Removed "fog" from dungeon maps, making them always display as revealed.
+#Remove "fog" from dungeon maps, making them always display as revealed.
 [RemoveDungeonFog]
 enable = true
 coalesce = true
