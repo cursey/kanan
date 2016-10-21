@@ -4,5 +4,13 @@
 
 echo Checking and installing dependencies...
 pip -q install frida toml psutil
+if %errorlevel% neq 0 (
+    pause
+    exit
+)
 cls
 python ./kanan.py --debug
+if %errorlevel% neq 0 (
+    pause
+    exit
+)
