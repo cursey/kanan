@@ -1,5 +1,5 @@
 [Default]
 bears = SpaceConsistencyBear
-files = **.(py|js)
+files = **.(py|js|bat)
 use_spaces = True
 default_actions = *: ApplyPatchAction

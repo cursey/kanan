@@ -42,7 +42,7 @@ usage: python kanan.py <options> [scripts]
 
     -s --start
         kanan will attempt to start mabi for you (useful for multi-client).
-    
+
     -m --morrighan
         kanan will attempt to start mabi with Morrighan for you.
     """)
