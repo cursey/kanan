@@ -158,7 +158,7 @@ class KananApp:
 
     def _attach(self):
         # Attach to Mabinogi.
-        while ctypes.windll.user32.FindWindowA(b'Mabinogi', b'Mabinogi') == 0:
+        while ctypes.windll.user32.FindWindowA(b'Mabinogi', None) == 0:
             time.sleep(1)
         try:
             self.session = frida.attach('Client.exe' if self.pid is None else self.pid)
@@ -332,7 +332,7 @@ class KananApp:
                 while self._process_alive(self.pid):
                     time.sleep(1)
             else:
-                while ctypes.windll.user32.FindWindowA(b'Mabinogi', b'Mabinogi') != 0:
+                while ctypes.windll.user32.FindWindowA(b'Mabinogi', None) != 0:
                     time.sleep(1)
             print("Unloading scripts (patches may stay applied)...")
             self._unload_scripts()
