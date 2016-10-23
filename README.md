@@ -43,13 +43,6 @@ kanan will automatically rerun all the scripts.
 
 Learn about configuring kanan on our [wiki](https://github.com/cursey/kanan/wiki).
 
-## Known issues
-* Closing the command prompt after patches have been applied has caused crashes
-for some users. If you experience a crash immediately after closing the command
-prompt then leave it open for now.
-    * If `kanan.bat` does not stay open then something is most likely wrong with
-your python install.
-
 ## Contributing
 Contributions are welcome. If you are contributing a patch that you aren't the
 original author of, please give credits at the top of the file. If a patch has
