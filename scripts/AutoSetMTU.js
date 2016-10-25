@@ -5,8 +5,20 @@
 // Configuration:
 // To change MTU on login/channel change:
 // 1. Set NET_INTERFACE to the correct interface name for your computer.
-// 2. Set LOW_MTU to the lowest value you're comfortable with, 386 is a good default.
+//
+// 2. To find your interface name and current mtu launch a CMD Window and input "Netsh interface ipv4 show subinterfaces".
+// If an interface name does not exist on the pc it will ignore it. So do not worry.
+//
+// 3. While 1500 is a good default for NORM_MTU, to get a perfect mtu value you can run a few tests on a value of choice in cmd prompt.
+// Type "ping www.google.com -f -l ####" without quotes in a cmd window with elevated priviledges, where #### = the value you wish to test.
+// Run the test by reducing mtu value tested in small increments (even numbers) from 1500. (Example 1480 > 1460 > 1440 < 1442 etc)
+// You will want to reach a value that is as high as possible without packet loss or fragmentation. This varies by connection but may improve web speeds.
+// Note you must add 28 to the mtu value you tested when actually changing mtu for bit header reserves.
+// For Example: 1440 tests with no fragmentation or packet loss on my wifi so I take 1440 + 28 = 1468 mtu. Or 1470 + 28 = 1498
+//
+// 4. Set LOW_MTU to the lowest value you're comfortable with, 386 is a good option for some when it comes to mabinogi.
 var NET_INTERFACE = getConfigValue('net_interface', 'Ethernet'); //"Wi-Fi";
+var NET_INTERFACE2 = getConfigValue('net_interface2', 'Wi-Fi'); //"Ethernet";
 var LOW_MTU = getConfigValue('low_mtu', 386);
 var NORM_MTU = getConfigValue('norm_mtu', 1500);
 /*
@@ -88,9 +100,11 @@ Interceptor.attach(createConnectionPtr, {
     onEnter(args) {
         // Lower MTU
         runProcess('netsh.exe', 'interface ipv4 set subinterface "' + NET_INTERFACE + '" mtu=' + LOW_MTU + ' store=persistent');
+        runProcess('netsh.exe', 'interface ipv4 set subinterface "' + Net_INTERFACE2 + '" mtu=' + LOW_MTU + 'store=persistent');
     },
     onLeave(retval) {
         // Raise MTU back to normal (1500)
         runProcess('netsh.exe', 'interface ipv4 set subinterface "' + NET_INTERFACE + '" mtu=' + NORM_MTU + ' store=persistent');
+        runProcess('netsh.exe', 'interface ipv4 set subinterface "' + NET_INTERFACE2 + '" mtu=' + NORM_MTU + ' store=persistent');
     }
 });
