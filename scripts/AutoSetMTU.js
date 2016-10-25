@@ -100,7 +100,7 @@ Interceptor.attach(createConnectionPtr, {
     onEnter(args) {
         // Lower MTU
         runProcess('netsh.exe', 'interface ipv4 set subinterface "' + NET_INTERFACE + '" mtu=' + LOW_MTU + ' store=persistent');
-        runProcess('netsh.exe', 'interface ipv4 set subinterface "' + Net_INTERFACE2 + '" mtu=' + LOW_MTU + 'store=persistent');
+        runProcess('netsh.exe', 'interface ipv4 set subinterface "' + NET_INTERFACE2 + '" mtu=' + LOW_MTU + 'store=persistent');
     },
     onLeave(retval) {
         // Raise MTU back to normal (1500)
