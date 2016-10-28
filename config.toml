@@ -18,6 +18,7 @@ enable = true
 coalesce = false
 delay = false
 net_interface = "Ethernet"
+net_interface2 = "Wi-Fi"
 low_mtu = 386
 norm_mtu = 1500
 
