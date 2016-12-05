@@ -152,6 +152,13 @@ enable = true
 coalesce = true
 delay = false
 
+#Cause the cursor to jump to the end when editing a pet note, allowing you to 
+#erase what was previously written.
+[FixPetNoteCursor]
+enable = true
+coalesce = true
+delay = false
+
 #Changes the flight height cap.  10000 is the normal height limit.
 #A low flight cap makes it so you can always land, and a value
 #around 2000 (the minimum) has the added benefit of instant takeoff.
