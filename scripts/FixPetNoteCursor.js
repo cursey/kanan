@@ -14,6 +14,6 @@
 //to
 //add [esi+0000010C],ebp
 
-var pattern = scan('C7 45 08 00 00 00 00 FF 86 0C 01 00 00');
+var pattern = scan('C7 45 08 00 00 00 00 FF 86 10 01 00 00');
 
-patch(pattern.add(7), [0x01, 0xAE, 0x0C, 0x01, 0x00, 0x00]);
+patch(pattern.add(7), [0x01, 0xAE]);
