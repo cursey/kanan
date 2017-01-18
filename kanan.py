@@ -292,7 +292,7 @@ class KananApp:
         args = self.get_option('AutoStart', 'args')
         if not mabidir.exists():
             print("Couldn't find Client.exe in " + str(mabidir))
-            print("Please check directory.txt is correct.")
+            print("Please make sure the directory is correct in config.toml")
             print("Will wait for Client.exe to begin instead.")
             return None
         mabipath = str(mabidir)
