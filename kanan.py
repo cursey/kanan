@@ -162,6 +162,7 @@ class KananApp:
             time.sleep(1)
         try:
             self.session = frida.attach('Client.exe' if self.pid is None else self.pid)
+            self.session.enable_jit() # Force the use of v8 for moddern javascript.
         except frida.ProcessNotFoundError:
             print("Couldn't attach to Client.exe.")
             print("Make sure you're running kanan as administrator!")
