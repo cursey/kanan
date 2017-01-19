@@ -31,7 +31,7 @@ var CloseHandle = native('kernel32.dll', 'CloseHandle', 'int', ['pointer'], 'std
 var GetLastError = native('kernel32.dll', 'GetLastError', 'uint32', [], 'stdcall');
 
 // Find the mutex handle.
-var movHandle = scan('B9 ?? ?? ?? ?? E8 ?? ?? ?? ?? 84 C0 74 52 A1');
+var movHandle = scan('B9 ? ? ? ? E8 ? ? ? ? 84 C0 74 57 8B 0D');
 var mutexHandlePtr = Memory.readPointer(movHandle.add(1));
 var mutexHandle = 0;
 
