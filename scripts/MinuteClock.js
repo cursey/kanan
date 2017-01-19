@@ -31,8 +31,8 @@
 // Instead of nopping the entire division we can just nop the mov that stores
 // the result. This gives us simpler patterns and patches.
 
-var mov1 = scan('89 4D C4 39 9F');
-var mov2 = scan('89 55 C4 39 9F');
+var mov1 = scan('89 45 C4 39 9F');
+var mov2 = scan('89 4D C4 39 9F');
 
 patch(mov1, [0x90, 0x90, 0x90]);
 patch(mov2, [0x90, 0x90, 0x90]);
