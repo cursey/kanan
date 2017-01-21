@@ -100,8 +100,8 @@ for (var i = 0; i < filter.length; ++i) {
 // Get the address of the function we need to itnercept. There are duplicates
 // of this function so we can't just take a pattern of it, instead this is the
 // pattern of where its called and I grab the address from it.
-var theblock = scan('8B 95 ? ? ? ? A1 ? ? ? ? 8B 88 ? ? ? ? 8B 80 ? ? ? ? 52');
-var theaddress = calcAbsAddress(theblock.add(42)); // the call instruction.
+var theblock = scan('8B 95 ? FB FF FF 52 56 57');
+var theaddress = calcAbsAddress(theblock.add(36)); // the call instruction.
 
 Interceptor.attach(ptr(theaddress), {
     onEnter(args) {
@@ -130,7 +130,7 @@ Interceptor.attach(ptr(theaddress), {
         }
 
         if (verbose) {
-            dmsg("sub_636d60(" + args[0] +
+            dmsg("sub_63dc40(" + args[0] +
                 ", " + args[1] +
                 ", " + args[2] +
                 ", " + args[3] +
