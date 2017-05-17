@@ -20,6 +20,6 @@
 var desiredColor = 0xFFFFFFFF;
 
 
-var movColor = scan('C7 46 ? ? ? ? ? C7 46 ? ? ? ? ? 68');
+var movColor = scan('C7 47 ? ? ? ? ? C7 47 ? ? ? ? ? 68');
 
 patchDword(movColor.add(3), desiredColor);
