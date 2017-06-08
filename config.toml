@@ -512,3 +512,10 @@ enable = true
 coalesce = true
 delay = false
 
+#Prevents the game from moving to the squad chat tab when joining a squad
+#or clicking on it manually.  Squad chat works and can still be read, and
+#you can type in squad chat in the message log window manually if needed.
+[NoDefaultSquadChat]
+enable = true
+coalesce = true
+delay = false
