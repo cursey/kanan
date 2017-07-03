@@ -519,3 +519,9 @@ delay = false
 enable = true
 coalesce = true
 delay = false
+
+#Displays each item's class ID and attribute flag in the description.
+[ShowItemClass]
+enable = true
+coalesce = true
+delay = false
