@@ -525,3 +525,10 @@ delay = false
 enable = true
 coalesce = true
 delay = false
+
+# Removes chat censorship. Note, in public chat only other people with this mod
+# (or something similar) enabled will see your uncensored chat.
+[NoCensorship]
+enable = true
+coalesce = true
+delay = false
