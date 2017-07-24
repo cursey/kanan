@@ -11,7 +11,71 @@ import subprocess
 import ctypes
 import toml
 import psutil
+from http import client
+from hashlib import sha512
+from binascii import hexlify
+from base64 import b64encode
+from json import loads, dumps
+from subprocess import run, Popen, PIPE
+from io import StringIO
 from pathlib import Path
+
+
+def get_login_passport():
+    # Get something unique (not important as far as I can tell)
+    cmd_result = run(['wmic', 'csproduct', 'get', 'uuid'], stdout=PIPE)
+    cmd_result_str = StringIO(cmd_result.stdout.decode('utf-8'))
+
+    # skip the first line
+    cmd_result_str.readline()
+
+    # Grab UUID
+    uuid = cmd_result_str.readline().strip()
+
+    # Ask for username/password.
+    username = input("Username: ")
+    password = input("Password: ")
+
+    # Immediately convert it.
+    password = hexlify(sha512(bytes(password, 'utf-8')).digest()).decode('utf-8')
+
+    # First request.
+    headers = {
+        'User-Agent': 'NexonLauncher.nxl-17.04.01-290-621f8e0',
+        'Content-Type': 'application/json'
+    }
+    body = {
+        'id': username,
+        'password': password,
+        'auto_login': False,
+        'client_id': '7853644408',
+        'scope': 'us.launcher.all',
+        'device_id': uuid
+    }
+    body_str = dumps(body)
+    connection = client.HTTPSConnection('accounts.nexon.net', 443)
+
+    connection.request('POST', '/account/login/launcher', body=body_str,
+                       headers=headers)
+
+    response = loads(connection.getresponse().read())
+    b64_token = b64encode(bytes(response['access_token'],
+                                'utf-8')).decode('utf-8')
+
+    # Second request.
+    headers = {
+        'User-Agent': 'NexonLauncher.nxl-17.04.01-290-621f8e0',
+        'Cookie': 'nxtk=' + response['access_token'] +
+                  ';domain=.nexon.net;path=/;',
+        'Authorization': 'bearer ' + b64_token
+    }
+    connection = client.HTTPSConnection('api.nexon.io', 443)
+
+    connection.request('GET', '/users/me/passport', headers=headers)
+    response = loads(connection.getresponse().read())
+
+    # Return the passport.
+    return response['passport']
 
 
 def usage():
@@ -97,11 +161,11 @@ class KananApp:
             if option in self.config[modname]:
                 return self.config[modname][option]
             else:
-                print("NOTICE: " + modname + " is missing the '" + option + "' entry in config.toml")
+                print("NOTICE: " + modname + " is missing the '" + option +
+                      "' entry in config.toml")
         else:
             print("NOTICE: " + modname + " does not have a config.toml entry")
             return None
-
 
     def is_disabled(self, filename):
         """Determines if a filename has been disabled by the user."""
@@ -129,7 +193,9 @@ class KananApp:
         try:
             opts, args = getopt.getopt(sys.argv[1:],
                                        'hdp:tvasm',
-                                       ['help', 'debug', 'pid=', 'test', 'verbose', 'all', 'start', 'morrighan'])
+                                       ['help', 'debug', 'pid=', 'test',
+                                        'verbose', 'all', 'start',
+                                        'morrighan'])
         except getopt.GetoptError as err:
             print(err)
             usage()
@@ -161,8 +227,10 @@ class KananApp:
         while ctypes.windll.user32.FindWindowA(b'Mabinogi', None) == 0:
             time.sleep(1)
         try:
-            self.session = frida.attach('Client.exe' if self.pid is None else self.pid)
-            # Force the use of v8 for modern javascript (only for newer versions of frida).
+            self.session = frida.attach('Client.exe' if self.pid is None else
+                                        self.pid)
+            # Force the use of v8 for modern javascript (only for newer
+            # versions of frida).
             enable_jit = getattr(self.session, 'enable_jit', None)
             if callable(enable_jit):
                 enable_jit()
@@ -184,11 +252,12 @@ class KananApp:
         # every loaded script.  The reason we don't load defaults in the
         # constructor is because we need to wait till the command line args
         # have been parsed.
+        cfg = json.dumps(self.config)
         self.script_defaults = 'var debug = {};\n'.format(self.debug)
         self.script_defaults += 'var testing = {};\n'.format(self.test)
         self.script_defaults += 'var verbose = {};\n'.format(self.verbose)
         self.script_defaults += 'var path = "{}";\n'.format(self.path)
-        self.script_defaults += 'var config = {};\n'.format(json.dumps(self.config))
+        self.script_defaults += 'var config = {};\n'.format(cfg)
         with open('./scripts/Defaults.js') as defaults:
             self.script_defaults += defaults.read()
 
@@ -197,14 +266,17 @@ class KananApp:
         # specific to that script and therefor cannot be added to
         # self.script_defaults
         shortname = os.path.basename(filename)
+        name = os.path.splitext(shortname)[0]
         scriptname = 'var scriptName = "{}";\n'.format(shortname)
-        modname = 'var modName = "{}";\n'.format(os.path.splitext(shortname)[0])
+        modname = 'var modName = "{}";\n'.format(name)
         return scriptname + modname
 
     def _run_script(self, source):
         # Run a single script and add it to the list of scripts.
-        if self.debug == 'true':  # Prepend the results of every scan to the source
-            source = 'var scans = {};\n'.format(json.dumps(self.scans)) + source
+        # Prepend the results of every scan to the source.
+        if self.debug == 'true':
+            scans = json.dumps(self.scans)
+            source = 'var scans = {};\n'.format(scans) + source
         script_loaded = False
         num_failed_load_attempts = 0
         while not script_loaded and num_failed_load_attempts < 3:
@@ -243,7 +315,8 @@ class KananApp:
             with open(filename) as script:
                 if self.is_coalesced(filename) and self.debug == 'false':
                     print("Coalescing " + shortname)
-                    coalesced_source += self._script_specific_defaults(filename)
+                    specific_defs = self._script_specific_defaults(filename)
+                    coalesced_source += specific_defs
                     coalesced_source += script.read()
                     continue
                 else:
@@ -280,7 +353,8 @@ class KananApp:
 
     def _process_alive(self, pid):
         # Checks if a process with the supplied pid is active.
-        processes = [line.split() for line in subprocess.check_output('tasklist').splitlines()]
+        processes = [line.split() for line in
+                     subprocess.check_output('tasklist').splitlines()]
         # Skip the malformed entries at the beginning.
         [processes.pop(i) for i in [0, 1, 2]]
         pidstr = str(pid).encode('utf-8')
@@ -294,6 +368,8 @@ class KananApp:
         # doesn't rely on the config files in the future.
         mabidir = Path(self.get_option('AutoStart', 'directory'))
         args = self.get_option('AutoStart', 'args')
+        passport = get_login_passport()
+        args = args + ' /P:' + passport
         if not mabidir.exists():
             print("Couldn't find Client.exe in " + str(mabidir))
             print("Please make sure the directory is correct in config.toml")
@@ -308,7 +384,7 @@ class KananApp:
             clientpath = str(mabidir / "Client.exe")
         # Try starting mabi.
         try:
-            mabi = subprocess.Popen(clientpath + " " + args, cwd=mabipath)
+            subprocess.Popen(clientpath + " " + args, cwd=mabipath)
         except OSError:
             print("Couldn't start Client.exe.")
             print("Make sure you're running kanan as administrator!")
@@ -357,6 +433,7 @@ def cleanup_tmp_frida_trash():
         except PermissionError:
             pass
 
+
 def get_newest_client_pid():
     """Searches through all the Client.exe's to find the newest one.
     Returns -1 if Client.exe is not found."""
@@ -369,11 +446,13 @@ def get_newest_client_pid():
                 pid = proc.pid
     return pid
 
+
 def main():
     """The entrypoint for kanan"""
     cleanup_tmp_frida_trash()
     app = KananApp()
     app.run()
+
 
 if __name__ == "__main__":
     main()
