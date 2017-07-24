@@ -19,6 +19,7 @@ from json import loads, dumps
 from subprocess import run, Popen, PIPE
 from io import StringIO
 from pathlib import Path
+from getpass import getpass
 
 
 def get_login_passport():
@@ -34,7 +35,7 @@ def get_login_passport():
 
     # Ask for username/password.
     username = input("Username: ")
-    password = input("Password: ")
+    password = getpass("Password: ")
 
     # Immediately convert it.
     password = hexlify(sha512(bytes(password, 'utf-8')).digest()).decode('utf-8')

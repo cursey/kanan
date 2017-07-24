@@ -12,6 +12,7 @@ from json import loads, dumps
 from subprocess import run, Popen, PIPE
 from io import StringIO
 from pathlib import Path
+from getpass import getpass
 
 # Get the UUID
 cmd_result = run(['wmic', 'csproduct', 'get', 'uuid'], stdout=PIPE)
@@ -26,7 +27,7 @@ uuid = cmd_result_str.readline().strip()
 print("Using uuid: '{}'".format(uuid))
 
 username = input("Username: ")
-password = input("Password: ")
+password = getpass("Password: ")
 
 # immediately convert it.
 password = hexlify(sha512(bytes(password, 'utf-8')).digest()).decode('utf-8')
