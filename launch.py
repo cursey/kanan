@@ -54,7 +54,7 @@ connection = client.HTTPSConnection('accounts.nexon.net', 443)
 connection.request('POST', '/account/login/launcher', body=body_str,
                    headers=headers)
 
-response = loads(connection.getresponse().read())
+response = loads(connection.getresponse().read().decode('utf-8'))
 
 print(response)
 
@@ -78,7 +78,7 @@ print("#############################")
 connection = client.HTTPSConnection('api.nexon.io', 443)
 
 connection.request('GET', '/users/me/passport', headers=headers)
-response = loads(connection.getresponse().read())
+response = loads(connection.getresponse().read().decode('utf-8'))
 
 print(response)
 

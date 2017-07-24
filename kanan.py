@@ -58,7 +58,7 @@ def get_login_passport():
     connection.request('POST', '/account/login/launcher', body=body_str,
                        headers=headers)
 
-    response = loads(connection.getresponse().read())
+    response = loads(connection.getresponse().read().decode('utf-8'))
     b64_token = b64encode(bytes(response['access_token'],
                                 'utf-8')).decode('utf-8')
 
@@ -72,7 +72,7 @@ def get_login_passport():
     connection = client.HTTPSConnection('api.nexon.io', 443)
 
     connection.request('GET', '/users/me/passport', headers=headers)
-    response = loads(connection.getresponse().read())
+    response = loads(connection.getresponse().read().decode('utf-8'))
 
     # Return the passport.
     return response['passport']
