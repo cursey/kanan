@@ -9,6 +9,6 @@
 //client.exe+1195B53 - 0F85 35020000         - jne client.exe+1195D8E
 //Edit the jne to not jump.
 
-var pattern = scan('66 3B C1 0F 85 ?? 02 00 00 68 ?? ?? ?? ?? 8D 4D B0');
+var pattern = scan('66 3B C1 0F 85 ?? 02 00 00 68 ?? ?? ?? ?? B9');
 
 patch(pattern.add(3), [0x90, 0x90, 0x90, 0x90, 0x90, 0x90]);
