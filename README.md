@@ -74,6 +74,8 @@ authors who haven't directly contributed via GitHub's pull requests.
     * No persistent fighter chain popup
     * Objects between camera and character do not become transparent
     * Hide main title
+* Licat
+    * No mouont timeout
 
 Many original patches/ideas came from the following projects:
 * Fantasia
