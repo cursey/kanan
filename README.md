@@ -75,7 +75,7 @@ authors who haven't directly contributed via GitHub's pull requests.
     * Objects between camera and character do not become transparent
     * Hide main title
 * Licat
-    * No mouont timeout
+    * No mount timeout
 
 Many original patches/ideas came from the following projects:
 * Fantasia
