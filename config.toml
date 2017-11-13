@@ -532,3 +532,9 @@ delay = false
 enable = true
 coalesce = true
 delay = false
+
+# Disables the mounting timeout on pets, so you can mount and dismount quickly.
+[NoMountTimeout]
+enable = true
+coalesce = true
+delay = false
