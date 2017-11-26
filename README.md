@@ -1,8 +1,6 @@
 # Kanan's Mabinogi Mod 
 Mods for Mabinogi using JavaScript
 
-[![Build status](https://ci.appveyor.com/api/projects/status/frp20d9y14rpxha0?svg=true)](https://ci.appveyor.com/project/cursey/kanan-new)
-
 ## Installation
 1. Download the repository by clicking the green **Clone or Download** button, and extract it anywhere on your computer. Alternatively you can download it through the Github desktop application.
 2. Download Python 3.5 x86-64 (the **64 bit** version) from
