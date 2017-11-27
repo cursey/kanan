@@ -13,6 +13,6 @@
 //so we'll change the jne right above it to not go down that
 //path and let you actually talk to the ego.
 
-var pattern = scan('0F 85 8F 00 00 00 68 ?? ?? ?? ?? 8D 4D DC E8');
+var pattern = scan('0F 85 90 00 00 00 68 ?? ?? ?? ?? 8D 4D DC E8');
 
 patch(pattern.add(0), [0x90, 0xE9]);
