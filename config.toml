@@ -538,3 +538,9 @@ delay = false
 enable = true
 coalesce = true
 delay = false
+
+# Removes the "Obtained X item" reward window that shows up when acquiring items, stats or exp.
+[NoRewardWindow]
+enable = true
+coalesce = true
+delay = false
