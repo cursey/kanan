@@ -544,3 +544,9 @@ delay = false
 enable = true
 coalesce = true
 delay = false
+
+# Shows an FPS counter.
+[ShowFPS]
+enable = false
+coalesce = true
+delay = false
