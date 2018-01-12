@@ -7,6 +7,6 @@
 // Scroll down just a bit in graph view and you'll see a function being called
 // with three 1's pushed as parameters.  We nop all the pushes and the function
 // that is called to remove the message box from being created.
-var pattern = scan('6A 01 53 53 6A 01 53 6A 01 53 53 8D 55 E8 52 E8 ? ? ? ? C6 45 FC 04');
+var pattern = scan('52 53 6A ?? 53 53 6A ?? 53 6A ?? 53 53 8D 45 E4 50 E8 ?? ?? ?? ?? C6 45 FC ?? 8B 4D EC 3B CB 74 ?? E8 ?? ?? ?? ?? 89 5D EC C6 45 FC ?? 8B 4D E4 3B CB 74 ?? E8 ?? ?? ?? ?? 89 5D E4 C6 45 FC ??');
 
-patch(pattern, Array(20).fill(0x90));
+patch(pattern, Array(22).fill(0x90));
