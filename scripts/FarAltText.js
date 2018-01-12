@@ -10,5 +10,5 @@
 // Look for an fld [<address>] that is called a ton
 // nop the jnz.
 
-var pattern = scan('0F 85 ?? ?? ?? ?? D9 EE D9 45 D4');
+var pattern = scan('0F 85 ?? ?? ?? ?? D9 ?? D9 ?? ?? D8 ?? DF E0 F6 C4 ??');
 patch(pattern, Array(6).fill(0x90));

@@ -10,6 +10,6 @@
 // referenced.
 // Change the first jz in this function to skip all the checks.
 
-var firstJz = scan('0F 84 ? ? ? ? 89 5D F0 89 5D FC 8B CE');
+var firstJz = scan('0F 84 ?? ?? ?? ?? 89 5D F0 89 5D FC 8B CF E8 ?? ?? ?? ?? 8B 10');
 
 patch(firstJz, [0x90, 0xE9]);

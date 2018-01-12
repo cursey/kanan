@@ -9,6 +9,6 @@
 //out as being much larger (and looks like a timestamp).  By trial and error, freezing
 //one of the three values should allow you to skip the timer.
 
-var pattern = scan('89 90 58 02 00 00');
+var pattern = scan('89 90 5C 02 00 00');
 
 patch(pattern, [0x90, 0x90, 0x90, 0x90, 0x90, 0x90]);
