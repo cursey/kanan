@@ -5,7 +5,7 @@
 // 180 = Mabi's normal value.
 // 120 = A common compromise.
 // 90 = Quake Pro MLG Airhorn
-var desiredFOV = 120;
+var desiredFOV = getConfigValue('fov', 120);
 
 // Walkthrough:
 // Find an fdiv that's reading from a specific address (holding 180).

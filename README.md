@@ -1,4 +1,4 @@
-# Kanan's Mabinogi Mod
+# Kanan's Mabinogi Mod 
 Mods for Mabinogi using JavaScript
 
 ## Installation
@@ -13,7 +13,7 @@ PATH** or **Add Python to environment variables**, depending on the version you 
 ## Injection
 There are three methods to start kanan, manually, automatically or debug.
 * Manually -  Run the batch file `kanan.bat` then launch Mabinogi manually with your prefer launching method. 
-* Automatically - Update `directory.txt` with your Mabinogi directory path (`C:/Nexon/Mabinogi/` for example), then run the batch file `kanan auto start.bat`.
+* Automatically - Make sure the path in the `[AutoStart]` section of `config.toml` is correct, then run the batch file `kanan auto start.bat`.
 * Debug - Same as manually, but run `kanan debug mode.bat` instead. This method contains information for testing purposes such as patched addresses which are useful for contributors.
 
 It is possible to launch kanan while Mabinogi is already running, but for best results its best to let it inject as Mabinogi launches, and keep it running in the background. You can run `python kanan.py -h` for more usage information. 
@@ -23,7 +23,7 @@ Note: If you are running under User Account Control (UAC), be sure to run the re
 ## Features at a glance
 Look in the `./scripts/` directory for a full list of mods provided with kanan.
 * By default most scripts (mods) that come with kanan are enabled. To disable a
-mod you can either add ".disabled" as a suffix to the respective file's name (`FreeZoom.js` > `FreeZoom.disabled.js`) in the `./scripts/` directory, or add the file name (`BitmapFont.js` for example) to `disabled.txt` in the main directory.
+mod find the correct section in `config.toml` and set `enable = true` to `enable = false`
 * You can attach kanan to different processes if you are running multiple
 clients. Open an administrator command prompt where `kanan.py` is located and
 run `python kanan.py -p<id>` where `id` is the process id you want to attach to.
@@ -42,20 +42,6 @@ used by each script for archiving and easier updating when a mod breaks.
 kanan will automatically rerun all the scripts.
 
 Learn about configuring kanan on our [wiki](https://github.com/cursey/kanan/wiki).
-
-## Known issues
-* Closing the command prompt after patches have been applied has caused crashes
-for some users. If you experience a crash immediately after closing the command
-prompt then leave it open for now.
-    * If `kanan.bat` does not stay open then something is most likely wrong with
-your python install.
-
-## The following scripts are disabled by default
-* DisableScreenFlash.js (issue with meteor strike)
-* PatternScanSnapshot.js
-* LargerTTFontResize.js
-* HideObjects.js
-* MaximizeWindow.js 
 
 ## Contributing
 Contributions are welcome. If you are contributing a patch that you aren't the
@@ -88,6 +74,8 @@ authors who haven't directly contributed via GitHub's pull requests.
     * No persistent fighter chain popup
     * Objects between camera and character do not become transparent
     * Hide main title
+* Licat
+    * No mount timeout
 
 Many original patches/ideas came from the following projects:
 * Fantasia
@@ -110,3 +98,5 @@ And to all the patchers that came before, and all that will come after.
 * Rydian
 * y3tii
 * miawsama
+* vurtic
+* Blade3575

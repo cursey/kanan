@@ -57,7 +57,9 @@ var filter = [
     '@home',
     '@house',
     'sale',
-    'nmo'
+    'nmo',
+    'selling',
+    'buying'
 ];
 
 // Walkthrough:
@@ -94,12 +96,12 @@ for (var i = 0; i < filter.length; ++i) {
     filter[i] = filter[i].toLowerCase();
 }
 
+
 // Get the address of the function we need to itnercept. There are duplicates
 // of this function so we can't just take a pattern of it, instead this is the
 // pattern of where its called and I grab the address from it.
-var thecall = scan('E8 ? ? ? ? 83 C4 1C E9 ? ? ? ? 8D 4D 08');
-var theoffset = Memory.readS32(thecall.add(1));
-var theaddress = thecall.add(5).toInt32() + theoffset;
+var theblock = scan('8B 95 ? FB FF FF 52 56 57');
+var theaddress = calcAbsAddress(theblock.add(36)); // the call instruction.
 
 Interceptor.attach(ptr(theaddress), {
     onEnter(args) {
@@ -128,7 +130,7 @@ Interceptor.attach(ptr(theaddress), {
         }
 
         if (verbose) {
-            dmsg("sub_636780(" + args[0] +
+            dmsg("sub_63dc40(" + args[0] +
                 ", " + args[1] +
                 ", " + args[2] +
                 ", " + args[3] +
@@ -139,3 +141,68 @@ Interceptor.attach(ptr(theaddress), {
     }
 });
 
+//
+// The rest of this script is commented out on purpose. It was used to develop
+// the mod and can be used as an example of how to use kanan as a development
+// platform and not just a patcher.
+//
+
+// Intercept mabi's wcscpy_s wrapper.
+/*
+Interceptor.attach(ptr('0x45a560'), {
+    onEnter(args) {
+        var src = Memory.readUtf16String(args[2]);
+
+        if (src.indexOf('Kanan') != -1) {
+            msg('sub_45a560(dst, len, "' + src + '") ret=' + this.returnAddress);
+        }
+    }
+});
+*/
+
+// This calls mabi's wcscpy_s wrapper but seems to be just a small wrapper with
+// some bounds checking itself.
+/*
+Interceptor.attach(ptr('0x45f200'), {
+    onEnter(args) {
+        var src = Memory.readUtf16String(args[2]);
+
+        if (src.indexOf('Kanan') != -1) {
+            msg('sub_45f200(dst, len, "' + src + '") ret=' + this.returnAddress);
+        }
+    }
+});
+*/
+
+// This calls the above function.
+/*
+Interceptor.attach(ptr('0x426df0'), {
+    onEnter(args) {
+        var str = Memory.readUtf16String(args[0]);
+
+        if (str.indexOf('Kanan') != -1) {
+            msg('sub_426df0("' + str + '") ret=' + this.returnAddress);
+        }
+    }
+});
+*/
+
+// This calls the above function.
+/*
+Interceptor.attach(ptr('0x5545e0'), {
+    onEnter(args) {
+        msg('sub_5545e0() ret=' + this.returnAddress);
+    }
+});
+*/
+
+// This also calls mabi's wcscpy_s wrapper. This one uses mabi's string object,
+// and can be used to easilly get the offset into the string object where the
+// string buffer is.
+/*
+Interceptor.attach(ptr('0x45f820'), {
+    onEnter(args) {
+
+    }
+});
+*/

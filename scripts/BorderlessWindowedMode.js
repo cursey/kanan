@@ -31,7 +31,7 @@ freeMemory(rect, 16);
 
 // Get the mabi window.
 var mabiStr = allocateStr('Mabinogi');
-var mabiWnd = FindWindowA(mabiStr, mabiStr);
+var mabiWnd = FindWindowA(mabiStr, NULL);
 
 freeStr(mabiStr);
 

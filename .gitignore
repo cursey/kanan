@@ -1,3 +1,5 @@
 /output/disasm.txt
 data/
 scripts/private/
+private.toml
+__handlers__/

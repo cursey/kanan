@@ -3,6 +3,23 @@
 // before it is ran by kanan, making everything within this file available to all
 // scripts.
 
+// Returns a mods configuration option value. If the option is missing, a
+// message will be sent and the def value will be returned.
+function getConfigValue(option, def) {
+    if (modName in config) {
+        if (option in config[modName]) {
+            return config[modName][option];
+        }
+        else {
+            msg("NOTICE: " + modName + " is missing the '" + option + "' entry in config.toml");
+        }
+    }
+    else {
+        msg("NOTICE: " + modName + " does not have a config.toml entry");
+    }
+
+    return def;
+}
 
 // Sends a msg back to kanan's window with the name of the script prepended.
 function msg(str) {
@@ -425,4 +442,40 @@ function insertJmp(address, destination) {
     Memory.writeS32(address.add(1), destination.toInt32() - address.toInt32() - 5);
 
     protect(address, 5, p);
+}
+
+// Inserts a 5-byte call at the address to the destination.
+function insertCall(address, destination) {
+    if (!isValidPatchAddress(address)) {
+        msg("Failed to insert call.");
+        return;
+    }
+
+    if (testing) {
+        return;
+    }
+
+    var p = unprotect(address, 5);
+
+    Memory.writeU8(address, 0xE8);
+    Memory.writeS32(address.add(1), destination.toInt32() - address.toInt32() - 5);
+
+    protect(address, 5, p);
+}
+
+// Calculates the absolute address from an instruction that uses a relative
+// one.
+function calcAbsAddress(address, offset, sizeofInstruction) {
+    if (offset == undefined) {
+        offset = 1;
+    }
+
+    if (sizeofInstruction == undefined) {
+        sizeofInstruction = 5;
+    }
+
+    var theOffset = Memory.readS32(address.add(offset));
+    var theAddress = address.add(sizeofInstruction).toInt32() + theOffset;
+
+    return ptr(theAddress);
 }

@@ -7,7 +7,7 @@
 //1.0 = Normal
 //0.2 = Child
 //-0.4 = Tin Potion
-var desiredHeight = -0.4;
+var desiredHeight = getConfigValue('height', -0.4);
 
 //Walkthrough:
 //Find the fld that loads an entity's height value (+88)
