@@ -11,6 +11,6 @@
 // 'CMessageView' in it.
 // This is the call that creates the description message box.
 
-var firstPush = scan('6A 01 53 53 6A 01 53 6A 01 56 8D 4D DC');
+var firstPush = scan('51 8B 0D ? ? ? ? 53 6A ? 53 53 6A ? 53 6A ? 56 8D 55 DC');
 
-patch(firstPush, Array(29).fill(0x90)); // Nop all the pushes and the call.
+patch(firstPush, Array(31).fill(0x90)); // Nop all the pushes and the call.

@@ -7,5 +7,5 @@
 //It's +70 in the structure, and max zoom is +74.
 //Find what writes it, change the write to a high value.
 
-var pattern = scan('89 4E 74 80 78 40 00 74 16');
+var pattern = scan('89 4E 74 38 58 40');
 patch(pattern.add(1), 0x6E);
