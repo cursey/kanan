@@ -11,67 +11,72 @@ import subprocess
 import ctypes
 import toml
 import psutil
+import winreg
+import keyring
 from http import client
-from hashlib import sha512
+from hashlib import sha256, sha512
 from binascii import hexlify
 from base64 import b64encode
 from json import loads, dumps
-from subprocess import run, Popen, PIPE
+from subprocess import Popen
 from io import StringIO
 from pathlib import Path
 from getpass import getpass
+from sys import argv
 
 
 def get_login_passport():
-    # Get something unique (not important as far as I can tell)
-    cmd_result = run(['wmic', 'csproduct', 'get', 'uuid'], stdout=PIPE)
-    cmd_result_str = StringIO(cmd_result.stdout.decode('utf-8'))
+    # Get the motherboard UUID
+    uuid = str(subprocess.check_output('wmic csproduct get uuid'))
+    uuid = uuid[uuid.find("\\n")+2 : -15]
+    # Get the operating system GUID
+    guid = winreg.QueryValueEx(winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Cryptography"), "MachineGuid")[0]
 
-    # skip the first line
-    cmd_result_str.readline()
+    # Generate a device ID from UUID and GUID.
+    device_id = hexlify(sha256(bytes(uuid + guid, 'utf-8')).digest()).decode('utf-8')
 
-    # Grab UUID
-    uuid = cmd_result_str.readline().strip()
+    # Ask for nexon account ID.
+    email = input("Nexon Account Email: ")
+    password = keyring.get_password('mabinogi', email)
+    if not password:
+        print("Password will be stored in Windows Credential Manager.")
+        password = input("Password: ")
 
-    # Ask for username/password.
-    username = input("Username: ")
-    password = getpass("Password: ")
-
-    # Immediately convert it.
-    password = hexlify(sha512(bytes(password, 'utf-8')).digest()).decode('utf-8')
-
-    # First request.
+    # First HTTPS request.
+    password_sha512 = hexlify(sha512(bytes(password, 'utf-8')).digest()).decode('utf-8')
     headers = {
-        'User-Agent': 'NexonLauncher.nxl-17.04.01-290-621f8e0',
         'Content-Type': 'application/json'
     }
     body = {
-        'id': username,
-        'password': password,
+        'id': email,
+        'password': password_sha512,
         'auto_login': False,
         'client_id': '7853644408',
         'scope': 'us.launcher.all',
-        'device_id': uuid
+        'device_id': device_id
     }
-    body_str = dumps(body)
-    connection = client.HTTPSConnection('accounts.nexon.net', 443)
-
-    connection.request('POST', '/account/login/launcher', body=body_str,
-                       headers=headers)
-
+    connection = client.HTTPSConnection('www.nexon.com', 443)
+    connection.request('POST', '/account-webapi/login/launcher', body=dumps(body), headers=headers)
     response = loads(connection.getresponse().read().decode('utf-8'))
-    b64_token = b64encode(bytes(response['access_token'],
-                                'utf-8')).decode('utf-8')
 
-    # Second request.
+    # Check if the response successfully returned an access token.
+    if not 'access_token' in response:
+        print("Account credentials are invalid. Exiting.")
+        os.system("pause")
+        sys.exit()
+
+    # Save the password in keyring.
+    keyring.set_password('mabinogi', email, password)
+    email = None
+    password = None
+
+    # Second HTTPS request.
+    access_token_b64 = b64encode(bytes(response['access_token'], 'utf-8')).decode('utf-8')
     headers = {
-        'User-Agent': 'NexonLauncher.nxl-17.04.01-290-621f8e0',
-        'Cookie': 'nxtk=' + response['access_token'] +
-                  ';domain=.nexon.net;path=/;',
-        'Authorization': 'bearer ' + b64_token
+        'Cookie': 'nxtk=' + response['access_token'] + ';domain=.nexon.net;path=/;',
+        'Authorization': 'bearer ' + access_token_b64
     }
     connection = client.HTTPSConnection('api.nexon.io', 443)
-
     connection.request('GET', '/users/me/passport', headers=headers)
     response = loads(connection.getresponse().read().decode('utf-8'))
 

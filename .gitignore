@@ -3,3 +3,4 @@ data/
 scripts/private/
 private.toml
 __handlers__/
+/.vs
