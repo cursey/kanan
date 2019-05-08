@@ -3,7 +3,7 @@
 @cd /d "%~dp0"
 
 echo Checking and installing dependencies...
-pip -q install frida==9.0.7 toml psutil
+pip -q install frida==9.0.7 toml psutil keyring
 if %errorlevel% neq 0 (
     pause
     exit
