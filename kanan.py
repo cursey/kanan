@@ -35,10 +35,12 @@ def get_login_passport():
     # Generate a device ID from UUID and GUID.
     device_id = hexlify(sha256(bytes(uuid + guid, 'utf-8')).digest()).decode('utf-8')
 
-    # Ask for nexon account ID.
+    # Ask the user for nexon account ID.
     email = input("Nexon Account Email: ")
     password = keyring.get_password('mabinogi', email)
-    if not password:
+    if password:
+        password_found = True
+    else:
         print("Password will be stored in Windows Credential Manager.")
         password = input("Password: ")
 
@@ -65,8 +67,11 @@ def get_login_passport():
         os.system("pause")
         sys.exit()
 
-    # Save the password in keyring.
-    keyring.set_password('mabinogi', email, password)
+    # If the password was not retrieved though keyring, we can save it now.
+    if not password_found:
+        keyring.set_password('mabinogi', email, password)
+    
+    # Unset the credentials. Never leave credentials lingering in memory.
     email = None
     password = None
 
@@ -80,7 +85,7 @@ def get_login_passport():
     connection.request('GET', '/users/me/passport', headers=headers)
     response = loads(connection.getresponse().read().decode('utf-8'))
 
-    # Return the passport.
+    # Return the login passport.
     return response['passport']
 
 
